@@ -7,8 +7,10 @@ First of all, make sure you have configured an Emulator/Device to your Computer.
 > NPM >= 7
 
 ### Start Dev
-> `npm install`\
-`npm run android`
+```sh
+$ npm install
+$ npm run android
+```
 
 ## Development Status
 |Workflows | |
