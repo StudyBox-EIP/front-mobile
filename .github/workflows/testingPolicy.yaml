@@ -7,7 +7,7 @@ on:
 
 jobs:
   tests:
-    name: Jest
+    name: Jest Testing Policy
     runs-on: ubuntu-20.04
 
     defaults:
