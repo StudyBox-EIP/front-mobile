@@ -18,6 +18,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {MicrosoftOauthScreen} from './src/components/connection/oauth/MicrosoftOauthScreen';
 import {GoogleOauthScreen} from './src/components/connection/oauth/GoogleOauthScreen';
 import {ManualSignInScreen} from './src/components/connection/login/login';
+import {ManualSignUpScreen} from './src/components/connection/register/register';
 import {HomePageScreen} from './src/components/homepage/homepage';
 
 const ConnectionScreenStyle = StyleSheet.create({
@@ -45,6 +46,10 @@ function ConnectionScreen({navigation}: any) {
           title="Manual Sign In"
           onPress={() => navigation.navigate('ManualSignIn')}
         />
+        <Button
+          title="Manual Sign Up"
+          onPress={() => navigation.navigate('ManualSignUp')}
+        />
       </View>
       <View style={ConnectionScreenStyle.base}>
         <Button
@@ -70,6 +75,7 @@ function App() {
       <Stack.Navigator initialRouteName="Connection">
         <Stack.Screen name="Connection" component={ConnectionScreen} />
         <Stack.Screen name="ManualSignIn" component={ManualSignInScreen} />
+        <Stack.Screen name="ManualSignUp" component={ManualSignUpScreen} />
         <Stack.Screen name="GoogleOauthScreen" component={GoogleOauthScreen} />
         <Stack.Screen
           name="MicrosoftOauthScreen"
