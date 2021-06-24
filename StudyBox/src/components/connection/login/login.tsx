@@ -9,6 +9,7 @@ const ManualSignInScreenStyle = StyleSheet.create({
   },
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function ManualSignInScreen({navigation}: any) {
   return (
     <View style={ManualSignInScreenStyle.base}>
