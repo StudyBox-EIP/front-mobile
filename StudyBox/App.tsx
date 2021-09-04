@@ -14,12 +14,12 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {ScreenAuth} from './src/components/connection/screen-auth/screen-auth';
-import {MicrosoftOauthScreen} from './src/components/connection/oauth/MicrosoftOauthScreen';
-import {GoogleOauthScreen} from './src/components/connection/oauth/GoogleOauthScreen';
-import {Login} from './src/components/connection/login/login';
-import {ManualSignUpScreen} from './src/components/connection/register/register';
-import {HomePageScreen} from './src/components/homepage/homepage';
+import {AuthScreen} from './src/components/pages/connection/screen-auth/screen-auth';
+import {MicrosoftOauthScreen} from './src/components/pages/connection/oauth/MicrosoftOauthScreen';
+import {GoogleOauthScreen} from './src/components/pages/connection/oauth/GoogleOauthScreen';
+import {LoginScreen} from './src/components/pages/connection/login/login';
+import {SignUpScreen} from './src/components/pages/connection/register/register';
+import {HomePageScreen} from './src/components/pages/homepage/homepage';
 
 const Stack = createStackNavigator();
 const ScreensOptions = {
@@ -37,17 +37,17 @@ function App() {
         <Stack.Screen
           name="AuthScreen"
           options={{headerShown: false}}
-          component={ScreenAuth}
+          component={AuthScreen}
         />
         <Stack.Screen
           name="ManualSignIn"
           options={ScreensOptions}
-          component={Login}
+          component={LoginScreen}
         />
         <Stack.Screen
           name="ManualSignUp"
           options={ScreensOptions}
-          component={ManualSignUpScreen}
+          component={SignUpScreen}
         />
         <Stack.Screen name="GoogleOauthScreen" component={GoogleOauthScreen} />
         <Stack.Screen

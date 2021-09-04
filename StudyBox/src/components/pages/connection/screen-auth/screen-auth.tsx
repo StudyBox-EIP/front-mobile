@@ -50,12 +50,12 @@ const ScreenAuthStyle = StyleSheet.create({
   },
 });
 
-export function ScreenAuth({navigation}: any) {
+export function AuthScreen({navigation}: any) {
   return (
     <SafeAreaView style={ScreenAuthStyle.container}>
       <Image
         style={ScreenAuthStyle.logo}
-        source={require('../../../assets/studybox-logo.png')}
+        source={require('../../../../assets/studybox-logo.png')}
       />
       <Text style={ScreenAuthStyle.main_text}>StudyBox</Text>
       <TouchableOpacity
