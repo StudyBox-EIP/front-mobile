@@ -42,9 +42,10 @@ export function SignUpScreen({navigation}: any) {
           secureTextEntry={true}
         />
       </View>
+      {/* Backend Authentication */}
       <StudyBoxSubmitButton
         text="Register"
-        onPress={() => navigation.navigate('')}
+        onPress={() => navigation.navigate('HomePageScreen')}
       />
     </View>
   );

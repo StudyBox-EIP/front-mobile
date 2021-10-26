@@ -37,9 +37,10 @@ export function LoginScreen({navigation}: any) {
           secureTextEntry={true}
         />
       </View>
+      {/* Backend Authentication */}
       <StudyBoxSubmitButton
         text="Login"
-        onPress={() => navigation.navigate('')}
+        onPress={() => navigation.navigate('HomePageScreen')}
       />
     </View>
   );

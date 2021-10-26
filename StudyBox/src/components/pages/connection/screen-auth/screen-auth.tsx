@@ -83,5 +83,5 @@ export function AuthScreen({navigation}: any) {
           title="MICROSOFT"
           onPress={() => navigation.navigate('MicrosoftOauthScreen')}
         />
-      </View>
+      </View>navigation
       */

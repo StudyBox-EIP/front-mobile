@@ -54,7 +54,11 @@ function App() {
           name="MicrosoftOauthScreen"
           component={MicrosoftOauthScreen}
         />
-        <Stack.Screen name="HomePageScreen" component={HomePageScreen} />
+        <Stack.Screen
+          name="HomePageScreen"
+          options={{headerShown: false}}
+          component={HomePageScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
