@@ -8,108 +8,67 @@
  * @format
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import 'react-native-gesture-handler';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+import {AuthScreen} from './src/components/pages/connection/screen-auth/screen-auth';
+import {MicrosoftOauthScreen} from './src/components/pages/connection/oauth/MicrosoftOauthScreen';
+import {GoogleOauthScreen} from './src/components/pages/connection/oauth/GoogleOauthScreen';
+import {LoginScreen} from './src/components/pages/connection/login/login';
+import {SignUpScreen} from './src/components/pages/connection/register/register';
+import {HomePageScreen} from './src/components/pages/homepage/homepage';
+import {SplashScreen} from './src/components/pages/splashScreen';
 
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+const NavigationLoader = () => {
+  const Stack = createStackNavigator();
+  const ScreensOptions = {
+    title: '',
+    headerStyle: {
+      backgroundColor: '#F1F1F1',
+    },
+    headerTintColor: '#29B6F6',
+    headerShown: false,
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="SplashScreen">
+        <Stack.Screen
+          name="SplashScreen"
+          options={ScreensOptions}
+          component={SplashScreen}
+        />
+        <Stack.Screen
+          name="AuthScreen"
+          options={{headerShown: false}}
+          component={AuthScreen}
+        />
+        <Stack.Screen
+          name="ManualSignIn"
+          options={ScreensOptions}
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          name="ManualSignUp"
+          options={ScreensOptions}
+          component={SignUpScreen}
+        />
+        <Stack.Screen name="GoogleOauthScreen" component={GoogleOauthScreen} />
+        <Stack.Screen
+          name="MicrosoftOauthScreen"
+          component={MicrosoftOauthScreen}
+        />
+        <Stack.Screen
+          name="HomePageScreen"
+          options={{headerShown: false}}
+          component={HomePageScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+export default NavigationLoader;
