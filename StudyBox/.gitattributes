@@ -1,5 +1,3 @@
 # Windows files should use crlf line endings
 # https://help.github.com/articles/dealing-with-line-endings/
-
-# Replacing CRLF rule by LF to be Linux Compliant (Development Environment of Reference)
-* text eol=lf
+*.bat text eol=crlf
