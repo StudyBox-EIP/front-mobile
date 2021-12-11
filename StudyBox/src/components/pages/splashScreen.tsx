@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getData = async (key: string): Promise<boolean> => {
