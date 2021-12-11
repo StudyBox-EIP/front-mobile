@@ -20,8 +20,9 @@ First of all, to be able to use this project you need to download a phone emulat
 We recommand using tools such as **Android Studio** for the **Android** version.
 
 ## Requirements
-> NodeJS >= 14\
-> NPM >= 7
+> NodeJS >= 16\
+> NPM >= 7\
+> JDK == 11
 
 ## Start developing
 
@@ -68,7 +69,7 @@ $ npm run test
 ---
 
 ### Lint tbe Code
-Lintage is very important for the visual clarity of your code. This is why there is command to make it easly.
+Lintage is very important for the visual clarity of your code. This is why there is command to make it easily.
 ```shell
 $ npm run lint
 ```
