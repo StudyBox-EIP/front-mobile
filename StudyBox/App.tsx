@@ -20,20 +20,27 @@ import {GoogleOauthScreen} from './src/components/pages/connection/oauth/GoogleO
 import {LoginScreen} from './src/components/pages/connection/login/login';
 import {SignUpScreen} from './src/components/pages/connection/register/register';
 import {HomePageScreen} from './src/components/pages/homepage/homepage';
+import {SplashScreen} from './src/components/pages/splashScreen';
 
-const Stack = createStackNavigator();
-const ScreensOptions = {
-  title: '',
-  headerStyle: {
-    backgroundColor: '#F1F1F1',
-  },
-  headerTintColor: '#29B6F6',
-};
+const NavigationLoader = () => {
+  const Stack = createStackNavigator();
+  const ScreensOptions = {
+    title: '',
+    headerStyle: {
+      backgroundColor: '#F1F1F1',
+    },
+    headerTintColor: '#29B6F6',
+    headerShown: false,
+  };
 
-function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ScreenAuth">
+      <Stack.Navigator initialRouteName="SplashScreen">
+        <Stack.Screen
+          name="SplashScreen"
+          options={ScreensOptions}
+          component={SplashScreen}
+        />
         <Stack.Screen
           name="AuthScreen"
           options={{headerShown: false}}
@@ -62,6 +69,6 @@ function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
-export default App;
+export default NavigationLoader;

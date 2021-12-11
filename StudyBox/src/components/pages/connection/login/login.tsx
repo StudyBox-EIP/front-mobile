@@ -2,6 +2,7 @@ import React from 'react';
 import StudyBoxTextInput from '../../../elements/form/input/StudyBoxInput';
 import {Image, StyleSheet, View} from 'react-native';
 import StudyBoxSubmitButton from '../../../elements/form/submit/StudyBoxSubmitButton';
+import {login} from '../../../api/auth';
 
 const LoginStyle = StyleSheet.create({
   container: {
@@ -23,6 +24,19 @@ const LoginStyle = StyleSheet.create({
 });
 
 export function LoginScreen({navigation}: any) {
+  const data = {
+    email: '',
+    password: '',
+  };
+
+  function changeUsername(newText: string) {
+    data.email = newText;
+  }
+
+  function changePassword(newText: string) {
+    data.password = newText;
+  }
+
   return (
     <View style={LoginStyle.container}>
       <Image
@@ -30,17 +44,18 @@ export function LoginScreen({navigation}: any) {
         source={require('../../../../assets/studybox-logo.png')}
       />
       <View style={LoginStyle.main_wrapper}>
-        <StudyBoxTextInput text="Username" />
+        <StudyBoxTextInput text="Email" changeText={changeUsername} />
         <StudyBoxTextInput
           text="Password"
           autoCompleteType="password"
           secureTextEntry={true}
+          changeText={changePassword}
         />
       </View>
       {/* Backend Authentication */}
       <StudyBoxSubmitButton
         text="Login"
-        onPress={() => navigation.navigate('HomePageScreen')}
+        onPress={() => login(navigation, data)}
       />
     </View>
   );

@@ -32,6 +32,9 @@ function StudyBoxTextInput(props: any) {
         style={ComponentStyle.textInput}
         autoCompleteType={props.autoCompleteType}
         secureTextEntry={props.secureTextEntry}
+        onChangeText={newText => {
+          props.changeText(newText);
+        }}
       />
     </View>
   );
