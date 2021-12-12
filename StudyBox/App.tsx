@@ -21,6 +21,7 @@ import {LoginScreen} from './src/components/pages/connection/login/login';
 import {SignUpScreen} from './src/components/pages/connection/register/register';
 import {HomePageScreen} from './src/components/pages/homepage/homepage';
 import {SplashScreen} from './src/components/pages/splashScreen';
+import {SettingsScreen} from './src/components/pages/settings/settings';
 
 const NavigationLoader = () => {
   const Stack = createStackNavigator();
@@ -65,6 +66,11 @@ const NavigationLoader = () => {
           name="HomePageScreen"
           options={{headerShown: false}}
           component={HomePageScreen}
+        />
+        <Stack.Screen
+          name="SettingsPageScreen"
+          options={{headerShown: false}}
+          component={SettingsScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
