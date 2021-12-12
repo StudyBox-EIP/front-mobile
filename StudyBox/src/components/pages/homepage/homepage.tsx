@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { BottomHomePageController } from '../../elements/controllers/homePageController';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -90,7 +91,7 @@ const Card = (props: any) => {
   );
 };
 
-export class HomePageScreen extends React.Component {
+export class HomePageScreen extends React.Component<Props> {
   render() {
     return (
       <View style={HomePageScreenStyle.base}>
@@ -102,12 +103,14 @@ export class HomePageScreen extends React.Component {
           <Card title="2ème vignette" imageSource="IMAGE URL" />
           <Card title="3ème vignette" imageSource="IMAGE URL" />
         </ScrollView>
-        <View style={pageBottomMargin.container} />
+        {/* <View style={pageBottomMargin.container} />
         <View style={pageController.container}>
+          
           <Text>1</Text>
           <Text>2</Text>
           <Text>3</Text>
-        </View>
+        </View> */}
+        <BottomHomePageController navigation={this.props.navigation} />
       </View>
     );
   }
