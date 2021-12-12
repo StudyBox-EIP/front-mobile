@@ -1,7 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {SettingsScreen} from '../../pages/settings/settings';
 import {faUserCircle as farUserCircle} from '@fortawesome/free-regular-svg-icons';
 // import {faUserCircle as fasUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {faCompass as farCompass} from '@fortawesome/free-regular-svg-icons';

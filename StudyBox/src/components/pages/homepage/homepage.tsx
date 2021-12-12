@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { BottomHomePageController } from '../../elements/controllers/homePageController';
+import {BottomHomePageController} from '../../elements/controllers/homePageController';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -54,29 +54,6 @@ const cardStyle = StyleSheet.create({
   },
 });
 
-const pageBottomMargin = StyleSheet.create({
-  container: {
-    position: 'relative',
-    width: '100%',
-    height: 75,
-    bottom: 0,
-  },
-});
-
-const pageController = StyleSheet.create({
-  container: {
-    paddingHorizontal: '10%',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-    position: 'absolute',
-    width: '100%',
-    height: 75,
-    backgroundColor: 'white',
-    bottom: 0,
-  },
-});
-
 const Card = (props: any) => {
   return (
     <SafeAreaView style={cardStyle.container}>
@@ -103,13 +80,6 @@ export class HomePageScreen extends React.Component<Props> {
           <Card title="2ème vignette" imageSource="IMAGE URL" />
           <Card title="3ème vignette" imageSource="IMAGE URL" />
         </ScrollView>
-        {/* <View style={pageBottomMargin.container} />
-        <View style={pageController.container}>
-          
-          <Text>1</Text>
-          <Text>2</Text>
-          <Text>3</Text>
-        </View> */}
         <BottomHomePageController navigation={this.props.navigation} />
       </View>
     );
