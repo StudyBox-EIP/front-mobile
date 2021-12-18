@@ -4,11 +4,10 @@ import {API} from '../../../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const storeData = async (key: string, value: string) => {
-  console.log('storing data');
   try {
     await AsyncStorage.setItem(key, value);
   } catch (e) {
-    // saving error
+    console.error(e);
   }
 };
 
@@ -53,8 +52,7 @@ export async function register(
       password: data.password,
     });
     console.log(auth.data);
-    storeData('token', auth.data.token);
-    navigation.navigate('HomePageScreen');
+    navigation.navigate('AuthScreen');
     return auth;
   } catch (error) {
     if (axios.isAxiosError(error)) {
