@@ -52,8 +52,7 @@ export async function register(
       password: data.password,
     });
     console.log(auth.data);
-    storeData('token', auth.data.token);
-    navigation.navigate('HomePageScreen');
+    navigation.navigate('AuthScreen');
     return auth;
   } catch (error) {
     if (axios.isAxiosError(error)) {
