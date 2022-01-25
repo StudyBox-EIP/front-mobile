@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {resetPageHistory} from '../elements/controllers/navigation';
+
 const getData = async (key: string): Promise<boolean> => {
   try {
     const value = await AsyncStorage.getItem(key);
@@ -18,21 +20,14 @@ const getData = async (key: string): Promise<boolean> => {
 };
 
 export class SplashScreen extends Component<Props> {
-  resetPageHistory(defaultPage: string) {
-    this.props.navigation.reset({
-      index: 0,
-      routes: [{name: defaultPage}],
-    });
-  }
-
   componentDidMount() {
     setTimeout(
       () =>
         getData('token').then(res => {
           if (res === true) {
-            this.resetPageHistory('HomePageScreen');
+            resetPageHistory(this.props.navigation, 'HomePageScreen');
           } else {
-            this.resetPageHistory('AuthScreen');
+            resetPageHistory(this.props.navigation, 'AuthScreen');
           }
         }),
       800,
