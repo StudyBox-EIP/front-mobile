@@ -1,7 +1,9 @@
 import axios, {AxiosError} from 'axios';
 import {Alert} from 'react-native';
-import {API} from '../../../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {API} from '../../../config';
+import {resetPageHistory} from '../elements/controllers/navigation';
 
 const storeData = async (key: string, value: string) => {
   try {
@@ -22,7 +24,7 @@ export async function login(
     });
     console.log(auth.data);
     storeData('token', auth.data.token);
-    navigation.navigate('HomePageScreen');
+    resetPageHistory(navigation, 'HomePageScreen');
     return auth;
   } catch (error) {
     if (axios.isAxiosError(error)) {
