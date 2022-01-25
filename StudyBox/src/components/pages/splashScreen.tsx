@@ -18,14 +18,21 @@ const getData = async (key: string): Promise<boolean> => {
 };
 
 export class SplashScreen extends Component<Props> {
+  resetPageHistory(defaultPage: string) {
+    this.props.navigation.reset({
+      index: 0,
+      routes: [{name: defaultPage}],
+    });
+  }
+
   componentDidMount() {
     setTimeout(
       () =>
         getData('token').then(res => {
           if (res === true) {
-            this.props.navigation.navigate('HomePageScreen');
+            this.resetPageHistory('HomePageScreen');
           } else {
-            this.props.navigation.navigate('AuthScreen');
+            this.resetPageHistory('AuthScreen');
           }
         }),
       800,
