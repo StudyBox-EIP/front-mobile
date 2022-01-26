@@ -35,6 +35,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run Tests
+        working-directory: ./StudyBox/android
         run: ./gradlew test
 
       - name: Build Project
@@ -69,7 +70,9 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run Tests
+        working-directory: ./StudyBox/android
         run: ./gradlew test
 
       - name: Build Project
+        working-directory: ./StudyBox/android
         run: ./gradlew build
