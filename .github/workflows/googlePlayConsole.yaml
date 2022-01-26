@@ -34,6 +34,9 @@ jobs:
         working-directory: ./StudyBox/android
         run: chmod +x ./gradlew
 
+      - name: Run Tests
+        run: ./gradlew test
+
       - name: Build Project
         working-directory: ./StudyBox/android
         run: ./gradlew assemble
