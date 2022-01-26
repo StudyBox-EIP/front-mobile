@@ -77,6 +77,10 @@ jobs:
         working-directory: ./StudyBox/android
         run: ./gradlew build
 
+      - name: Build Release AAB
+        working-directory: ./StudyBox/android
+        run: ./gradlew bundleRelease
+
       - name: Deploy to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
