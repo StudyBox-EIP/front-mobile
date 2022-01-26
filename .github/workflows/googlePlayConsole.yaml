@@ -31,7 +31,9 @@ jobs:
         run: npm install
 
       - name: Change wrapper permissions
-        run: chmod +x ./android/gradlew
+        working-directory: ./StudyBox/android
+        run: chmod +x ./gradlew
 
       - name: Build Project
-        run: ./android/gradlew assemble
+        working-directory: ./StudyBox/android
+        run: ./gradlew assemble
