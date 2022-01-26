@@ -1,6 +1,9 @@
 name: Google Play Console
 
 on:
+  push:
+    branches:
+      - Google-Play-Console-CI/CD
   workflow_dispatch:
 
 jobs:
