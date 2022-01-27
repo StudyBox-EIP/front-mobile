@@ -3,6 +3,8 @@ name: Google Play Console Prod
 on:
   release:
   workflow_dispatch:
+    branches:
+      - master
 
 jobs:
   build:
