@@ -43,8 +43,10 @@ jobs:
         working-directory: ./StudyBox/android
         run: ./gradlew assemble
 
-  publishDevelop:
+  publish:
     runs-on: ubuntu-latest
+
+    needs: build
 
     defaults:
       run:
