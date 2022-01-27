@@ -1,30 +1,16 @@
 import React, {Component} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {resetPageHistory} from '../elements/controllers/navigation';
-
-const getData = async (key: string): Promise<boolean> => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
-      console.log(value);
-      return true;
-    } else {
-      return false;
-    }
-  } catch (e) {
-    // error reading value
-  }
-  return false;
-};
+import {getData} from '../api/userInfo';
 
 export class SplashScreen extends Component<Props> {
   componentDidMount() {
     setTimeout(
       () =>
-        getData('token').then(res => {
-          if (res === true) {
+        getData('userInfo').then(res => {
+          if (res !== undefined && res !== null) {
+            console.log(res);
             resetPageHistory(this.props.navigation, 'HomePageScreen');
           } else {
             resetPageHistory(this.props.navigation, 'AuthScreen');

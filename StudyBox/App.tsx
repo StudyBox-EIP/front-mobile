@@ -22,6 +22,7 @@ import {SignUpScreen} from './src/components/pages/connection/register/register'
 import {HomePageScreen} from './src/components/pages/homepage/homepage';
 import {SplashScreen} from './src/components/pages/splashScreen';
 import {SettingsScreen} from './src/components/pages/settings/settings';
+import {FriendsView} from './src/components/pages/settings/friends/friends';
 
 const NavigationLoader = () => {
   const Stack = createStackNavigator();
@@ -71,6 +72,11 @@ const NavigationLoader = () => {
           name="SettingsPageScreen"
           options={{headerShown: false}}
           component={SettingsScreen}
+        />
+        <Stack.Screen
+          name="FriendsView"
+          component={FriendsView}
+          options={{title: 'Amis'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
