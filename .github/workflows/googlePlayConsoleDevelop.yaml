@@ -1,0 +1,93 @@
+name: Google Play Console Dev
+
+on:
+  push:
+    branches:
+      - Google-Play-Console-CI/CD
+      - develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./StudyBox
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Installing Node version 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+    
+      - name: Installing Dependencies
+        run: npm install
+
+      - name: Change wrapper permissions
+        working-directory: ./StudyBox/android
+        run: chmod +x ./gradlew
+
+      - name: Run Tests
+        working-directory: ./StudyBox/android
+        run: ./gradlew test
+
+      - name: Build Project
+        working-directory: ./StudyBox/android
+        run: ./gradlew assemble
+
+  publish:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    defaults:
+      run:
+        working-directory: ./StudyBox
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Installing Node version 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+    
+      - name: Installing Dependencies
+        run: npm install
+
+      - name: Change wrapper permissions
+        working-directory: ./StudyBox/android
+        run: chmod +x ./gradlew
+
+      - name: Run Tests
+        working-directory: ./StudyBox/android
+        run: ./gradlew test
+
+      - name: Build Project
+        working-directory: ./StudyBox/android
+        run: ./gradlew build
+
+      - name: Build Release AAB
+        working-directory: ./StudyBox/android
+        run: ./gradlew bundleRelease
+
+      - name: Deploy to Play Store
+        uses: r0adkll/upload-google-play@v1.0.15
+        with:
+          serviceAccountJsonPlainText: ${{secrets.SERVICE_ACCOUNT}}
+          packageName: com.StudyBox
+          releaseFiles: StudyBox/android/app/build/outputs/bundle/release/app-release.aab
+          track: internal
