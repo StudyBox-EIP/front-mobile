@@ -3,7 +3,6 @@ name: Google Play Console Dev
 on:
   push:
     branches:
-      - Google-Play-Console-CI/CD
       - develop
   workflow_dispatch:
 
