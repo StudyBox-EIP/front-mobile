@@ -2,8 +2,8 @@ name: Project Linter
 
 on:
   push:
+    branches: ['!master', '!develop']
   pull_request:
-  release:
 
 jobs:
   lint:
@@ -18,10 +18,10 @@ jobs:
       - name: Retrieving Latest Code
         uses: actions/checkout@v2
 
-      - name: Installing Node version 14
+      - name: Installing Node version 16
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 16
 
       - name: Installing Dependencies
         run: npm install
