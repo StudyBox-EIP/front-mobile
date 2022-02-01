@@ -9,7 +9,7 @@ on:
 jobs:
   buildAndPublish:
     runs-on: ubuntu-latest
-    name: Build and Publish Google Play App Internal Testing
+    name: Build & Publish Google Play Internal Testing
 
     defaults:
       run:
@@ -39,7 +39,7 @@ jobs:
         working-directory: ./StudyBox/android
         run: ./gradlew test
 
-      - name: Build Project
+      - name: Assemble Project
         working-directory: ./StudyBox/android
         run: ./gradlew assemble
 
