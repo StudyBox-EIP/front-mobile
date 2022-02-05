@@ -68,20 +68,20 @@ jobs:
 
       - name: Assemble Project
         working-directory: ./StudyBox/android
-        run: ./gradlew assemble
+        run: ./gradlew assembleDebug
 
       - name: Build Project
         working-directory: ./StudyBox/android
-        run: ./gradlew build
+        run: ./gradlew buildDebug
 
-      - name: Build Release AAB
+      - name: Build Debug AAB
         working-directory: ./StudyBox/android
-        run: ./gradlew bundleRelease
+        run: ./gradlew bundleDebug
 
       - name: Deploy to Play Store
         uses: r0adkll/upload-google-play@v1.0.15
         with:
           serviceAccountJsonPlainText: ${{secrets.SERVICE_ACCOUNT}}
           packageName: com.StudyBox
-          releaseFiles: StudyBox/android/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: StudyBox/android/app/build/outputs/bundle/debug/app-debug.aab
           track: internal
