@@ -68,11 +68,11 @@ jobs:
 
       - name: Assemble Project
         working-directory: ./StudyBox/android
-        run: ./gradlew assembleDebug
+        run: ./gradlew assemble
 
       - name: Build Project
         working-directory: ./StudyBox/android
-        run: ./gradlew buildDebug
+        run: ./gradlew build
 
       - name: Build Release AAB
         working-directory: ./StudyBox/android
