@@ -72,7 +72,7 @@ jobs:
 
       - name: Build Project
         working-directory: ./StudyBox/android
-        run: ./gradlew buildDebug
+        run: ./gradlew buildRelease
 
       - name: Build Debug AAB
         working-directory: ./StudyBox/android
