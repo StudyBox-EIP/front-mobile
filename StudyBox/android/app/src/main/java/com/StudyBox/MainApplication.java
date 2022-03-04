@@ -1,4 +1,4 @@
-package com.studybox;
+package com.StudyBox;
 
 import android.app.Application;
 import android.content.Context;

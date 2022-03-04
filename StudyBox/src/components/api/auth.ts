@@ -1,16 +1,9 @@
 import axios, {AxiosError} from 'axios';
 import {Alert} from 'react-native';
-import {API} from '../../../config';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const storeData = async (key: string, value: string) => {
-  console.log('storing data');
-  try {
-    await AsyncStorage.setItem(key, value);
-  } catch (e) {
-    // saving error
-  }
-};
+import {API} from '../../../config';
+import {resetPageHistory} from '../elements/controllers/navigation';
+import {storeData, removeData} from './userInfo';
 
 export async function login(
   navigation: any,
@@ -21,9 +14,8 @@ export async function login(
       email: data.email,
       password: data.password,
     });
-    console.log(auth.data);
-    storeData('token', auth.data.token);
-    navigation.navigate('HomePageScreen');
+    storeData('userInfo', JSON.stringify(auth.data));
+    resetPageHistory(navigation, 'HomePageScreen');
     return auth;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -45,16 +37,13 @@ export async function register(
   data: any,
 ): Promise<object | AxiosError | Boolean> {
   try {
-    console.log(data);
     const auth = await axios.post(API.WEB_ROOT + '/auth/register', {
       first_name: data.first_name,
       last_name: data.last_name,
       email: data.email,
       password: data.password,
     });
-    console.log(auth.data);
-    storeData('token', auth.data.token);
-    navigation.navigate('HomePageScreen');
+    navigation.navigate('AuthScreen');
     return auth;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -67,4 +56,10 @@ export async function register(
     }
   }
   return false;
+}
+
+export async function disconnect(navigation: any) {
+  if ((await removeData('userInfo')) === true) {
+    navigation.navigate('AuthScreen');
+  }
 }

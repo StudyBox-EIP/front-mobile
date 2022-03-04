@@ -1,37 +1,43 @@
 import React, {Component} from 'react';
-import {View, Image} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {View, Image, StyleSheet} from 'react-native';
 
-const getData = async (key: string): Promise<boolean> => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
-      console.log(value);
-      return true;
-    } else {
-      return false;
-    }
-  } catch (e) {
-    // error reading value
-  }
-  return false;
-};
+import {resetPageHistory} from '../elements/controllers/navigation';
+import {getData} from '../api/userInfo';
 
 export class SplashScreen extends Component<Props> {
   componentDidMount() {
-    getData('token').then(res => {
-      if (res === true) {
-        this.props.navigation.navigate('HomePageScreen');
-      } else {
-        this.props.navigation.navigate('AuthScreen');
-      }
-    });
+    setTimeout(
+      () =>
+        getData('userInfo').then(res => {
+          if (res !== undefined && res !== null) {
+            console.log(res);
+            resetPageHistory(this.props.navigation, 'HomePageScreen');
+          } else {
+            resetPageHistory(this.props.navigation, 'AuthScreen');
+          }
+        }),
+      800,
+    );
   }
+
+  splashView = StyleSheet.create({
+    base: {
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
 
   render() {
     return (
-      <View>
-        <Image source={require('../../assets/studybox-logo.png')} />
+      <View style={this.splashView.base}>
+        <Image
+          width={250}
+          height={250}
+          resizeMode="center"
+          source={require('../../assets/studybox-logo.png')}
+        />
       </View>
     );
   }

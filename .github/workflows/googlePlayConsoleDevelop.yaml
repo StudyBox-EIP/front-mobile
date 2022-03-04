@@ -1,0 +1,87 @@
+name: Google Play Console Dev
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  lintAndTest:
+    name: ESLint Linter & Jest Testing Policy
+    runs-on: ubuntu-20.04
+
+    defaults:
+      run:
+        working-directory: ./StudyBox
+
+    steps:
+      - name: Retrieving Latest Code
+        uses: actions/checkout@v2
+
+      - name: Installing Node version 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Installing Dependencies
+        run: npm install
+
+      - name: Executing Linter Scan
+        run: npm run lint
+
+      - name: Executing Jest Tests
+        run: npm run test
+
+  buildAndPublish:
+    name: Build & Publish Google Play Internal Testing
+    runs-on: ubuntu-latest
+
+    needs: lintAndTest
+
+    defaults:
+      run:
+        working-directory: ./StudyBox
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Installing Node version 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+    
+      - name: Installing Dependencies
+        run: npm install
+
+      - name: Change wrapper permissions
+        working-directory: ./StudyBox/android
+        run: chmod +x ./gradlew
+
+      - name: Run Tests
+        working-directory: ./StudyBox/android
+        run: ./gradlew test
+
+      - name: Assemble Project
+        working-directory: ./StudyBox/android
+        run: ./gradlew assemble
+
+      - name: Build Project
+        working-directory: ./StudyBox/android
+        run: ./gradlew build
+
+      - name: Build Release AAB
+        working-directory: ./StudyBox/android
+        run: ./gradlew bundleRelease
+
+      - name: Deploy to Play Store
+        uses: r0adkll/upload-google-play@v1.0.15
+        with:
+          serviceAccountJsonPlainText: ${{secrets.SERVICE_ACCOUNT}}
+          packageName: com.StudyBox
+          releaseFiles: StudyBox/android/app/build/outputs/bundle/release/app-release.aab
+          track: internal

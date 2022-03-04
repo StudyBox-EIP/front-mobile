@@ -1,4 +1,4 @@
-package com.studybox;
+package com.StudyBox;
 
 import com.facebook.react.ReactActivity;
 

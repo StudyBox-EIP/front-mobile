@@ -120,6 +120,11 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+def getVersionCode(offset = 0) {
+    def formattedDate = new Date().format('yyMMddHH')
+    return formattedDate.toInteger() + offset
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -131,11 +136,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.studybox"
+        applicationId "com.StudyBox"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        // versionCode 1
-        // versionName "1.0",
+        versionCode getVersionCode(0)
+        versionName "v.${getVersionCode(0)}"
         manifestPlaceholders = [appAuthRedirectScheme: 'com.googleusercontent.apps.128451461186-2r9ec6b1jmlja0h77g211tcvddfu8n5t']
     }
     splits {
@@ -162,6 +167,7 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
+            shrinkResources false
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
