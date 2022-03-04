@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {BottomHomePageController} from '../../elements/controllers/homePageController';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { BottomHomePageController } from '../../elements/controllers/homePageController';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -62,7 +62,7 @@ const Card = (props: any) => {
       <Image
         style={cardStyle.imageCover}
         resizeMode="cover"
-        source={require('../../../assets/Places/Desktop1.jpg')}
+        source={props.image === undefined ? require('../../../assets/img/NoPicture.png') : { uri: props.image }}
       />
     </SafeAreaView>
   );
@@ -76,9 +76,9 @@ export class HomePageScreen extends React.Component<Props> {
           style={HomePageScreenStyle.cardContainer}
           contentContainerStyle={HomePageScreenStyle.cardContentContainer}
           showsVerticalScrollIndicator={false}>
-          <Card title="1ère vignette" imageSource="IMAGE URL" />
-          <Card title="2ème vignette" imageSource="IMAGE URL" />
-          <Card title="3ème vignette" imageSource="IMAGE URL" />
+          <Card title="1ère vignette" image="https://pbs.twimg.com/media/FLvY4QWaIAEJUAV.jpg" />
+          <Card title="2ème vignette" />
+          <Card title="3ème vignette" />
         </ScrollView>
         <BottomHomePageController navigation={this.props.navigation} />
       </View>
