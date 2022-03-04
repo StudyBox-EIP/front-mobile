@@ -121,7 +121,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 def getVersionCode(offset = 0) {
-    def formattedDate = new Date().format('yyMMddHH')
+    def formattedDate = new Date().format('MMddHHmm')
     return formattedDate.toInteger() + offset
 }
 
