@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomHomePageController } from '../../elements/controllers/homePageController';
@@ -11,6 +11,7 @@ const HomePageScreenStyle = StyleSheet.create({
   },
   cardContainer: {
     width: '100%',
+    marginBottom: '20%',
   },
   cardContentContainer: {
     alignItems: 'center',
@@ -56,29 +57,51 @@ const cardStyle = StyleSheet.create({
 
 const Card = (props: any) => {
   return (
-    <SafeAreaView style={cardStyle.container}>
+    <Pressable
+      style={cardStyle.container}
+      onPress={() => {
+        console.log('Join: ' + props.title);
+        props.navigation.navigate('RoomScreen', { name: props.title });
+      }}>
       <Text style={cardStyle.title}>{props.title}</Text>
-      {/* <Button title={props.title} onPress={() => {}}></Button> */}
       <Image
         style={cardStyle.imageCover}
         resizeMode="cover"
-        source={props.image === undefined ? require('../../../assets/img/NoPicture.png') : { uri: props.image }}
+        source={
+          props.image === undefined
+            ? require('../../../assets/img/NoPicture.png')
+            : { uri: props.image }
+        }
       />
-    </SafeAreaView>
+    </Pressable>
   );
 };
 
 export class HomePageScreen extends React.Component<Props> {
   render() {
+    const rooms: Array<Any> = [
+      { title: 'A', image: 'https://pbs.twimg.com/media/FLvY4QWaIAEJUAV.jpg' },
+      { title: 'B', image: undefined },
+      { title: 'C', image: undefined },
+      { title: 'C', image: undefined },
+    ];
+
     return (
       <View style={HomePageScreenStyle.base}>
         <ScrollView
           style={HomePageScreenStyle.cardContainer}
           contentContainerStyle={HomePageScreenStyle.cardContentContainer}
           showsVerticalScrollIndicator={false}>
-          <Card title="1ère vignette" image="https://pbs.twimg.com/media/FLvY4QWaIAEJUAV.jpg" />
-          <Card title="2ème vignette" />
-          <Card title="3ème vignette" />
+          {rooms.map((val, key) => {
+            return (
+              <Card
+                key={key}
+                title={val.title}
+                image={val.image}
+                navigation={this.props.navigation}
+              />
+            );
+          })}
         </ScrollView>
         <BottomHomePageController navigation={this.props.navigation} />
       </View>
