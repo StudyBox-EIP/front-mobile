@@ -2,7 +2,6 @@ name: Testing Policy
 
 on:
   push:
-    branches: ['!master', '!develop']
   pull_request:
 
 jobs:
