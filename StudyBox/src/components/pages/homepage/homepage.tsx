@@ -1,7 +1,6 @@
 import React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
 import {getPictureObject} from '../../../tools/images';
 
