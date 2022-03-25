@@ -1,8 +1,9 @@
 import React from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { BottomHomePageController } from '../../elements/controllers/homePageController';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {BottomHomePageController} from '../../elements/controllers/homePageController';
+import {getPictureObject} from '../../../tools/images';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -56,23 +57,22 @@ const cardStyle = StyleSheet.create({
 });
 
 const Card = (props: any) => {
+  const picture = getPictureObject(props.image);
   return (
     <Pressable
       style={cardStyle.container}
       onPress={() => {
         console.log('Join: ' + props.title);
-        props.navigation.navigate('RoomScreen', { name: props.title });
+        props.navigation.navigate('RoomScreen', {
+          name: props.title,
+          desc: props.desc,
+          adress: props.adress,
+          score: props.score,
+          pic: picture,
+        });
       }}>
       <Text style={cardStyle.title}>{props.title}</Text>
-      <Image
-        style={cardStyle.imageCover}
-        resizeMode="cover"
-        source={
-          props.image === undefined
-            ? require('../../../assets/img/NoPicture.png')
-            : { uri: props.image }
-        }
-      />
+      <Image style={cardStyle.imageCover} resizeMode="cover" source={picture} />
     </Pressable>
   );
 };
@@ -80,10 +80,36 @@ const Card = (props: any) => {
 export class HomePageScreen extends React.Component<Props> {
   render() {
     const rooms: Array<Any> = [
-      { title: 'A', image: 'https://pbs.twimg.com/media/FLvY4QWaIAEJUAV.jpg' },
-      { title: 'B', image: undefined },
-      { title: 'C', image: undefined },
-      { title: 'C', image: undefined },
+      {
+        title: 'Université Bordeaux',
+        desc: 'Hello this is the place',
+        adress: '25 rue Victor Hugo, Bordeaux',
+        score: 3.4,
+        image:
+          'https://i.f1g.fr/media/eidos/805x453_crop/2020/02/05/XVMfe599c10-3219-11ea-84ed-e882884db677.jpg',
+      },
+      {
+        title: 'Uni',
+        desc: 'Hello this is the place',
+        adress: '25 rue Victor Hugo, Bordeaux',
+        score: 3.1,
+        image: undefined,
+      },
+      {
+        title:
+          'Université Bordeaux Montesquieux Université Bordeaux Montesquieux',
+        desc: 'Hello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the place',
+        adress: '25 rue Victor Hugo, Bordeaux',
+        score: 5,
+        image: 'https://pbs.twimg.com/media/FLvY4QWaIAEJUAV.jpg',
+      },
+      {
+        title: 'C',
+        desc: 'Hello this is the place',
+        adress: '25 rue Victor Hugo, Bordeaux',
+        score: 0,
+        image: undefined,
+      },
     ];
 
     return (
@@ -97,6 +123,9 @@ export class HomePageScreen extends React.Component<Props> {
               <Card
                 key={key}
                 title={val.title}
+                desc={val.desc}
+                adress={val.adress}
+                score={val.score}
                 image={val.image}
                 navigation={this.props.navigation}
               />
