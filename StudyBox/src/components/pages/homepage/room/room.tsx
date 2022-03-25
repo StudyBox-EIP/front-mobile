@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import React from 'react';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import BasicButton from '../../../elements/button';
