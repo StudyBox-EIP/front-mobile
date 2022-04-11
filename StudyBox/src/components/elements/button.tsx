@@ -19,11 +19,9 @@ function BasicButton(props: any) {
   });
 
   return (
-    <View style={style.container}>
-      <TouchableOpacity onPress={props.callback}>
-        <Text style={style.text}>{props.txt}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={style.container} onPress={props.callback}>
+      <Text style={style.text}>{props.txt}</Text>
+    </TouchableOpacity>
   );
 }
 
