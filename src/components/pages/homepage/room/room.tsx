@@ -1,5 +1,7 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import getDirections from 'react-native-google-maps-directions';
+import Geolocation from 'react-native-geolocation-service';
 import BasicButton from '../../../elements/button';
 
 const scoreMax = 5;
@@ -77,9 +79,34 @@ const BasicInfo = (props: any) => {
 };
 
 export class RoomScreen extends React.Component<Props> {
+  goToRoom = () => {
+    Geolocation.getCurrentPosition(
+      async info => {
+        const data = {
+          source: {
+            latitude: info.coords.latitude,
+            longitude: info.coords.longitude,
+          },
+          destination: {
+            latitude: this.props.route.params.latitude,
+            longitude: this.props.route.params.longitude,
+          },
+          params: [
+            {
+              key: 'travelmode',
+              value: 'walking',
+            },
+          ],
+        };
+        getDirections(data);
+      },
+      (e: any) => console.error(e),
+      {enableHighAccuracy: true},
+    );
+  };
+
   render(): React.ReactNode {
-    let props: Any = this.props.route.params;
-    console.log(props);
+    let props: any = this.props.route.params;
     return (
       <View style={RoomScreenStyle.base}>
         <Image style={RoomScreenStyle.imageCover} source={props.pic} />
@@ -97,6 +124,11 @@ export class RoomScreen extends React.Component<Props> {
           style={RoomScreenStyle.button}
           callback={undefined}
           txt="Réserver"
+        />
+        <BasicButton
+          style={RoomScreenStyle.button}
+          callback={this.goToRoom}
+          txt="En route !"
         />
       </View>
     );

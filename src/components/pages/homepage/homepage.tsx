@@ -86,12 +86,14 @@ const Card = (props: any) => {
     <Pressable
       style={cardStyle.container}
       onPress={() => {
-        console.log('Join: ' + props.title);
+        console.info('Join: ' + props.title);
         props.navigation.navigate('RoomScreen', {
           name: props.title,
           desc: props.desc,
           adress: props.adress,
           score: props.score,
+          latitude: props.latitude,
+          longitude: props.longitude,
           pic: picture,
         });
       }}>
@@ -118,6 +120,8 @@ export class HomePageScreen extends React.Component<Props> {
         desc: remoteRoom.desc,
         address: remoteRoom.address,
         score: remoteRoom.average,
+        latitude: remoteRoom.latitude,
+        longitude: remoteRoom.longitude,
         image: undefined,
       });
     }
@@ -127,7 +131,6 @@ export class HomePageScreen extends React.Component<Props> {
   async componentDidMount() {
     Geolocation.getCurrentPosition(
       async info => {
-        console.log(info);
         this.setState({latitude: info.coords.latitude});
         this.setState({longitude: info.coords.longitude});
         const remoteRooms = await getRoomsNearby(
@@ -149,10 +152,9 @@ export class HomePageScreen extends React.Component<Props> {
           style={HomePageScreenStyle.textInput}
           onEndEditing={async v => {
             contextFilter = v.nativeEvent.text;
-            console.log('Search : ' + contextFilter);
+            console.info('Search : ' + contextFilter);
             const filteredRooms = await getRooms(contextFilter);
             this.applyRoomState(filteredRooms);
-            console.info(filteredRooms);
           }}
         />
         <ScrollView
@@ -168,6 +170,8 @@ export class HomePageScreen extends React.Component<Props> {
                 adress={val.address}
                 score={val.score}
                 image={val.image}
+                latitude={val.latitude}
+                longitude={val.longitude}
                 navigation={this.props.navigation}
               />
             );
