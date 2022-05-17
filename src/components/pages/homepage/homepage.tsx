@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
 import {getPictureObject} from '../../../tools/images';
+import {getRooms} from '../../api/rooms';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -100,6 +94,15 @@ const Card = (props: any) => {
 };
 
 export class HomePageScreen extends React.Component<Props> {
+  async componentDidMount() {
+    console.log('loaded');
+    const rooms = await getRooms();
+
+    console.info(rooms);
+    Alert.alert(JSON.stringify(rooms));
+    // new Alert.alert(rooms);
+  }
+
   render() {
     const rooms: Array<Any> = [
       {
