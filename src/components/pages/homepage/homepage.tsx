@@ -1,9 +1,17 @@
 import React from 'react';
-import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
 import {getPictureObject} from '../../../tools/images';
-import {getRooms} from '../../api/rooms';
+import {getRooms, getRoomsNearby} from '../../api/rooms';
+import Geolocation from 'react-native-geolocation-service';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -94,78 +102,75 @@ const Card = (props: any) => {
 };
 
 export class HomePageScreen extends React.Component<Props> {
-  async componentDidMount() {
-    console.log('loaded');
-    const rooms = await getRooms();
+  state = {
+    nearbyRooms: [], // Storing all nearby Rooms from current Device
+    latitude: 0,
+    longitude: 0,
+  };
 
-    console.info(rooms);
-    Alert.alert(JSON.stringify(rooms));
-    // new Alert.alert(rooms);
+  applyRoomState(remoteRooms: Array<any>) {
+    const newRooms = [];
+
+    for (const remoteRoom of remoteRooms) {
+      newRooms.push({
+        id: remoteRoom.id,
+        name: remoteRoom.name,
+        desc: remoteRoom.desc,
+        address: remoteRoom.address,
+        score: remoteRoom.average,
+        image: undefined,
+      });
+    }
+    this.setState({nearbyRooms: newRooms});
+  }
+
+  async componentDidMount() {
+    Geolocation.getCurrentPosition(
+      async info => {
+        console.log(info);
+        this.setState({latitude: info.coords.latitude});
+        this.setState({longitude: info.coords.longitude});
+        const remoteRooms = await getRoomsNearby(
+          this.state.latitude,
+          this.state.longitude,
+        );
+        this.applyRoomState(remoteRooms);
+      },
+      (e: any) => console.error(e),
+      {enableHighAccuracy: true},
+    );
   }
 
   render() {
-    const rooms: Array<Any> = [
-      {
-        title: 'Université Bordeaux',
-        desc: 'Hello this is the place',
-        adress: '25 rue Victor Hugo, Bordeaux',
-        score: 3.4,
-        image:
-          'https://i.f1g.fr/media/eidos/805x453_crop/2020/02/05/XVMfe599c10-3219-11ea-84ed-e882884db677.jpg',
-      },
-      {
-        title: 'Uni',
-        desc: 'Hello this is the place',
-        adress: '25 rue Victor Hugo, Bordeaux',
-        score: 3.1,
-        image: undefined,
-      },
-      {
-        title:
-          'Université Bordeaux Montesquieux Université Bordeaux Montesquieux',
-        desc: 'Hello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the placeHello this is the place',
-        adress: '25 rue Victor Hugo, Bordeaux',
-        score: 5,
-        image: 'https://pbs.twimg.com/media/FLvY4QWaIAEJUAV.jpg',
-      },
-      {
-        title: 'C',
-        desc: 'Hello this is the place',
-        adress: '25 rue Victor Hugo, Bordeaux',
-        score: 0,
-        image: undefined,
-      },
-    ];
-    let currentRooms: Array<Any> = rooms;
     let contextFilter: String = '';
-
     return (
       <View style={HomePageScreenStyle.base}>
         <TextInput
           style={HomePageScreenStyle.textInput}
-          onEndEditing={v => {
+          onEndEditing={async v => {
             contextFilter = v.nativeEvent.text;
             console.log('Search : ' + contextFilter);
+            const filteredRooms = await getRooms(contextFilter);
+            this.applyRoomState(filteredRooms);
+            console.info(filteredRooms);
           }}
         />
         <ScrollView
           style={HomePageScreenStyle.cardContainer}
           contentContainerStyle={HomePageScreenStyle.cardContentContainer}
           showsVerticalScrollIndicator={false}>
-          {currentRooms.map((val, key) => {
-            if (val.title.includes(contextFilter)) {
-              return (
-                <Card
-                  key={key}
-                  title={val.title}
-                  desc={val.desc}
-                  adress={val.adress}
-                  score={val.score}
-                  image={val.image}
-                  navigation={this.props.navigation}
-                />
-              );
-            }
+          {this.state.nearbyRooms.map((val: any, key) => {
+            return (
+              <Card
+                key={key}
+                title={val.name}
+                desc={val.desc}
+                adress={val.address}
+                score={val.score}
+                image={val.image}
+                navigation={this.props.navigation}
+              />
+            );
           })}
         </ScrollView>
         <BottomHomePageController navigation={this.props.navigation} />
