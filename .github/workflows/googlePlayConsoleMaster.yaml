@@ -10,10 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./StudyBox
-
     steps:
       - uses: actions/checkout@v1
 
@@ -31,15 +27,15 @@ jobs:
         run: npm install
 
       - name: Change wrapper permissions
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: chmod +x ./gradlew
 
       - name: Run Tests
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew test
 
       - name: Build Project
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew assemble
 
 
@@ -48,10 +44,6 @@ jobs:
 
     needs: build
 
-    defaults:
-      run:
-        working-directory: ./StudyBox
-
     steps:
       - uses: actions/checkout@v1
 
@@ -69,23 +61,23 @@ jobs:
         run: npm install
 
       - name: Change wrapper permissions
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: chmod +x ./gradlew
 
       - name: Run Tests
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew test
 
       - name: Assemble Project
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew assembleRelease
 
       - name: Build Project
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew buildRelease
 
       - name: Build Release AAB
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew bundleRelease
 
       - name: Deploy to Play Store
@@ -93,5 +85,5 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{secrets.SERVICE_ACCOUNT}}
           packageName: com.StudyBox
-          releaseFiles: StudyBox/android/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           track: production
