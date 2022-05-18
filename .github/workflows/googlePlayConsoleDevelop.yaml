@@ -10,10 +10,6 @@ jobs:
     name: ESLint Linter & Jest Testing Policy
     runs-on: ubuntu-20.04
 
-    defaults:
-      run:
-        working-directory: ./StudyBox
-
     steps:
       - name: Retrieving Latest Code
         uses: actions/checkout@v2
@@ -38,10 +34,6 @@ jobs:
 
     needs: lintAndTest
 
-    defaults:
-      run:
-        working-directory: ./StudyBox
-
     steps:
       - uses: actions/checkout@v1
 
@@ -59,23 +51,23 @@ jobs:
         run: npm install
 
       - name: Change wrapper permissions
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: chmod +x ./gradlew
 
       - name: Run Tests
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew test
 
       - name: Assemble Project
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew assemble
 
       - name: Build Project
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew build
 
       - name: Build Release AAB
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew bundleRelease
 
       - name: Deploy to Play Store
@@ -83,5 +75,5 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{secrets.SERVICE_ACCOUNT}}
           packageName: com.StudyBox
-          releaseFiles: StudyBox/android/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           track: internal
