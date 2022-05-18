@@ -8,10 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./StudyBox
-
     steps:
       - uses: actions/checkout@v1
 
@@ -29,13 +25,13 @@ jobs:
         run: npm install
 
       - name: Change wrapper permissions
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: chmod +x ./gradlew
 
       - name: Run Tests
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew test
 
       - name: Build Project
-        working-directory: ./StudyBox/android
+        working-directory: ./android
         run: ./gradlew assemble
