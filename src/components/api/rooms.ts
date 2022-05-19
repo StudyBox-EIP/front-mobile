@@ -14,7 +14,6 @@ export async function getRooms(roomName: String = '') {
     if (roomName !== '') {
       route += `?name_substr=${roomName}`;
     }
-    console.log(route);
 
     const res = await axios.get(route, {
       headers: {
@@ -36,7 +35,6 @@ export async function getRoomsNearby(
   radius: number = 10,
 ) {
   try {
-    console.log(latitude, longitude);
     const rawUserInfo = await getData('userInfo');
     if (rawUserInfo === undefined || rawUserInfo === null) {
       throw 'userInfo not found';
