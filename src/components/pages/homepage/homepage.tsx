@@ -86,7 +86,6 @@ const Card = (props: any) => {
     <Pressable
       style={cardStyle.container}
       onPress={() => {
-        console.info('Join: ' + props.title);
         props.navigation.navigate('RoomScreen', {
           name: props.title,
           desc: props.desc,
@@ -150,9 +149,9 @@ export class HomePageScreen extends React.Component<Props> {
       <View style={HomePageScreenStyle.base}>
         <TextInput
           style={HomePageScreenStyle.textInput}
+          placeholder="Chercher une salle"
           onEndEditing={async v => {
             contextFilter = v.nativeEvent.text;
-            console.info('Search : ' + contextFilter);
             const filteredRooms = await getRooms(contextFilter);
             this.applyRoomState(filteredRooms);
           }}
