@@ -34,10 +34,10 @@ jobs:
 
       - name: Build Project
         working-directory: ./android
-        run: ./gradlew assemble
+        run: ./gradlew assembleRelease
 
       - name: Saving Debug Apk as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: StudyBox-Dev-Apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
