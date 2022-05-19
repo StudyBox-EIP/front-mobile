@@ -1,3 +1,6 @@
 export const API = {
-  WEB_ROOT: 'https://dev.api.studybox.fr',
+  WEB_ROOT:
+    __DEV__ === true
+      ? 'https://dev.api.studybox.fr'
+      : 'https://api.studybox.fr',
 };
