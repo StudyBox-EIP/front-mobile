@@ -10,7 +10,7 @@ export class SplashScreen extends Component<Props> {
       () =>
         getData('userInfo').then(res => {
           if (res !== undefined && res !== null) {
-            console.log(res);
+            console.info(res);
             resetPageHistory(this.props.navigation, 'HomePageScreen');
           } else {
             resetPageHistory(this.props.navigation, 'AuthScreen');
