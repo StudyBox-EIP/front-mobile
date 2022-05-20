@@ -6,6 +6,7 @@ import {
   Text,
   View,
   TextInput,
+  PermissionsAndroid,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
@@ -128,19 +129,45 @@ export class HomePageScreen extends React.Component<Props> {
   }
 
   async componentDidMount() {
-    Geolocation.getCurrentPosition(
-      async info => {
-        this.setState({latitude: info.coords.latitude});
-        this.setState({longitude: info.coords.longitude});
-        const remoteRooms = await getRoomsNearby(
-          this.state.latitude,
-          this.state.longitude,
-        );
-        this.applyRoomState(remoteRooms);
-      },
-      (e: any) => console.error(e),
-      {enableHighAccuracy: true},
-    );
+    let havePermission: Boolean =
+      (await PermissionsAndroid.check(
+        'android.permission.ACCESS_COARSE_LOCATION',
+      )) === true &&
+      (await PermissionsAndroid.check(
+        'android.permission.ACCESS_FINE_LOCATION',
+      )) === true;
+
+    if (havePermission === false) {
+      const granted = await PermissionsAndroid.requestMultiple([
+        'android.permission.ACCESS_COARSE_LOCATION',
+        'android.permission.ACCESS_FINE_LOCATION',
+      ]);
+      if (
+        granted['android.permission.ACCESS_COARSE_LOCATION'] === 'granted' &&
+        granted['android.permission.ACCESS_FINE_LOCATION'] === 'granted'
+      ) {
+        havePermission = true;
+      }
+    }
+
+    if (havePermission) {
+      Geolocation.getCurrentPosition(
+        async info => {
+          this.setState({latitude: info.coords.latitude});
+          this.setState({longitude: info.coords.longitude});
+          const remoteRooms = await getRoomsNearby(
+            this.state.latitude,
+            this.state.longitude,
+          );
+          this.applyRoomState(remoteRooms);
+        },
+        (e: any) => console.error(e),
+        {enableHighAccuracy: true},
+      );
+    } else {
+      const defaultRooms = await getRooms();
+      this.applyRoomState(defaultRooms);
+    }
   }
 
   render() {
