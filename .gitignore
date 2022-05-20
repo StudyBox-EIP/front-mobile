@@ -60,3 +60,6 @@ buck-out/
 
 # VisualCode configuration folder
 .vscode/
+
+# Env File
+.env
