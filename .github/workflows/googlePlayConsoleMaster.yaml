@@ -22,7 +22,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-    
+
+      - name: Define API URL
+        run: echo API_URL=https://api.studybox.fr > .env
+
       - name: Installing Dependencies
         run: npm install
 
@@ -56,7 +59,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-    
+
+      - name: Define API URL
+        run: echo API_URL=https://api.studybox.fr > .env
+
       - name: Installing Dependencies
         run: npm install
 
