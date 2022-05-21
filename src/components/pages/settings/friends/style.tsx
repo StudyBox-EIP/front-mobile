@@ -47,8 +47,7 @@ export const addButton = StyleSheet.create({
     height: '100%',
     borderRadius: 100,
   },
-})
-
+});
 
 export const card = StyleSheet.create({
   text: {
