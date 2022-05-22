@@ -10,13 +10,14 @@ import {
   FlatList,
 } from 'react-native';
 import {
+  answerTeamRequest,
   createTeam,
   deleteTeam,
   getInboundTeamRequest,
-  getOutboundTeamRequest,
   getTeams,
 } from '../../../api/teams';
 import {getData} from '../../../api/userInfo';
+import {card, friendViewStyle} from '../friends/style';
 import {imageButton, modal, team} from './style';
 
 export class TeamsView extends React.Component {
@@ -25,6 +26,7 @@ export class TeamsView extends React.Component {
     modalState: false,
     modalText: '',
     teamsList: [],
+    inboundRequests: [],
   };
 
   componentDidMount = async () => {
@@ -34,8 +36,6 @@ export class TeamsView extends React.Component {
       const userInfo = JSON.parse(rawUserInfo);
       this.setState({userInfo: userInfo});
     }
-
-    console.log(await getInboundTeamRequest(), await getOutboundTeamRequest());
     this.refreshTeams();
   };
 
@@ -48,6 +48,7 @@ export class TeamsView extends React.Component {
       }
       this.setState({teamsList: newTeams});
     }
+    this.setState({inboundRequests: await getInboundTeamRequest()});
   }
 
   createTeamCard = () => {
@@ -83,9 +84,43 @@ export class TeamsView extends React.Component {
     );
   };
 
+  Request = (item: any) => {
+    item = item.item;
+    return (
+      <View style={friendViewStyle.friendView}>
+        <Text style={card.text}>
+          {item.sender.first_name} {item.sender.last_name}: {item.team.name}
+        </Text>
+        <TouchableOpacity
+          style={card.touchableopacity}
+          onPress={async () => {
+            await answerTeamRequest(item.id, true);
+            this.refreshTeams();
+          }}>
+          <Image
+            style={imageButton.round}
+            source={require('../../../../assets/img/checked.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={card.touchableopacity}
+          onPress={async () => {
+            await answerTeamRequest(item.id, false);
+            this.refreshTeams();
+          }}>
+          <Image
+            style={imageButton.square}
+            source={require('../../../../assets/img/trash.png')}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   teamsModal = () => {
     return (
       <Modal
+        animationType="fade"
         visible={this.state.modalState}
         transparent={true}
         onRequestClose={() =>
@@ -122,7 +157,7 @@ export class TeamsView extends React.Component {
     return (
       <TouchableOpacity
         style={team.container}
-        onPress={()=> {
+        onPress={() => {
           this.props.navigation.navigate('TeamPage', {
             team: item,
           });
@@ -157,6 +192,11 @@ export class TeamsView extends React.Component {
     return (
       <View>
         <this.Teams />
+        <FlatList
+          data={this.state.inboundRequests}
+          renderItem={this.Request}
+          keyExtractor={item => item.id}
+        />
         <this.createTeamCard />
         <this.teamsModal />
       </View>
