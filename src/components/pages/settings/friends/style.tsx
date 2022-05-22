@@ -1,8 +1,5 @@
 import {StyleSheet} from 'react-native';
 
-// export const style = StyleSheet.create({
-// });
-
 export const friendViewStyle = StyleSheet.create({
   container: {
     flex: 1,

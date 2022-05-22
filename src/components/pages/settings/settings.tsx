@@ -48,7 +48,7 @@ export class SettingsScreen extends React.Component<Props> {
           <SettingsButton
             text="Mes Groupes de Travail"
             color="grey"
-            callback={undefined}
+            callback={() => this.props.navigation.navigate('TeamsView')}
           />
           <SettingsButton
             text="Déconnexion"
