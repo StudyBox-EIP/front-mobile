@@ -66,7 +66,7 @@ export class FriendsView extends React.Component {
       return (
         <View style={friendViewStyle.friendView}>
           <Text style={card.text}>
-            {item.sender.first_name} {item.sender.last_name} (en attente)
+            {item.target.first_name} {item.target.last_name} (en attente)
           </Text>
         </View>
       );
