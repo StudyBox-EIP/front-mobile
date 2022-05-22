@@ -1,5 +1,13 @@
 import {StyleSheet} from 'react-native';
 
+export const member = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+});
+
 export const team = StyleSheet.create({
   container: {
     flexDirection: 'row',

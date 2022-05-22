@@ -1,19 +1,30 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios from 'axios';
 import {API} from '../../../config';
 import {getData} from './userInfo';
 
-export async function getTeams() {
+export async function getTeams(teamID: number = -1) {
   try {
     const rawUserInfo = await getData('userInfo');
     if (rawUserInfo === undefined || rawUserInfo === null) {
       throw 'userInfo not found';
     }
     const userInfo = JSON.parse(rawUserInfo);
-    const route = `${API.WEB_ROOT}/users/teams`;
+    const route = `${API.WEB_ROOT}/users/teams${
+      teamID >= 0 ? `?id=${teamID}` : ''
+    }`;
     const config = {headers: {Authorization: `Bearer ${userInfo.token}`}};
 
     const res = await axios.get(route, config);
-    return res.data;
+    if (teamID >= 0) {
+      for (const team of res.data) {
+        if (team.id === teamID) {
+          return team;
+        }
+      }
+    } else {
+      return res.data;
+    }
+    return teamID >= 0 ? res.data[0] : res.data;
   } catch (e) {
     if (axios.isAxiosError(e)) {
       console.error(e.code, e.message, e.response?.data);
