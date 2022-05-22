@@ -1,5 +1,12 @@
 import {StyleSheet} from 'react-native';
 
+export const members = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    marginTop: '10%',
+  },
+});
+
 export const member = StyleSheet.create({
   container: {
     flexDirection: 'row',
