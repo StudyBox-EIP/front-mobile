@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-  FlatList,
   Modal,
   Text,
   View,
   TextInput,
   TouchableOpacity,
   Image,
+  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
@@ -26,9 +27,11 @@ export class FriendsView extends React.Component {
     friendList: [],
     pendingList: [],
     userInfo: {},
+    refreshing: false,
   };
 
-  Friend = ({item}: any) => {
+  Friend = (item: any) => {
+    item = item.value;
     if (item.target && item.target.id === this.state.userInfo.id) {
       return (
         <View style={friendViewStyle.friendView}>
@@ -159,30 +162,37 @@ export class FriendsView extends React.Component {
             </View>
           </View>
         </Modal>
-        <View style={friendViewStyle.viewShareMail}>
-          <Text>Vôtre Email à partager:</Text>
-          <Text>{this.state.userInfo.email}</Text>
-        </View>
-        <FlatList
-          data={this.state.friendList}
-          renderItem={this.Friend}
-          keyExtractor={item => item.id}
-        />
-        <FlatList
-          data={this.state.pendingList}
-          renderItem={this.Friend}
-          keyExtractor={item => item.id}
-        />
-        <View style={addButton.view}>
-          <TouchableOpacity
-            style={addButton.touchableOpacity}
-            onPress={() => this.setModalVisible(!modalVisible)}>
-            <Image
-              style={imageButton.square}
-              source={require('../../../../assets/img/add-friend.png')}
+        <ScrollView
+          contentContainerStyle={friendViewStyle.container}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={async () => {
+                await this.refreshFriend();
+              }}
             />
-          </TouchableOpacity>
-        </View>
+          }>
+          <View style={friendViewStyle.viewShareMail}>
+            <Text>Vôtre Email à partager:</Text>
+            <Text>{this.state.userInfo.email}</Text>
+          </View>
+          {this.state.friendList.map((key, value) => {
+            return <this.Friend key={value} value={key} />;
+          })}
+          {this.state.pendingList.map((value, key) => {
+            return <this.Friend value={value} key={key} />;
+          })}
+          <View style={addButton.view}>
+            <TouchableOpacity
+              style={addButton.touchableOpacity}
+              onPress={() => this.setModalVisible(!modalVisible)}>
+              <Image
+                style={imageButton.square}
+                source={require('../../../../assets/img/add-friend.png')}
+              />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }

@@ -6,8 +6,9 @@ import {
   Image,
   Modal,
   StyleSheet,
+  RefreshControl,
 } from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import {getFriendList} from '../../../api/friends';
 import {
   getOutboundTeamRequest,
@@ -23,7 +24,7 @@ import {
   imageButton,
   modal,
 } from '../friends/style';
-import {member, team} from './style';
+import {member, members, team} from './style';
 
 export class TeamPage extends React.Component<Props> {
   state = {
@@ -34,6 +35,7 @@ export class TeamPage extends React.Component<Props> {
     modalState: false,
     modalText: '',
     outboundRequests: [],
+    refreshing: false,
   };
 
   async componentDidMount() {
@@ -97,11 +99,9 @@ export class TeamPage extends React.Component<Props> {
             Ajouter un ami à votre Groupe de Travail
           </Text>
           <View style={modal.viewContent}>
-            <FlatList
-              data={this.state.friendList}
-              renderItem={FriendCard}
-              keyExtractor={item => item.id}
-            />
+            {this.state.friendList.map((value, key) => {
+              return <FriendCard value={value} key={key} />;
+            })}
           </View>
         </View>
       </Modal>
@@ -109,7 +109,7 @@ export class TeamPage extends React.Component<Props> {
   };
 
   Request = (item: any) => {
-    item = item.item;
+    item = item.value;
     return (
       <View style={friendViewStyle.friendView}>
         <Text style={card.text}>
@@ -120,7 +120,7 @@ export class TeamPage extends React.Component<Props> {
   };
 
   Member = (item: any) => {
-    item = item.item;
+    item = item.value;
     return (
       <View style={team.container}>
         <Text style={team.text}>
@@ -142,24 +142,6 @@ export class TeamPage extends React.Component<Props> {
           <TouchableOpacity />
         )}
       </View>
-    );
-  };
-
-  Members = () => {
-    const style = StyleSheet.create({
-      container: {
-        position: 'absolute',
-        marginTop: '10%',
-      },
-    });
-
-    return (
-      <FlatList
-        style={style.container}
-        data={this.state.memberList}
-        renderItem={this.Member}
-        keyExtractor={item => item.id}
-      />
     );
   };
 
@@ -189,14 +171,25 @@ export class TeamPage extends React.Component<Props> {
 
   render() {
     return (
-      <View style={friendViewStyle.container}>
+      <ScrollView
+        contentContainerStyle={friendViewStyle.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={async () => {
+              await this.refreshTeamStatus();
+            }}
+          />
+        }>
         <this.TeamHeader />
-        <FlatList
-          data={this.state.outboundRequests}
-          renderItem={this.Request}
-          keyExtractor={item => item.id}
-        />
-        <this.Members />
+        {this.state.outboundRequests.map((value, key) => {
+          return <this.Request value={value} key={key} />;
+        })}
+        {this.state.memberList?.map((value, key) => {
+          return (
+            <this.Member style={members.container} value={value} key={key} />
+          );
+        })}
         <this.AddMemberModal />
         <View style={addButton.view}>
           <TouchableOpacity
@@ -208,7 +201,7 @@ export class TeamPage extends React.Component<Props> {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
