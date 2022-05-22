@@ -153,14 +153,14 @@ export async function getOutboundTeamRequest() {
   }
 }
 
-export async function sendTeamRequest(teamID: number, userID: number) {
+export async function sendTeamRequest(teamID: number, userMail: string) {
   try {
     const rawUserInfo = await getData('userInfo');
     if (rawUserInfo === undefined || rawUserInfo === null) {
       throw 'userInfo not found';
     }
     const userInfo = JSON.parse(rawUserInfo);
-    const route = `${API.WEB_ROOT}/users/teams/request/${userID}/${teamID}`;
+    const route = `${API.WEB_ROOT}/users/teams/request/${userMail}/${teamID}`;
     const config = {headers: {Authorization: `Bearer ${userInfo.token}`}};
 
     const res = await axios.post(route, {}, config);

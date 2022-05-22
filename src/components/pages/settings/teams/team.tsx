@@ -65,7 +65,7 @@ export class TeamPage extends React.Component<Props> {
 
   AddMemberModal = () => {
     const FriendCard = (item: any) => {
-      item = item.item;
+      item = item.value;
       return (
         <View style={member.container}>
           <Text>
@@ -74,7 +74,7 @@ export class TeamPage extends React.Component<Props> {
           <TouchableOpacity
             style={modal.touchableopacity}
             onPress={async () => {
-              await sendTeamRequest(this.state.team.id, item.id);
+              await sendTeamRequest(this.state.team.id, item.email);
               this.setState({modalState: !this.state.modalState});
             }}>
             <Image
