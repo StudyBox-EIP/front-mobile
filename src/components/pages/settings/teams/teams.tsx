@@ -165,17 +165,21 @@ export class TeamsView extends React.Component {
           });
         }}>
         <Text style={team.text}>{item.name}</Text>
-        <TouchableOpacity
-          style={team.touchableOpacity}
-          onPress={async () => {
-            await deleteTeam(item.id);
-            await this.refreshTeams();
-          }}>
-          <Image
-            style={imageButton.square}
-            source={require('../../../../assets/img/trash.png')}
-          />
-        </TouchableOpacity>
+        {this.state.userInfo.id === item.creator.id ? (
+          <TouchableOpacity
+            style={team.touchableOpacity}
+            onPress={async () => {
+              await deleteTeam(item.id);
+              await this.refreshTeams();
+            }}>
+            <Image
+              style={imageButton.square}
+              source={require('../../../../assets/img/trash.png')}
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity />
+        )}
       </TouchableOpacity>
     );
   };
@@ -197,11 +201,6 @@ export class TeamsView extends React.Component {
         {this.state.inboundRequests.map((value, key) => {
           return <this.Request value={value} key={key} />;
         })}
-        {/* <FlatList
-          data={this.state.inboundRequests}
-          renderItem={this.Request}
-          keyExtractor={item => item.id}
-        /> */}
         <this.createTeamCard />
         <this.teamsModal />
       </ScrollView>

@@ -75,6 +75,7 @@ export class TeamPage extends React.Component<Props> {
             style={modal.touchableopacity}
             onPress={async () => {
               await sendTeamRequest(this.state.team.id, item.email);
+              await this.refreshTeamStatus();
               this.setState({modalState: !this.state.modalState});
             }}>
             <Image
@@ -124,9 +125,10 @@ export class TeamPage extends React.Component<Props> {
     return (
       <View style={team.container}>
         <Text style={team.text}>
-          {item.first_name} {item.last_name}
+          {item?.first_name} {item?.last_name}
         </Text>
-        {this.state.userInfo.id === this.state.team.creator.id ? (
+        {this.state.userInfo.id === this.state.team?.creator?.id &&
+        this.state.userInfo.id !== item?.id ? (
           <TouchableOpacity
             style={team.touchableOpacity}
             onPress={async () => {
@@ -185,6 +187,10 @@ export class TeamPage extends React.Component<Props> {
         {this.state.outboundRequests.map((value, key) => {
           return <this.Request value={value} key={key} />;
         })}
+        <this.Member
+          style={members.container}
+          value={this.state.team.creator}
+        />
         {this.state.memberList?.map((value, key) => {
           return (
             <this.Member style={members.container} value={value} key={key} />
