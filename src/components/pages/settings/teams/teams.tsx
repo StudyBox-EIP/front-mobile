@@ -7,8 +7,9 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  FlatList,
+  RefreshControl,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {
   answerTeamRequest,
   createTeam,
@@ -27,6 +28,7 @@ export class TeamsView extends React.Component {
     modalText: '',
     teamsList: [],
     inboundRequests: [],
+    refreshing: false,
   };
 
   componentDidMount = async () => {
@@ -85,7 +87,7 @@ export class TeamsView extends React.Component {
   };
 
   Request = (item: any) => {
-    item = item.item;
+    item = item.value;
     return (
       <View style={friendViewStyle.friendView}>
         <Text style={card.text}>
@@ -153,7 +155,7 @@ export class TeamsView extends React.Component {
   };
 
   Team = (item: any) => {
-    item = item.item;
+    item = item.value;
     return (
       <TouchableOpacity
         style={team.container}
@@ -178,28 +180,31 @@ export class TeamsView extends React.Component {
     );
   };
 
-  Teams = () => {
-    return (
-      <FlatList
-        data={this.state.teamsList}
-        renderItem={this.Team}
-        keyExtractor={item => item.id}
-      />
-    );
-  };
-
   render() {
     return (
-      <View>
-        <this.Teams />
-        <FlatList
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={async () => {
+              await this.refreshTeams();
+            }}
+          />
+        }>
+        {this.state.teamsList.map((value, key) => {
+          return <this.Team value={value} key={key} />;
+        })}
+        {this.state.inboundRequests.map((value, key) => {
+          return <this.Request value={value} key={key} />;
+        })}
+        {/* <FlatList
           data={this.state.inboundRequests}
           renderItem={this.Request}
           keyExtractor={item => item.id}
-        />
+        /> */}
         <this.createTeamCard />
         <this.teamsModal />
-      </View>
+      </ScrollView>
     );
   }
 }
