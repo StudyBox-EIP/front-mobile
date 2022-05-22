@@ -23,7 +23,9 @@ import {HomePageScreen} from './src/components/pages/homepage/homepage';
 import {SplashScreen} from './src/components/pages/splashScreen';
 import {SettingsScreen} from './src/components/pages/settings/settings';
 import {FriendsView} from './src/components/pages/settings/friends/friends';
+import {TeamsView} from './src/components/pages/settings/teams/teams';
 import {RoomScreen} from './src/components/pages/homepage/room/room';
+import {TeamPage} from './src/components/pages/settings/teams/team';
 
 const NavigationLoader = () => {
   const Stack = createStackNavigator();
@@ -78,6 +80,16 @@ const NavigationLoader = () => {
           name="FriendsView"
           component={FriendsView}
           options={{title: 'Amis'}}
+        />
+        <Stack.Screen
+          name="TeamsView"
+          component={TeamsView}
+          options={{title: 'Groupes'}}
+        />
+        <Stack.Screen
+          name="TeamPage"
+          component={TeamPage}
+          options={{title: 'Team Management'}}
         />
         <Stack.Screen
           name="RoomScreen"
