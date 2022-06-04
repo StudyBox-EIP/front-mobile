@@ -52,6 +52,7 @@ export function SignUpScreen({navigation}: any) {
         <StudyBoxTextInput
           text="Email"
           autoCompleteType="email"
+          keyboardType={'email-address'}
           changeText={(newText: string) => {
             data.email = newText;
           }}
