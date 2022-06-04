@@ -44,7 +44,11 @@ export function LoginScreen({navigation}: any) {
         source={require('../../../../assets/studybox-logo.png')}
       />
       <View style={LoginStyle.main_wrapper}>
-        <StudyBoxTextInput text="Email" changeText={changeUsername} />
+        <StudyBoxTextInput
+          text="Email"
+          keyboardType={'email-address'}
+          changeText={changeUsername}
+        />
         <StudyBoxTextInput
           text="Password"
           autoCompleteType="password"

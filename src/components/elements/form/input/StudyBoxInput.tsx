@@ -31,6 +31,7 @@ function StudyBoxTextInput(props: any) {
       <TextInput
         style={ComponentStyle.textInput}
         autoCompleteType={props.autoCompleteType}
+        keyboardType={props.keyboardType}
         secureTextEntry={props.secureTextEntry}
         onChangeText={newText => {
           props.changeText(newText);
