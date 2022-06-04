@@ -43,4 +43,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: StudyBox-Dev-Apk
+          retention-days: 7
           path: android/app/build/outputs/apk/release/app-release.apk
