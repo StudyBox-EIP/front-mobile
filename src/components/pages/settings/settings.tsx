@@ -1,27 +1,41 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
 import {disconnect} from '../../api/auth';
 
+import UserIcon from '../../../assets/svg/circle-user-solid.svg';
+import {getData} from '../../api/userInfo';
+
 const SettingsPageScreenStyle = StyleSheet.create({
   base: {
     flex: 1,
+    backgroundColor: '#ffffff',
   },
 });
 
 const SettingsButton = (props: any) => {
   const style = StyleSheet.create({
     container: {
+      flexDirection: 'row',
       backgroundColor: props.color,
-      borderRadius: 10,
-      width: '80%',
-      height: 100,
-      marginVertical: 15,
+      // borderRadius: 10,
+      width: '100%',
+      height: 50,
+      marginVertical: 8,
       alignSelf: 'center',
-      justifyContent: 'center',
       alignItems: 'center',
+      shadowOffset: {
+        width: 0,
+        height: 10,
+      },
+      shadowOpacity: 0.9,
+      shadowRadius: 1,
+      elevation: 8,
+    },
+    icon: {
+      marginHorizontal: 10,
     },
     text: {
       fontSize: 20,
@@ -30,29 +44,70 @@ const SettingsButton = (props: any) => {
 
   return (
     <TouchableOpacity style={style.container} onPress={props.callback}>
+      <UserIcon width={40} height={40} fill={'#4ac538'} style={style.icon} />
       <Text style={style.text}>{props.text}</Text>
     </TouchableOpacity>
   );
 };
 
 export class SettingsScreen extends React.Component<Props> {
+  state = {
+    userInfo: {},
+  };
+
+  async componentDidMount() {
+    const rawUserInfo: any = await getData('userInfo');
+
+    if (rawUserInfo) {
+      const userInfo = JSON.parse(rawUserInfo);
+      this.setState({userInfo: userInfo});
+    }
+  }
+
   render() {
     return (
       <View style={SettingsPageScreenStyle.base}>
-        <View style={{}}>
+        <View
+          style={{
+            height: '20%',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          }}>
+          <UserIcon width={60} height={60} fill={'#4bc63b'} />
+          <Text>
+            {this.state.userInfo.first_name} {this.state.userInfo.last_name}
+          </Text>
+          <View style={{width: '85%', height: 2, backgroundColor: '#5ddc4b'}} />
+        </View>
+        <View style={{height: '70%'}}>
           <SettingsButton
-            text="Mes Amis"
-            color="grey"
+            color="#ffffff"
+            text="Gestion du Compte"
+            callback={undefined}
+          />
+          <SettingsButton
+            color="#ffffff"
+            text="Gérer mes Amis"
             callback={() => this.props.navigation.navigate('FriendsView')}
           />
           <SettingsButton
-            text="Mes Groupes de Travail"
-            color="grey"
+            color="#ffffff"
+            text="Gérer mes Groupes"
             callback={() => this.props.navigation.navigate('TeamsView')}
           />
           <SettingsButton
+            color="#ffffff"
+            text="Paiement"
+            callback={undefined}
+          />
+          <SettingsButton
+            color="#ffffff"
+            text="Historique de Paiement"
+            callback={undefined}
+          />
+          <SettingsButton
+            color="#ffffff"
             text="Déconnexion"
-            color="red"
             callback={() => disconnect(this.props.navigation)}
           />
         </View>
