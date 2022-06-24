@@ -79,17 +79,17 @@ const NavigationLoader = () => {
         <Stack.Screen
           name="FriendsView"
           component={FriendsView}
-          options={{title: 'Amis'}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="TeamsView"
           component={TeamsView}
-          options={{title: 'Groupes'}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="TeamPage"
           component={TeamPage}
-          options={{title: 'Team Management'}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="RoomScreen"
