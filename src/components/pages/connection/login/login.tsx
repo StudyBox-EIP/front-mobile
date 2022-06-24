@@ -50,7 +50,7 @@ export function LoginScreen({navigation}: any) {
           changeText={changeUsername}
         />
         <StudyBoxTextInput
-          text="Password"
+          text="Mot de Passe"
           autoCompleteType="password"
           secureTextEntry={true}
           changeText={changePassword}
@@ -58,7 +58,7 @@ export function LoginScreen({navigation}: any) {
       </View>
       {/* Backend Authentication */}
       <StudyBoxSubmitButton
-        text="Login"
+        text="Se connecter"
         onPress={() => login(navigation, data)}
       />
     </View>

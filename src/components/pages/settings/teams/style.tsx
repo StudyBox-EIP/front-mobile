@@ -19,7 +19,7 @@ export const member = StyleSheet.create({
 export const team = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: 'grey',
+    backgroundColor: '#ffffff',
     width: '80%',
     height: 75,
     marginVertical: 8,
@@ -27,6 +27,7 @@ export const team = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 5,
+    elevation: 2,
   },
   text: {
     marginHorizontal: '5%',
@@ -47,7 +48,9 @@ export const modal = StyleSheet.create({
   background: {
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
-    backgroundColor: 'grey',
+    backgroundColor: '#ffffff',
+    borderColor: '#4bc63b',
+    borderWidth: 1,
     width: '85%',
     height: '20%',
     minHeight: 100,

@@ -38,13 +38,13 @@ export function SignUpScreen({navigation}: any) {
       />
       <View style={SignUpStyle.container_input}>
         <StudyBoxTextInput
-          text="First Name"
+          text="Prénom"
           changeText={(newText: string) => {
             data.first_name = newText;
           }}
         />
         <StudyBoxTextInput
-          text="Last Name"
+          text="Nom"
           changeText={(newText: string) => {
             data.last_name = newText;
           }}
@@ -58,7 +58,7 @@ export function SignUpScreen({navigation}: any) {
           }}
         />
         <StudyBoxTextInput
-          text="Password"
+          text="Mot de Passe"
           autoCompleteType="password"
           secureTextEntry={true}
           changeText={(newText: string) => {
@@ -68,7 +68,7 @@ export function SignUpScreen({navigation}: any) {
       </View>
       {/* Backend Authentication */}
       <StudyBoxSubmitButton
-        text="Register"
+        text="S'enregistrer"
         onPress={() => register(navigation, data)}
       />
     </View>

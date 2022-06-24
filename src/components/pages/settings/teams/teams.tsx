@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-  Image,
   Modal,
-  StyleSheet,
   Text,
   TextInput,
   View,
   TouchableOpacity,
   RefreshControl,
+  SafeAreaView,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {
@@ -18,8 +17,13 @@ import {
   getTeams,
 } from '../../../api/teams';
 import {getData} from '../../../api/userInfo';
-import {card, friendViewStyle} from '../friends/style';
-import {imageButton, modal, team} from './style';
+import {addButton, card, friendViewStyle} from '../friends/style';
+import {modal, team} from './style';
+import AddLogo from '../../../../assets/svg/plus.svg';
+import BackButton from '../../../../assets/svg/angle-left-solid.svg';
+import PageHeader from '../../../elements/controllers/pageHeader';
+import TrashIcon from '../../../../assets/svg/trash-can-solid.svg';
+import CheckIcon from '../../../../assets/svg/check-mark.svg';
 
 export class TeamsView extends React.Component {
   state = {
@@ -53,39 +57,6 @@ export class TeamsView extends React.Component {
     this.setState({inboundRequests: await getInboundTeamRequest()});
   }
 
-  createTeamCard = () => {
-    const style = StyleSheet.create({
-      container: {
-        backgroundColor: 'red',
-        width: '80%',
-        height: 75,
-        alignSelf: 'center',
-        marginVertical: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        borderBottomLeftRadius: 10,
-        borderTopRightRadius: 10,
-      },
-      image: {
-        width: 50,
-        height: 50,
-      },
-    });
-
-    return (
-      <TouchableOpacity
-        style={style.container}
-        onPress={() => this.setState({modalState: !this.state.modalState})}>
-        <Text>Créer une Equipe</Text>
-        <Image
-          style={style.image}
-          source={require('../../../../assets/img/add-group.png')}
-        />
-      </TouchableOpacity>
-    );
-  };
-
   Request = (item: any) => {
     item = item.value;
     return (
@@ -93,28 +64,24 @@ export class TeamsView extends React.Component {
         <Text style={card.text}>
           {item.sender.first_name} {item.sender.last_name}: {item.team.name}
         </Text>
-        <TouchableOpacity
-          style={card.touchableopacity}
-          onPress={async () => {
-            await answerTeamRequest(item.id, true);
-            this.refreshTeams();
-          }}>
-          <Image
-            style={imageButton.round}
-            source={require('../../../../assets/img/checked.png')}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={card.touchableopacity}
-          onPress={async () => {
-            await answerTeamRequest(item.id, false);
-            this.refreshTeams();
-          }}>
-          <Image
-            style={imageButton.square}
-            source={require('../../../../assets/img/trash.png')}
-          />
-        </TouchableOpacity>
+        <View style={friendViewStyle.actionButtons}>
+          <TouchableOpacity
+            style={card.leftTouchableOpacity}
+            onPress={async () => {
+              await answerTeamRequest(item.id, true);
+              this.refreshTeams();
+            }}>
+            <CheckIcon width={'100%'} height={'100%'} fill={'#4bc63b'} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={card.rightTouchableOpacity}
+            onPress={async () => {
+              await answerTeamRequest(item.id, false);
+              this.refreshTeams();
+            }}>
+            <TrashIcon width={'100%'} height={'100%'} fill={'#FF4444'} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
@@ -143,10 +110,7 @@ export class TeamsView extends React.Component {
                 this.setState({modalState: !this.state.modalState});
                 await this.refreshTeams();
               }}>
-              <Image
-                style={modal.image}
-                source={require('../../../../assets/img/checked.png')}
-              />
+              <CheckIcon width={'100%'} height={'100%'} fill={'#4bc63b'} />
             </TouchableOpacity>
           </View>
         </View>
@@ -158,7 +122,7 @@ export class TeamsView extends React.Component {
     item = item.value;
     return (
       <TouchableOpacity
-        style={team.container}
+        style={friendViewStyle.friendView}
         onPress={() => {
           this.props.navigation.navigate('TeamPage', {
             team: item,
@@ -166,17 +130,16 @@ export class TeamsView extends React.Component {
         }}>
         <Text style={team.text}>{item.name}</Text>
         {this.state.userInfo.id === item.creator.id ? (
-          <TouchableOpacity
-            style={team.touchableOpacity}
-            onPress={async () => {
-              await deleteTeam(item.id);
-              await this.refreshTeams();
-            }}>
-            <Image
-              style={imageButton.square}
-              source={require('../../../../assets/img/trash.png')}
-            />
-          </TouchableOpacity>
+          <View style={friendViewStyle.actionButtons}>
+            <TouchableOpacity
+              style={card.rightTouchableOpacity}
+              onPress={async () => {
+                await deleteTeam(item.id);
+                await this.refreshTeams();
+              }}>
+              <TrashIcon width={'100%'} height={'100%'} fill={'#FF4444'} />
+            </TouchableOpacity>
+          </View>
         ) : (
           <TouchableOpacity />
         )}
@@ -186,24 +149,38 @@ export class TeamsView extends React.Component {
 
   render() {
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={async () => {
-              await this.refreshTeams();
-            }}
+      <SafeAreaView style={friendViewStyle.container}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={async () => {
+                await this.refreshTeams();
+              }}
+            />
+          }>
+          <PageHeader
+            headerText="Vos Groupes de Travail"
+            callback={() => this.props.navigation?.goBack()}
+            icon={BackButton}
+            linePercentage="90%"
           />
-        }>
-        {this.state.teamsList.map((value, key) => {
-          return <this.Team value={value} key={key} />;
-        })}
-        {this.state.inboundRequests.map((value, key) => {
-          return <this.Request value={value} key={key} />;
-        })}
-        <this.createTeamCard />
-        <this.teamsModal />
-      </ScrollView>
+          {this.state.teamsList.map((value, key) => {
+            return <this.Team value={value} key={key} />;
+          })}
+          {this.state.inboundRequests.map((value, key) => {
+            return <this.Request value={value} key={key} />;
+          })}
+          <this.teamsModal />
+        </ScrollView>
+        <View style={addButton.view}>
+          <TouchableOpacity
+            style={addButton.touchableOpacity}
+            onPress={() => this.setState({modalState: !this.state.modalState})}>
+            <AddLogo width={60} height={60} fill={'#4bc63b'} />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     );
   }
 }
