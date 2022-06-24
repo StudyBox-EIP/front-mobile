@@ -6,7 +6,7 @@ export const friendViewStyle = StyleSheet.create({
   },
   friendView: {
     flexDirection: 'row',
-    backgroundColor: 'grey',
+    // backgroundColor: '#ffffff',
     width: '80%',
     height: 50,
     marginVertical: 8,
@@ -14,6 +14,7 @@ export const friendViewStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 5,
+    elevation: 3,
   },
   viewShareMail: {
     width: '80%',
@@ -21,9 +22,13 @@ export const friendViewStyle = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'pink',
+    elevation: 1,
     borderRadius: 10,
     marginVertical: 10,
+    minHeight: 50,
+  },
+  actionButtons: {
+    flexDirection: 'row',
   },
 });
 
@@ -50,10 +55,15 @@ export const card = StyleSheet.create({
   text: {
     marginHorizontal: '5%',
   },
-  touchableopacity: {
+  rightTouchableOpacity: {
     width: 40,
     height: 40,
-    marginHorizontal: '5%',
+    marginRight: '2%',
+  },
+  leftTouchableOpacity: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
   },
 });
 
@@ -75,15 +85,17 @@ export const modal = StyleSheet.create({
   viewContainer: {
     alignItems: 'center',
     alignSelf: 'center',
-    top: '50%',
     height: 100,
-    backgroundColor: 'grey',
+    backgroundColor: '#ffffff',
+    borderColor: '#4bc63b',
+    borderWidth: 1,
     width: '75%',
     borderRadius: 10,
+    top: '50%',
   },
   viewContent: {
     justifyContent: 'space-between',
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '100%',
     paddingHorizontal: 10,
   },

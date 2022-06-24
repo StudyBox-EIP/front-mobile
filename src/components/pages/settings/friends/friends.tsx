@@ -5,7 +5,6 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Image,
   ScrollView,
   RefreshControl,
 } from 'react-native';
@@ -18,7 +17,12 @@ import {
   removeFriend,
 } from '../../../api/friends';
 import {getData} from '../../../api/userInfo';
-import {addButton, card, friendViewStyle, imageButton, modal} from './style';
+import PageHeader from '../../../elements/controllers/pageHeader';
+import {addButton, card, friendViewStyle, modal} from './style';
+import BackButton from '../../../../assets/svg/angle-left-solid.svg';
+import AddLogo from '../../../../assets/svg/plus.svg';
+import TrashIcon from '../../../../assets/svg/trash-can-solid.svg';
+import CheckIcon from '../../../../assets/svg/check-mark.svg';
 
 export class FriendsView extends React.Component {
   state = {
@@ -38,28 +42,24 @@ export class FriendsView extends React.Component {
           <Text style={card.text}>
             {item.sender.first_name} {item.sender.last_name}
           </Text>
-          <TouchableOpacity
-            style={card.touchableopacity}
-            onPress={async () => {
-              await answerFriendRequest(item.id, true);
-              await this.refreshFriend();
-            }}>
-            <Image
-              style={imageButton.round}
-              source={require('../../../../assets/img/checked.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={card.touchableopacity}
-            onPress={async () => {
-              await answerFriendRequest(item.id, false);
-              await this.refreshFriend();
-            }}>
-            <Image
-              style={imageButton.square}
-              source={require('../../../../assets/img/trash.png')}
-            />
-          </TouchableOpacity>
+          <View style={friendViewStyle.actionButtons}>
+            <TouchableOpacity
+              style={card.leftTouchableOpacity}
+              onPress={async () => {
+                await answerFriendRequest(item.id, true);
+                await this.refreshFriend();
+              }}>
+              <CheckIcon width={'100%'} height={'100%'} fill={'#4bc63b'} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={card.rightTouchableOpacity}
+              onPress={async () => {
+                await answerFriendRequest(item.id, false);
+                await this.refreshFriend();
+              }}>
+              <TrashIcon width={'100%'} height={'100%'} fill={'#FF4444'} />
+            </TouchableOpacity>
+          </View>
         </View>
       );
     } else if (item.sender && item.sender.id === this.state.userInfo.id) {
@@ -77,15 +77,12 @@ export class FriendsView extends React.Component {
             {item.first_name} {item.last_name}
           </Text>
           <TouchableOpacity
-            style={card.touchableopacity}
+            style={card.rightTouchableOpacity}
             onPress={async () => {
               await removeFriend(item.id);
               await this.refreshFriend();
             }}>
-            <Image
-              style={imageButton.square}
-              source={require('../../../../assets/img/trash.png')}
-            />
+            <TrashIcon width={'100%'} height={'100%'} fill={'#FF4444'} />
           </TouchableOpacity>
         </View>
       );
@@ -136,6 +133,12 @@ export class FriendsView extends React.Component {
     const {modalVisible, modalText} = this.state;
     return (
       <SafeAreaView style={friendViewStyle.container}>
+        <PageHeader
+          headerText="Vos Amis"
+          callback={() => this.props.navigation?.goBack()}
+          icon={BackButton}
+          linePercentage="55%"
+        />
         <Modal
           animationType="fade"
           transparent={true}
@@ -154,10 +157,7 @@ export class FriendsView extends React.Component {
                   this.setModalVisible(!modalVisible);
                   addFriend(modalText);
                 }}>
-                <Image
-                  style={imageButton.round}
-                  source={require('../../../../assets/img/checked.png')}
-                />
+                <CheckIcon width={'100%'} height={'100%'} fill={'#4bc63b'} />
               </TouchableOpacity>
             </View>
           </View>
@@ -182,17 +182,14 @@ export class FriendsView extends React.Component {
           {this.state.pendingList.map((value, key) => {
             return <this.Friend value={value} key={key} />;
           })}
-          <View style={addButton.view}>
-            <TouchableOpacity
-              style={addButton.touchableOpacity}
-              onPress={() => this.setModalVisible(!modalVisible)}>
-              <Image
-                style={imageButton.square}
-                source={require('../../../../assets/img/add-friend.png')}
-              />
-            </TouchableOpacity>
-          </View>
         </ScrollView>
+        <View style={addButton.view}>
+          <TouchableOpacity
+            style={addButton.touchableOpacity}
+            onPress={() => this.setModalVisible(!modalVisible)}>
+            <AddLogo width={60} height={60} fill={'#4bc63b'} />
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }

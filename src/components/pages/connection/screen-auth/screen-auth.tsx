@@ -61,12 +61,12 @@ export function AuthScreen({navigation}: any) {
       <TouchableOpacity
         onPress={() => navigation.navigate('ManualSignIn')}
         style={ScreenAuthStyle.button_auth}>
-        <Text style={ScreenAuthStyle.button_text}>Login</Text>
+        <Text style={ScreenAuthStyle.button_text}>Se connecter</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate('ManualSignUp')}
         style={ScreenAuthStyle.button_auth}>
-        <Text style={ScreenAuthStyle.button_text}>Sign Up</Text>
+        <Text style={ScreenAuthStyle.button_text}>S'enregistrer</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

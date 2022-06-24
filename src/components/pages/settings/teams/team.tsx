@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
   Modal,
   StyleSheet,
   RefreshControl,
@@ -17,14 +16,11 @@ import {
   sendTeamRequest,
 } from '../../../api/teams';
 import {getData} from '../../../api/userInfo';
-import {
-  addButton,
-  card,
-  friendViewStyle,
-  imageButton,
-  modal,
-} from '../friends/style';
+import {addButton, card, friendViewStyle, modal} from '../friends/style';
 import {member, members, team} from './style';
+import CheckIcon from '../../../../assets/svg/check-mark.svg';
+import TrashIcon from '../../../../assets/svg/trash-can-solid.svg';
+import AddLogo from '../../../../assets/svg/plus.svg';
 
 export class TeamPage extends React.Component<Props> {
   state = {
@@ -78,10 +74,7 @@ export class TeamPage extends React.Component<Props> {
               await this.refreshTeamStatus();
               this.setState({modalState: !this.state.modalState});
             }}>
-            <Image
-              style={imageButton.round}
-              source={require('../../../../assets/img/checked.png')}
-            />
+            <CheckIcon width={'100%'} height={'100%'} fill={'#4bc63b'} />
           </TouchableOpacity>
         </View>
       );
@@ -123,23 +116,22 @@ export class TeamPage extends React.Component<Props> {
   Member = (item: any) => {
     item = item.value;
     return (
-      <View style={team.container}>
+      <View style={friendViewStyle.friendView}>
         <Text style={team.text}>
           {item?.first_name} {item?.last_name}
         </Text>
         {this.state.userInfo.id === this.state.team?.creator?.id &&
         this.state.userInfo.id !== item?.id ? (
-          <TouchableOpacity
-            style={team.touchableOpacity}
-            onPress={async () => {
-              await removeUserFromTeam(this.state.team.id, item.id);
-              this.refreshTeamStatus();
-            }}>
-            <Image
-              style={imageButton.square}
-              source={require('../../../../assets/img/trash.png')}
-            />
-          </TouchableOpacity>
+          <View style={friendViewStyle.actionButtons}>
+            <TouchableOpacity
+              style={card.rightTouchableOpacity}
+              onPress={async () => {
+                await removeUserFromTeam(this.state.team.id, item.id);
+                this.refreshTeamStatus();
+              }}>
+              <TrashIcon width={'100%'} height={'100%'} fill={'#FF4444'} />
+            </TouchableOpacity>
+          </View>
         ) : (
           <TouchableOpacity />
         )}
@@ -150,7 +142,9 @@ export class TeamPage extends React.Component<Props> {
   TeamHeader = () => {
     const style = StyleSheet.create({
       container: {
-        backgroundColor: 'pink',
+        backgroundColor: '#ffffff',
+        borderColor: '#4bc63b',
+        borderWidth: 2,
         margin: 10,
         borderTopRightRadius: 10,
         borderBottomLeftRadius: 10,
@@ -201,10 +195,7 @@ export class TeamPage extends React.Component<Props> {
           <TouchableOpacity
             style={addButton.touchableOpacity}
             onPress={() => this.setState({modalState: !this.state.modalState})}>
-            <Image
-              style={imageButton.square}
-              source={require('../../../../assets/img/add-friend.png')}
-            />
+            <AddLogo width={60} height={60} fill={'#4bc63b'} />
           </TouchableOpacity>
         </View>
       </ScrollView>
