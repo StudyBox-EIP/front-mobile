@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  PermissionsAndroid,
-} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {BottomHomePageController} from '../../elements/controllers/homePageController';
-import {getPictureObject} from '../../../tools/images';
-import {getRooms, getRoomsNearby} from '../../api/rooms';
+import { StyleSheet, View, PermissionsAndroid, } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { BottomHomePageController } from '../../elements/controllers/homePageController';
+import { getRooms, getRoomsNearby } from '../../api/rooms';
 import Geolocation from 'react-native-geolocation-service';
+import RoomCard from "../../elements/card";
+import BasicSearchBar from '../../elements/searchbar';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -44,65 +37,6 @@ const HomePageScreenStyle = StyleSheet.create({
   },
 });
 
-const cardStyle = StyleSheet.create({
-  container: {
-    width: '85%',
-    height: 250,
-    color: '#737373',
-    alignItems: 'center',
-    backgroundColor: 'grey',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-    shadowColor: '#000',
-    elevation: 8,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    marginVertical: 10,
-  },
-  imageCover: {
-    flex: 0.8,
-    position: 'absolute',
-    alignSelf: 'baseline',
-    width: 250,
-    height: 200,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
-  },
-  title: {
-    position: 'absolute',
-    alignSelf: 'baseline',
-    bottom: 15,
-    left: 25,
-    fontSize: 20,
-  },
-});
-
-const Card = (props: any) => {
-  const picture = getPictureObject(props.image);
-  return (
-    <Pressable
-      style={cardStyle.container}
-      onPress={() => {
-        props.navigation.navigate('RoomScreen', {
-          name: props.title,
-          desc: props.desc,
-          adress: props.adress,
-          score: props.score,
-          latitude: props.latitude,
-          longitude: props.longitude,
-          pic: picture,
-        });
-      }}>
-      <Text style={cardStyle.title}>{props.title}</Text>
-      <Image style={cardStyle.imageCover} resizeMode="cover" source={picture} />
-    </Pressable>
-  );
-};
-
 export class HomePageScreen extends React.Component<Props> {
   state = {
     nearbyRooms: [], // Storing all nearby Rooms from current Device
@@ -125,7 +59,7 @@ export class HomePageScreen extends React.Component<Props> {
         image: undefined,
       });
     }
-    this.setState({nearbyRooms: newRooms});
+    this.setState({ nearbyRooms: newRooms });
   }
 
   async componentDidMount() {
@@ -153,8 +87,8 @@ export class HomePageScreen extends React.Component<Props> {
     if (havePermission) {
       Geolocation.getCurrentPosition(
         async info => {
-          this.setState({latitude: info.coords.latitude});
-          this.setState({longitude: info.coords.longitude});
+          this.setState({ latitude: info.coords.latitude });
+          this.setState({ longitude: info.coords.longitude });
           const remoteRooms = await getRoomsNearby(
             this.state.latitude,
             this.state.longitude,
@@ -162,7 +96,7 @@ export class HomePageScreen extends React.Component<Props> {
           this.applyRoomState(remoteRooms);
         },
         (e: any) => console.error(e),
-        {enableHighAccuracy: true},
+        { enableHighAccuracy: true },
       );
     } else {
       const defaultRooms = await getRooms();
@@ -174,8 +108,7 @@ export class HomePageScreen extends React.Component<Props> {
     let contextFilter: String = '';
     return (
       <View style={HomePageScreenStyle.base}>
-        <TextInput
-          style={HomePageScreenStyle.textInput}
+        <BasicSearchBar
           placeholder="Chercher une salle"
           onEndEditing={async v => {
             contextFilter = v.nativeEvent.text;
@@ -189,7 +122,7 @@ export class HomePageScreen extends React.Component<Props> {
           showsVerticalScrollIndicator={false}>
           {this.state.nearbyRooms.map((val: any, key) => {
             return (
-              <Card
+              <RoomCard
                 key={key}
                 title={val.name}
                 desc={val.desc}
