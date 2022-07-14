@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import getDirections from 'react-native-google-maps-directions';
 import BasicButton from '../../../elements/button';
+import {COLORS_STUDYBOX} from '../../..//elements/colors';
 
 const scoreMax = 5;
 
@@ -32,7 +33,7 @@ const RoomScreenStyle = StyleSheet.create({
     flex: 1.5,
   },
   cardContainer: {
-    borderTopColor: '#4bc63b',
+    borderTopColor: COLORS_STUDYBOX.GREEN,
     borderTopWidth: 3,
     width: '100%',
     paddingBottom: 80,
