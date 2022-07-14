@@ -10,7 +10,7 @@ export async function login(
   data: any,
 ): Promise<object | AxiosError | Boolean> {
   if (__DEV__) {
-    console.log("API : ", API.WEB_ROOT);
+    console.log('API : ', API.WEB_ROOT);
   }
   try {
     const auth = await axios.post(API.WEB_ROOT + '/auth/login', {

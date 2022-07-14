@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, PermissionsAndroid, } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { BottomHomePageController } from '../../elements/controllers/homePageController';
-import { getRooms, getRoomsNearby } from '../../api/rooms';
+import {StyleSheet, View, PermissionsAndroid} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {BottomHomePageController} from '../../elements/controllers/homePageController';
+import {getRooms, getRoomsNearby} from '../../api/rooms';
 import Geolocation from 'react-native-geolocation-service';
-import RoomCard from "../../elements/card";
+import RoomCard from '../../elements/roomcard';
 import BasicSearchBar from '../../elements/searchbar';
 
 const HomePageScreenStyle = StyleSheet.create({
@@ -24,9 +24,9 @@ const HomePageScreenStyle = StyleSheet.create({
     marginBottom: 2,
     width: '92%',
     borderRadius: 7,
-    backgroundColor: '#FFF',
-    shadowColor: '#000',
-    color: '#000',
+    backgroundColor: 'white',
+    shadowColor: 'black',
+    color: 'black',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -56,10 +56,11 @@ export class HomePageScreen extends React.Component<Props> {
         score: remoteRoom.average,
         latitude: remoteRoom.latitude,
         longitude: remoteRoom.longitude,
+        favorite: false, // FAVORITE NEEDS TO BE IMPLEMENTED IN API
         image: undefined,
       });
     }
-    this.setState({ nearbyRooms: newRooms });
+    this.setState({nearbyRooms: newRooms});
   }
 
   async componentDidMount() {
@@ -87,8 +88,8 @@ export class HomePageScreen extends React.Component<Props> {
     if (havePermission) {
       Geolocation.getCurrentPosition(
         async info => {
-          this.setState({ latitude: info.coords.latitude });
-          this.setState({ longitude: info.coords.longitude });
+          this.setState({latitude: info.coords.latitude});
+          this.setState({longitude: info.coords.longitude});
           const remoteRooms = await getRoomsNearby(
             this.state.latitude,
             this.state.longitude,
@@ -96,7 +97,7 @@ export class HomePageScreen extends React.Component<Props> {
           this.applyRoomState(remoteRooms);
         },
         (e: any) => console.error(e),
-        { enableHighAccuracy: true },
+        {enableHighAccuracy: true},
       );
     } else {
       const defaultRooms = await getRooms();
@@ -131,6 +132,7 @@ export class HomePageScreen extends React.Component<Props> {
                 image={val.image}
                 latitude={val.latitude}
                 longitude={val.longitude}
+                favorite={val.favorite}
                 navigation={this.props.navigation}
               />
             );
