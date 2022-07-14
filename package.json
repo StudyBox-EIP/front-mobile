@@ -18,8 +18,8 @@
     "@react-navigation/stack": "^5.14.5",
     "axios": "^0.24.0",
     "babel-plugin-module-resolver": "^4.1.0",
-    "react": "17.0.2",
-    "react-native": "0.67.3",
+    "react": "^18.0.0",
+    "react-native": "^0.69.1",
     "react-native-app-auth": "^6.3.0",
     "react-native-geolocation-service": "^5.3.0-beta.4",
     "react-native-gesture-handler": "^1.10.3",
@@ -42,9 +42,9 @@
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",
     "react-native-dotenv": "^3.3.1",
-    "react-test-renderer": "17.0.2",
-    "typescript": "^3.8.3",
-    "react-native-svg-transformer": "^1.0.0"
+    "react-native-svg-transformer": "^1.0.0",
+    "react-test-renderer": "^18.0.0",
+    "typescript": "^3.8.3"
   },
   "resolutions": {
     "@types/react": "^17"
