@@ -21,6 +21,7 @@ import {member, members, team} from './style';
 import CheckIcon from '../../../../assets/svg/check-mark.svg';
 import TrashIcon from '../../../../assets/svg/trash-can-solid.svg';
 import AddLogo from '../../../../assets/svg/plus.svg';
+import {COLORS_STUDYBOX} from '../../../elements/colors';
 
 export class TeamPage extends React.Component<Props> {
   state = {
@@ -74,7 +75,11 @@ export class TeamPage extends React.Component<Props> {
               await this.refreshTeamStatus();
               this.setState({modalState: !this.state.modalState});
             }}>
-            <CheckIcon width={'100%'} height={'100%'} fill={'#4bc63b'} />
+            <CheckIcon
+              width={'100%'}
+              height={'100%'}
+              fill={COLORS_STUDYBOX.GREEN}
+            />
           </TouchableOpacity>
         </View>
       );
@@ -129,7 +134,11 @@ export class TeamPage extends React.Component<Props> {
                 await removeUserFromTeam(this.state.team.id, item.id);
                 this.refreshTeamStatus();
               }}>
-              <TrashIcon width={'100%'} height={'100%'} fill={'#FF4444'} />
+              <TrashIcon
+                width={'100%'}
+                height={'100%'}
+                fill={COLORS_STUDYBOX.CONFIRM_RED}
+              />
             </TouchableOpacity>
           </View>
         ) : (
@@ -142,8 +151,8 @@ export class TeamPage extends React.Component<Props> {
   TeamHeader = () => {
     const style = StyleSheet.create({
       container: {
-        backgroundColor: '#ffffff',
-        borderColor: '#4bc63b',
+        backgroundColor: 'white',
+        borderColor: COLORS_STUDYBOX.GREEN,
         borderWidth: 2,
         margin: 10,
         borderTopRightRadius: 10,
@@ -195,7 +204,7 @@ export class TeamPage extends React.Component<Props> {
           <TouchableOpacity
             style={addButton.touchableOpacity}
             onPress={() => this.setState({modalState: !this.state.modalState})}>
-            <AddLogo width={60} height={60} fill={'#4bc63b'} />
+            <AddLogo width={60} height={60} fill={COLORS_STUDYBOX.GREEN} />
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -5,4 +5,5 @@ export const COLORS_STUDYBOX = {
   GREEN: '#4BC63B',
   CONFIRM_GREEN: '#9CCC65',
   CONFIRM_RED: '#DC3C05',
+  YELLOW: '#FFC107',
 };

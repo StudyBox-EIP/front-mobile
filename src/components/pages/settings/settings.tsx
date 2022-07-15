@@ -9,11 +9,12 @@ import UserIcon from '../../../assets/svg/circle-user-solid.svg';
 import ReturnIcon from '../../../assets/svg/return.svg';
 
 import {getData} from '../../api/userInfo';
+import { COLORS_STUDYBOX } from '../../elements/colors';
 
 const SettingsPageScreenStyle = StyleSheet.create({
   base: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
   profile: {
     height: '20%',
@@ -23,7 +24,7 @@ const SettingsPageScreenStyle = StyleSheet.create({
   profileUnderline: {
     width: '85%',
     height: 2,
-    backgroundColor: '#5ddc4b',
+    backgroundColor: COLORS_STUDYBOX.GREEN,
   },
   buttonBox: {
     height: '70%',

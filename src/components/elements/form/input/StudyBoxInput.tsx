@@ -1,20 +1,21 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {COLORS_STUDYBOX} from '../../colors';
 
 function StudyBoxTextInput(props: any) {
   const ComponentStyle = StyleSheet.create({
     label_text: {
       fontSize: 16,
       fontFamily: 'RopaSans-Regular',
-      color: '#737373',
+      color: COLORS_STUDYBOX.GREY,
     },
     textInput: {
       width: '100%',
       borderRadius: 7,
       marginBottom: 15,
-      backgroundColor: '#FFF',
-      shadowColor: '#000',
-      color: '#000',
+      backgroundColor: 'white',
+      shadowColor: 'black',
+      color: 'black',
       shadowOffset: {
         width: 0,
         height: 2,

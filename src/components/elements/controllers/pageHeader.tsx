@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { COLORS_STUDYBOX } from '../colors';
 
 export default class PageHeader extends React.Component<Props> {
   style = StyleSheet.create({
@@ -16,7 +17,7 @@ export default class PageHeader extends React.Component<Props> {
           ? this.props.linePercentage
           : '0%',
       height: 2,
-      backgroundColor: '#5ddc4b',
+      backgroundColor: COLORS_STUDYBOX.GREEN,
     },
   });
 
@@ -25,7 +26,11 @@ export default class PageHeader extends React.Component<Props> {
       <View>
         <View style={this.style.titleContainer}>
           <TouchableOpacity onPress={this.props?.callback}>
-            <this.props.icon width={50} height={50} fill={'#4bc63b'} />
+            <this.props.icon
+              width={50}
+              height={50}
+              fill={COLORS_STUDYBOX.GREEN}
+            />
           </TouchableOpacity>
           <Text style={this.style.titleText}>{this.props?.headerText}</Text>
         </View>

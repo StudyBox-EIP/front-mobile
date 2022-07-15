@@ -6,7 +6,7 @@ export const friendViewStyle = StyleSheet.create({
   },
   friendView: {
     flexDirection: 'row',
-    // backgroundColor: '#ffffff',
+    // backgroundColor: 'white',
     width: '80%',
     height: 50,
     marginVertical: 8,
@@ -86,7 +86,7 @@ export const modal = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     height: 100,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
     borderColor: '#4bc63b',
     borderWidth: 1,
     width: '75%',
