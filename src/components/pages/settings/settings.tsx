@@ -6,7 +6,12 @@ import {BottomHomePageController} from '../../elements/controllers/homePageContr
 import {disconnect} from '../../api/auth';
 
 import UserIcon from '../../../assets/svg/circle-user-solid.svg';
-import ReturnIcon from '../../../assets/svg/return.svg';
+import PriceListIcon from '../../../assets/svg/price-list.svg';
+import DebitCardIcon from '../../../assets/svg/debit-card.svg';
+import AccountIcon from '../../../assets/svg/user(1).svg';
+import FriendsIcon from '../../../assets/svg/friends.svg';
+import GroupsIcon from '../../../assets/svg/communities-social-networking.svg';
+import ReturnIcon from '../../../assets/svg/logout-line.svg';
 
 import {getData} from '../../api/userInfo';
 import {COLORS_STUDYBOX} from '../../elements/colors';
@@ -99,35 +104,35 @@ export class SettingsScreen extends React.Component<Props> {
             backgroundColor="white"
             iconColor={COLORS_STUDYBOX.GREEN}
             text="Gestion du Compte"
-            logo={UserIcon}
+            logo={AccountIcon}
             callback={undefined}
           />
           <SettingsButton
             backgroundColor="white"
             iconColor={COLORS_STUDYBOX.GREEN}
             text="Gérer mes Amis"
-            logo={UserIcon}
+            logo={FriendsIcon}
             callback={() => this.props.navigation.navigate('FriendsView')}
           />
           <SettingsButton
             backgroundColor="white"
             iconColor={COLORS_STUDYBOX.GREEN}
             text="Gérer mes Groupes"
-            logo={UserIcon}
+            logo={GroupsIcon}
             callback={() => this.props.navigation.navigate('TeamsView')}
           />
           <SettingsButton
             backgroundColor="white"
             iconColor={COLORS_STUDYBOX.GREEN}
             text="Paiement"
-            logo={UserIcon}
+            logo={DebitCardIcon}
             callback={undefined}
           />
           <SettingsButton
             backgroundColor="white"
             iconColor={COLORS_STUDYBOX.GREEN}
             text="Historique de Paiement"
-            logo={UserIcon}
+            logo={PriceListIcon}
             callback={() => this.props.navigation.navigate('BookingHistory')}
           />
           <SettingsButton
