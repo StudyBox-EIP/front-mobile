@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {COLORS_STUDYBOX} from '../../elements/colors';
 
 export const RoomScreenStyle = StyleSheet.create({
   base: {
@@ -27,7 +28,7 @@ export const RoomScreenStyle = StyleSheet.create({
     flex: 1.5,
   },
   cardContainer: {
-    borderTopColor: '#4bc63b',
+    borderTopColor: COLORS_STUDYBOX.GREEN,
     borderTopWidth: 3,
     width: '100%',
     paddingBottom: 80,

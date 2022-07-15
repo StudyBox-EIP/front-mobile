@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {COLORS_STUDYBOX} from '../../colors';
 
 function StudyBoxSubmitButton(props: any) {
   const ComponentStyle = StyleSheet.create({
@@ -10,8 +11,8 @@ function StudyBoxSubmitButton(props: any) {
       paddingBottom: 12,
       borderRadius: 7,
       marginBottom: 15,
-      backgroundColor: '#9CCC65',
-      shadowColor: '#000',
+      backgroundColor: COLORS_STUDYBOX.CONFIRM_GREEN,
+      shadowColor: 'black',
       shadowOffset: {
         width: 0,
         height: 2,
@@ -22,7 +23,7 @@ function StudyBoxSubmitButton(props: any) {
       marginTop: '10%',
     },
     button_text: {
-      color: '#FFF',
+      color: 'white',
       textAlign: 'center',
       fontSize: 17,
       fontFamily: 'RopaSans-Regular',

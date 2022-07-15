@@ -28,15 +28,16 @@ import {RoomScreen} from './src/components/pages/homepage/room/room';
 import {TeamPage} from './src/components/pages/settings/teams/team';
 import {BookingScreen} from './src/components/pages/booking/booking';
 import {BookingHistory} from './src/components/pages/settings/bookingHistory/bookingHistory';
+import {COLORS_STUDYBOX} from './src/components/elements/colors';
 
 const NavigationLoader = () => {
   const Stack = createStackNavigator();
   const ScreensOptions = {
     title: '',
     headerStyle: {
-      backgroundColor: '#F1F1F1',
+      backgroundColor: COLORS_STUDYBOX.DARK_WHITE,
     },
-    headerTintColor: '#29B6F6',
+    headerTintColor: COLORS_STUDYBOX.LIGHT_BLUE,
     headerShown: false,
   };
 

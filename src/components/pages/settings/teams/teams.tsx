@@ -24,6 +24,7 @@ import BackButton from '../../../../assets/svg/angle-left-solid.svg';
 import PageHeader from '../../../elements/controllers/pageHeader';
 import TrashIcon from '../../../../assets/svg/trash-can-solid.svg';
 import CheckIcon from '../../../../assets/svg/check-mark.svg';
+import {COLORS_STUDYBOX} from '../../../elements/colors';
 
 export class TeamsView extends React.Component {
   state = {
@@ -71,7 +72,11 @@ export class TeamsView extends React.Component {
               await answerTeamRequest(item.id, true);
               this.refreshTeams();
             }}>
-            <CheckIcon width={'100%'} height={'100%'} fill={'#4bc63b'} />
+            <CheckIcon
+              width={'100%'}
+              height={'100%'}
+              fill={COLORS_STUDYBOX.GREEN}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             style={card.rightTouchableOpacity}
@@ -79,7 +84,11 @@ export class TeamsView extends React.Component {
               await answerTeamRequest(item.id, false);
               this.refreshTeams();
             }}>
-            <TrashIcon width={'100%'} height={'100%'} fill={'#FF4444'} />
+            <TrashIcon
+              width={'100%'}
+              height={'100%'}
+              fill={COLORS_STUDYBOX.CONFIRM_RED}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -110,7 +119,11 @@ export class TeamsView extends React.Component {
                 this.setState({modalState: !this.state.modalState});
                 await this.refreshTeams();
               }}>
-              <CheckIcon width={'100%'} height={'100%'} fill={'#4bc63b'} />
+              <CheckIcon
+                width={'100%'}
+                height={'100%'}
+                fill={COLORS_STUDYBOX.GREEN}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -137,7 +150,11 @@ export class TeamsView extends React.Component {
                 await deleteTeam(item.id);
                 await this.refreshTeams();
               }}>
-              <TrashIcon width={'100%'} height={'100%'} fill={'#FF4444'} />
+              <TrashIcon
+                width={'100%'}
+                height={'100%'}
+                fill={COLORS_STUDYBOX.CONFIRM_RED}
+              />
             </TouchableOpacity>
           </View>
         ) : (
@@ -177,7 +194,7 @@ export class TeamsView extends React.Component {
           <TouchableOpacity
             style={addButton.touchableOpacity}
             onPress={() => this.setState({modalState: !this.state.modalState})}>
-            <AddLogo width={60} height={60} fill={'#4bc63b'} />
+            <AddLogo width={60} height={60} fill={COLORS_STUDYBOX.GREEN} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
