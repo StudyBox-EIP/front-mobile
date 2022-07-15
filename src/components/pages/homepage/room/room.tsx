@@ -112,7 +112,9 @@ export class RoomScreen extends React.Component<Props> {
         </ScrollView>
         <BasicButton
           style={RoomScreenStyle.button}
-          callback={undefined}
+          callback={() =>
+            this.props.navigation.navigate('BookingScreen', props)
+          }
           txt="Réserver"
         />
         <BasicButton

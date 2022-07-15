@@ -26,6 +26,9 @@ import {FriendsView} from './src/components/pages/settings/friends/friends';
 import {TeamsView} from './src/components/pages/settings/teams/teams';
 import {RoomScreen} from './src/components/pages/homepage/room/room';
 import {TeamPage} from './src/components/pages/settings/teams/team';
+import {BookingScreen} from './src/components/pages/booking/booking';
+import {BookingHistory} from './src/components/pages/settings/bookingHistory/bookingHistory';
+import {PaymentScreen} from './src/components/pages/payment/payment';
 
 const NavigationLoader = () => {
   const Stack = createStackNavigator();
@@ -92,9 +95,24 @@ const NavigationLoader = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="BookingHistory"
+          component={BookingHistory}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="RoomScreen"
           options={{headerShown: false}}
           component={RoomScreen}
+        />
+        <Stack.Screen
+          name="BookingScreen"
+          options={{headerShown: false}}
+          component={BookingScreen}
+        />
+        <Stack.Screen
+          name="PaymentScreen"
+          options={{headerShown: false}}
+          component={PaymentScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
