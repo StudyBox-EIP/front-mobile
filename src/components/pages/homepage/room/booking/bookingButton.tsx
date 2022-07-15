@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, View} from 'react-native';
-import {COLORS_STUDYBOX} from '../../elements/colors';
+import {COLORS_STUDYBOX} from '../../../../elements/colors';
 import {bookingStyle} from './style';
 
 export class BookingButton extends React.Component<Props> {

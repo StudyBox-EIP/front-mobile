@@ -1,11 +1,11 @@
 import React from 'react';
 import {Alert, Text, TextInput, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import PageHeader from '../../elements/controllers/pageHeader';
-import BackButton from '../../../assets/svg/angle-left-solid.svg';
-import {getData} from '../../api/userInfo';
-import BasicButton from '../../elements/button';
-import {makeBooking} from '../../api/booking';
+import PageHeader from '../../../../elements/controllers/pageHeader';
+import BackButton from '../../../../../assets/svg/angle-left-solid.svg';
+import {getData} from '../../../../api/userInfo';
+import BasicButton from '../../../../elements/button';
+import {makeBooking} from '../../../../api/booking';
 import {bookingStyle} from './style';
 import {BookingButton} from './bookingButton';
 
