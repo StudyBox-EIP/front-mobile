@@ -99,12 +99,15 @@ function RoomCard(props: any) {
       style={cardStyle.container}
       onPress={() => {
         props.navigation.navigate('RoomScreen', {
+          id: props.id,
           name: props.title,
           desc: props.desc,
           adress: props.adress,
           score: props.score,
+          price: props.price,
           latitude: props.latitude,
           longitude: props.longitude,
+          open_hours: props.open_hours,
           pic: picture,
         });
       }}>
