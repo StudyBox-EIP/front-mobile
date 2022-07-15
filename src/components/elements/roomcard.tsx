@@ -86,7 +86,7 @@ function RoomCard(props: any) {
       borderBottomRightRadius: 10,
     },
     favorite: {
-      fill: 'red',
+      fill: COLORS_STUDYBOX.CONFIRM_RED,
       position: 'absolute',
       top: 8,
       right: 8,
