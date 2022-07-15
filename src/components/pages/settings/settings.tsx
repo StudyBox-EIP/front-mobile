@@ -9,7 +9,7 @@ import UserIcon from '../../../assets/svg/circle-user-solid.svg';
 import ReturnIcon from '../../../assets/svg/return.svg';
 
 import {getData} from '../../api/userInfo';
-import { COLORS_STUDYBOX } from '../../elements/colors';
+import {COLORS_STUDYBOX} from '../../elements/colors';
 
 const SettingsPageScreenStyle = StyleSheet.create({
   base: {
@@ -88,7 +88,7 @@ export class SettingsScreen extends React.Component<Props> {
     return (
       <View style={SettingsPageScreenStyle.base}>
         <View style={SettingsPageScreenStyle.profile}>
-          <UserIcon width={60} height={60} fill={'#4bc63b'} />
+          <UserIcon width={60} height={60} fill={COLORS_STUDYBOX.GREEN} />
           <Text>
             {this.state.userInfo.first_name} {this.state.userInfo.last_name}
           </Text>
@@ -96,42 +96,42 @@ export class SettingsScreen extends React.Component<Props> {
         </View>
         <View style={SettingsPageScreenStyle.buttonBox}>
           <SettingsButton
-            backgroundColor="#ffffff"
-            iconColor="#4ac538"
+            backgroundColor="white"
+            iconColor={COLORS_STUDYBOX.GREEN}
             text="Gestion du Compte"
             logo={UserIcon}
             callback={undefined}
           />
           <SettingsButton
-            backgroundColor="#ffffff"
-            iconColor="#4ac538"
+            backgroundColor="white"
+            iconColor={COLORS_STUDYBOX.GREEN}
             text="Gérer mes Amis"
             logo={UserIcon}
             callback={() => this.props.navigation.navigate('FriendsView')}
           />
           <SettingsButton
-            backgroundColor="#ffffff"
-            iconColor="#4ac538"
+            backgroundColor="white"
+            iconColor={COLORS_STUDYBOX.GREEN}
             text="Gérer mes Groupes"
             logo={UserIcon}
             callback={() => this.props.navigation.navigate('TeamsView')}
           />
           <SettingsButton
-            backgroundColor="#ffffff"
-            iconColor="#4ac538"
+            backgroundColor="white"
+            iconColor={COLORS_STUDYBOX.GREEN}
             text="Paiement"
             logo={UserIcon}
             callback={undefined}
           />
           <SettingsButton
-            backgroundColor="#ffffff"
-            iconColor="#4ac538"
+            backgroundColor="white"
+            iconColor={COLORS_STUDYBOX.GREEN}
             text="Historique de Paiement"
             logo={UserIcon}
             callback={() => this.props.navigation.navigate('BookingHistory')}
           />
           <SettingsButton
-            backgroundColor="#ffffff"
+            backgroundColor="white"
             iconColor="red"
             text="Déconnexion"
             logo={ReturnIcon}

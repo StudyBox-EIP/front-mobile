@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { COLORS_STUDYBOX } from '../../../elements/colors';
 
 export const friendViewStyle = StyleSheet.create({
   container: {
@@ -87,7 +88,7 @@ export const modal = StyleSheet.create({
     alignSelf: 'center',
     height: 100,
     backgroundColor: 'white',
-    borderColor: '#4bc63b',
+    borderColor: COLORS_STUDYBOX.GREEN,
     borderWidth: 1,
     width: '75%',
     borderRadius: 10,
