@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { COLORS_STUDYBOX } from '../../../elements/colors';
 
 export const members = StyleSheet.create({
   container: {
@@ -19,7 +20,7 @@ export const member = StyleSheet.create({
 export const team = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
     width: '80%',
     height: 75,
     marginVertical: 8,
@@ -48,8 +49,8 @@ export const modal = StyleSheet.create({
   background: {
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
-    backgroundColor: '#ffffff',
-    borderColor: '#4bc63b',
+    backgroundColor: 'white',
+    borderColor: COLORS_STUDYBOX.GREEN,
     borderWidth: 1,
     width: '85%',
     height: '20%',

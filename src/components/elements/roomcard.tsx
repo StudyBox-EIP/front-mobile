@@ -55,6 +55,7 @@ const Score = (props: any) => {
       size: 16,
       padding: 2,
       marginLeft: 4,
+      fill: COLORS_STUDYBOX.YELLOW,
     },
     text: {
       color: 'white',

@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import {COLORS_STUDYBOX} from '../../../elements/colors';
 
 const ScreenAuthStyle = StyleSheet.create({
   container: {
@@ -23,7 +24,7 @@ const ScreenAuthStyle = StyleSheet.create({
     fontSize: 33,
     marginTop: 20,
     marginBottom: 20,
-    color: '#737373',
+    color: COLORS_STUDYBOX.GREY,
     fontFamily: 'RopaSans-Regular',
   },
   button_auth: {
@@ -32,8 +33,8 @@ const ScreenAuthStyle = StyleSheet.create({
     paddingBottom: 7,
     borderRadius: 7,
     marginBottom: 15,
-    backgroundColor: '#FFF',
-    shadowColor: '#000',
+    backgroundColor: 'white',
+    shadowColor: 'black',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -43,7 +44,7 @@ const ScreenAuthStyle = StyleSheet.create({
     elevation: 10,
   },
   button_text: {
-    color: '#737373',
+    color: COLORS_STUDYBOX.GREY,
     textAlign: 'center',
     fontSize: 17,
     fontFamily: 'RopaSans-Regular',
