@@ -127,7 +127,7 @@ export class SettingsScreen extends React.Component<Props> {
             iconColor="#4ac538"
             text="Historique de Paiement"
             logo={UserIcon}
-            callback={undefined}
+            callback={() => this.props.navigation.navigate('BookingHistory')}
           />
           <SettingsButton
             backgroundColor="#ffffff"

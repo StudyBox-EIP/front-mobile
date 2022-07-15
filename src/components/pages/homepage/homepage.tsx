@@ -54,9 +54,11 @@ export class HomePageScreen extends React.Component<Props> {
         desc: remoteRoom.desc,
         address: remoteRoom.address,
         score: remoteRoom.average,
+        price: remoteRoom.price,
         latitude: remoteRoom.latitude,
         longitude: remoteRoom.longitude,
         favorite: false, // FAVORITE NEEDS TO BE IMPLEMENTED IN API
+        open_hours: remoteRoom.open_hours,
         image: undefined,
       });
     }
@@ -125,14 +127,17 @@ export class HomePageScreen extends React.Component<Props> {
             return (
               <RoomCard
                 key={key}
+                id={val.id}
                 title={val.name}
                 desc={val.desc}
                 adress={val.address}
                 score={val.score}
+                price={val.price}
                 image={val.image}
                 latitude={val.latitude}
                 longitude={val.longitude}
                 favorite={val.favorite}
+                open_hours={val.open_hours}
                 navigation={this.props.navigation}
               />
             );
