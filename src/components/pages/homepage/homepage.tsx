@@ -58,6 +58,7 @@ export class HomePageScreen extends React.Component<Props> {
         latitude: remoteRoom.latitude,
         longitude: remoteRoom.longitude,
         favorite: false, // FAVORITE NEEDS TO BE IMPLEMENTED IN API
+        seats_available: remoteRoom.seats_available,
         open_hours: remoteRoom.open_hours,
         image: undefined,
       });
@@ -137,6 +138,7 @@ export class HomePageScreen extends React.Component<Props> {
                 latitude={val.latitude}
                 longitude={val.longitude}
                 favorite={val.favorite}
+                seats_available={val.seats_available}
                 open_hours={val.open_hours}
                 navigation={this.props.navigation}
               />

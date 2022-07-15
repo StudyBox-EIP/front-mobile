@@ -37,3 +37,34 @@ export const RoomScreenStyle = StyleSheet.create({
     flex: 0.8,
   },
 });
+
+export const bookingStyle = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
+  BookingButton: {
+    width: '50%',
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  ButtonList: {
+    margin: 10,
+  },
+  cardInput: {
+    borderWidth: 1,
+    borderColor: 'grey',
+    minWidth: 100,
+    borderRadius: 10,
+  },
+  bookingSelector: {
+    alignItems: 'center',
+  },
+  cardInfoContainer: {
+    width: '80%',
+    alignSelf: 'center',
+  },
+  cardInfoDate: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+});
