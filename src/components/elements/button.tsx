@@ -19,8 +19,12 @@ function BasicButton(props: any) {
     },
   });
 
+  const container =
+    props.style == null
+      ? StyleSheet.compose(props.style, style.container)
+      : style.container;
   return (
-    <TouchableOpacity style={style.container} onPress={props.callback}>
+    <TouchableOpacity style={container} onPress={props.callback}>
       <Text style={style.text}>{props.txt}</Text>
     </TouchableOpacity>
   );
