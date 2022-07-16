@@ -24,7 +24,7 @@ export const RoomScreenStyle = StyleSheet.create({
     width: '100%',
     height: '30%',
     resizeMode: 'contain',
-    backgroundColor: 'grey',
+    backgroundColor: COLORS_STUDYBOX.GREY,
     flex: 1.5,
   },
   cardContainer: {
@@ -40,32 +40,69 @@ export const RoomScreenStyle = StyleSheet.create({
 });
 
 export const bookingStyle = StyleSheet.create({
-  mainContainer: {
+  back: {
     flex: 1,
   },
-  BookingButton: {
-    width: '50%',
-    alignSelf: 'center',
+  base: {
+    flex: 1,
     alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    marginVertical: 8,
   },
-  ButtonList: {
+  BookingButton: {
+    flex: 0.5,
     margin: 10,
   },
-  cardInput: {
+  ButtonList: {
+    margin: 2,
+    width: '100%',
+    flexDirection: 'column',
+  },
+  cardInputLarge: {
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: COLORS_STUDYBOX.GREY,
     minWidth: 100,
     borderRadius: 10,
   },
+  zoneInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    flexWrap: 'wrap',
+    marginTop: 4,
+  },
+  cardInputSmall: {
+    borderWidth: 1,
+    borderColor: COLORS_STUDYBOX.GREY,
+    minWidth: 100,
+    borderRadius: 10,
+    flex: 1,
+    marginHorizontal: 2,
+  },
   bookingSelector: {
     alignItems: 'center',
+    flex: 10,
+    width: '90%',
   },
   cardInfoContainer: {
-    width: '80%',
     alignSelf: 'center',
+    flex: 4,
+    width: '90%',
+    margin: 4,
   },
   cardInfoDate: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  buttonTime: {
+    marginVertical: 2,
+    marginHorizontal: 16,
+    borderRadius: 10,
+    flex: 1,
+  },
+  title: {
+    alignSelf: 'center',
+    fontSize: 20,
   },
 });
