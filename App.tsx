@@ -26,7 +26,7 @@ import {FriendsView} from './src/components/pages/settings/friends/friends';
 import {TeamsView} from './src/components/pages/settings/teams/teams';
 import {RoomScreen} from './src/components/pages/homepage/room/room';
 import {TeamPage} from './src/components/pages/settings/teams/team';
-import {BookingScreen} from './src/components/pages/booking/booking';
+import {BookingScreen} from './src/components/pages/homepage/room/booking/booking';
 import {BookingHistory} from './src/components/pages/settings/bookingHistory/bookingHistory';
 import {COLORS_STUDYBOX} from './src/components/elements/colors';
 

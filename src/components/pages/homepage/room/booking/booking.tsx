@@ -56,7 +56,7 @@ export class BookingScreen extends React.Component<Props> {
   BookingSelector = () => {
     return (
       <View style={bookingStyle.bookingSelector}>
-        <Text>Choisissez votre plage horaire</Text>
+        <Text style={bookingStyle.title}>Choisissez votre plage horaire</Text>
         <ScrollView style={bookingStyle.ButtonList}>
           {this.state.params.open_hours.map((slot: string) => {
             return (
@@ -74,61 +74,69 @@ export class BookingScreen extends React.Component<Props> {
     );
   };
 
+  BankingSetting = () => {
+    return (
+      <View style={bookingStyle.cardInfoContainer}>
+        <Text style={bookingStyle.title}>Information Banquaire</Text>
+        <TextInput
+          placeholder="Numéro de Carte"
+          defaultValue={__DEV__ ? '4242424242424242' : ''}
+          style={bookingStyle.cardInputLarge}
+          onChangeText={newText => {
+            this.state.paymentInfo.number = parseInt(newText, 10);
+          }}
+        />
+        <View style={bookingStyle.zoneInput}>
+          <TextInput
+            placeholder="MM/YY"
+            style={bookingStyle.cardInputSmall}
+            maxLength={7}
+            onChangeText={cardExp => {
+              if (cardExp.length === 2) {
+                cardExp += '/';
+              } else if (cardExp.length === 3) {
+                cardExp = cardExp.substring(0, cardExp.length - 2);
+              }
+              this.setState({cardExp});
+              this.state.paymentInfo.exp_month = parseInt(
+                cardExp.split('/')[0],
+                10,
+              );
+              this.state.paymentInfo.exp_year = parseInt(
+                cardExp.split('/')[1],
+                10,
+              );
+            }}
+            value={this.state.cardExp}
+          />
+          <TextInput
+            placeholder="CVC"
+            defaultValue={__DEV__ ? '777' : ''}
+            style={bookingStyle.cardInputSmall}
+            onChangeText={newText =>
+              (this.state.paymentInfo.cvc = parseInt(newText, 10))
+            }
+          />
+        </View>
+      </View>
+    );
+  };
+
   render() {
     return (
-      <View style={bookingStyle.mainContainer}>
+      <View style={bookingStyle.back}>
         <PageHeader
           headerText="Réservation"
           callback={() => this.props.navigation?.goBack()}
           icon={BackButton}
           linePercentage="55%"
         />
-        <this.BookingSelector />
-        <View style={bookingStyle.cardInfoContainer}>
-          <TextInput
-            placeholder="Numéro de Carte"
-            defaultValue={__DEV__ ? '4242424242424242' : ''}
-            style={bookingStyle.cardInput}
-            onChangeText={newText => {
-              this.state.paymentInfo.number = parseInt(newText, 10);
-            }}
-          />
-          <View style={bookingStyle.cardInfoDate}>
-            <TextInput
-              placeholder="MM/YY"
-              style={bookingStyle.cardInput}
-              maxLength={7}
-              onChangeText={cardExp => {
-                if (cardExp.length === 2) {
-                  cardExp += '/';
-                } else if (cardExp.length === 3) {
-                  cardExp = cardExp.substring(0, cardExp.length - 2);
-                }
-                this.setState({cardExp});
-                this.state.paymentInfo.exp_month = parseInt(
-                  cardExp.split('/')[0],
-                  10,
-                );
-                this.state.paymentInfo.exp_year = parseInt(
-                  cardExp.split('/')[1],
-                  10,
-                );
-              }}
-              value={this.state.cardExp}
-            />
-            <TextInput
-              placeholder="CVC"
-              defaultValue={__DEV__ ? '777' : ''}
-              style={bookingStyle.cardInput}
-              onChangeText={newText =>
-                (this.state.paymentInfo.cvc = parseInt(newText, 10))
-              }
-            />
-          </View>
-        </View>
-        <View style={bookingStyle.BookingButton}>
+        <View style={bookingStyle.base}>
+          <this.BankingSetting />
+          <this.BookingSelector />
           <BasicButton
             style={bookingStyle.BookingButton}
+            txt="Confirmer la Réservation"
             callback={async () => {
               const paymentStatus: boolean = await makeBooking(
                 {
@@ -147,7 +155,6 @@ export class BookingScreen extends React.Component<Props> {
                 Alert.alert('Paiement Refusé');
               }
             }}
-            txt="Confirmer la Réservation"
           />
         </View>
       </View>

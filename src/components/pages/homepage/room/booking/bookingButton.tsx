@@ -34,7 +34,7 @@ export class BookingButton extends React.Component<Props> {
 
   render() {
     return (
-      <View style={bookingStyle.ButtonList} key={this.state.title}>
+      <View style={bookingStyle.buttonTime} key={this.state.title}>
         <Button
           title={this.state.title}
           color={this.state.buttonColor}
