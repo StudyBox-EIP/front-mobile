@@ -24,6 +24,11 @@ We recommand using tools such as **Android Studio** for the **Android** version.
 > NPM >= 7\
 > JDK == 11
 
+## Environment
+
+**.env** File Content
+- `API_URL={PROD OR DEV BACKEND URL}`
+
 ## Start developing
 
 To start developing you need to go to the `Studybox` directory and download the dependencies trough **npm**.
