@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import { COLORS_STUDYBOX } from '../colors';
+import {COLORS_STUDYBOX} from '../colors';
 
 export default class PageHeader extends React.Component<Props> {
   style = StyleSheet.create({

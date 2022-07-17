@@ -5,7 +5,7 @@ import PageHeader from '../../../../elements/controllers/pageHeader';
 import BackButton from '../../../../../assets/svg/angle-left-solid.svg';
 import {getData} from '../../../../api/userInfo';
 import BasicButton from '../../../../elements/button';
-import {makeBooking} from '../../../../api/booking';
+import {getSeatAvailibility, makeBooking} from '../../../../api/booking';
 import {bookingStyle} from './style';
 import {BookingButton} from './bookingButton';
 
@@ -27,6 +27,10 @@ export class BookingScreen extends React.Component<Props> {
     cardExp: '',
     slotDateStart: 0,
     slotDateEnd: 0,
+    selectedDate: {
+      date: 0,
+      seatsAvailable: [],
+    },
   };
 
   async updateBookingInfo() {
@@ -36,6 +40,7 @@ export class BookingScreen extends React.Component<Props> {
     }
     const userInfo = JSON.parse(rawUserInfo);
 
+    this.state.selectedDate.date = new Date(Date.now()).setHours(0, 0, 0, 0);
     this.state.bookingInfo.user_id = userInfo.id;
     this.state.bookingInfo.room_id = this.state.params.id;
     this.state.bookingInfo.price = this.state.params.price;
@@ -49,8 +54,17 @@ export class BookingScreen extends React.Component<Props> {
     }
   }
 
-  componentDidMount() {
-    this.updateBookingInfo();
+  async checkRoomAvailibility(bookingDate: number) {
+    this.state.selectedDate.seatsAvailable = await getSeatAvailibility(
+      this.state.bookingInfo.room_id,
+      bookingDate,
+    );
+    this.forceUpdate();
+  }
+
+  async componentDidMount() {
+    await this.updateBookingInfo();
+    await this.checkRoomAvailibility(this.state.selectedDate.date);
   }
 
   BookingSelector = () => {
@@ -58,11 +72,12 @@ export class BookingScreen extends React.Component<Props> {
       <View style={bookingStyle.bookingSelector}>
         <Text style={bookingStyle.title}>Choisissez votre plage horaire</Text>
         <ScrollView style={bookingStyle.ButtonList}>
-          {this.state.params.open_hours.map((slot: string) => {
+          {this.state.params.open_hours.map((slot: string, index: number) => {
             return (
               <BookingButton
                 title={slot}
                 key={slot}
+                seatsAvailable={this.state.selectedDate.seatsAvailable[index]}
                 callback={(newDate: Array<number>) => {
                   [this.state.slotDateStart, this.state.slotDateEnd] = newDate;
                 }}
@@ -77,9 +92,10 @@ export class BookingScreen extends React.Component<Props> {
   BankingSetting = () => {
     return (
       <View style={bookingStyle.cardInfoContainer}>
-        <Text style={bookingStyle.title}>Information Banquaire</Text>
+        <Text style={bookingStyle.title}>Informations Bancaires</Text>
         <TextInput
           placeholder="Numéro de Carte"
+          keyboardType="numeric"
           defaultValue={__DEV__ ? '4242424242424242' : ''}
           style={bookingStyle.cardInputLarge}
           onChangeText={newText => {
@@ -89,6 +105,7 @@ export class BookingScreen extends React.Component<Props> {
         <View style={bookingStyle.zoneInput}>
           <TextInput
             placeholder="MM/YY"
+            keyboardType="numeric"
             style={bookingStyle.cardInputSmall}
             maxLength={7}
             onChangeText={cardExp => {
@@ -111,6 +128,7 @@ export class BookingScreen extends React.Component<Props> {
           />
           <TextInput
             placeholder="CVC"
+            keyboardType="numeric"
             defaultValue={__DEV__ ? '777' : ''}
             style={bookingStyle.cardInputSmall}
             onChangeText={newText =>

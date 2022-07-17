@@ -23,7 +23,7 @@ import BackButton from '../../../../assets/svg/angle-left-solid.svg';
 import AddLogo from '../../../../assets/svg/plus.svg';
 import TrashIcon from '../../../../assets/svg/trash-can-solid.svg';
 import CheckIcon from '../../../../assets/svg/check-mark.svg';
-import { COLORS_STUDYBOX } from '../../../elements/colors';
+import {COLORS_STUDYBOX} from '../../../elements/colors';
 
 export class FriendsView extends React.Component {
   state = {
