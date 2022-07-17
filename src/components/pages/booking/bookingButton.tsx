@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, View} from 'react-native';
-import {COLORS_STUDYBOX} from '../../../../elements/colors';
+import {COLORS_STUDYBOX} from '../../elements/colors';
 import {bookingStyle} from './style';
 
 export class BookingButton extends React.Component<Props> {
@@ -11,12 +11,6 @@ export class BookingButton extends React.Component<Props> {
     slotDateEnd: 0,
     isOutdated: false,
   };
-
-  componentDidUpdate() {
-    if (!this.state.isOutdated && this.props.seatsAvailable <= 0) {
-      this.setState({isOutdated: true});
-    }
-  }
 
   componentDidMount() {
     this.state.title = this.props.title;
@@ -40,7 +34,7 @@ export class BookingButton extends React.Component<Props> {
 
   render() {
     return (
-      <View style={bookingStyle.buttonTime} key={this.state.title}>
+      <View style={bookingStyle.ButtonList} key={this.state.title}>
         <Button
           title={this.state.title}
           color={this.state.buttonColor}
@@ -56,7 +50,7 @@ export class BookingButton extends React.Component<Props> {
               this.state.slotDateEnd,
             ]);
           }}
-          disabled={this.state.isOutdated}
+          disabled={__DEV__ ? false : this.state.isOutdated}
         />
       </View>
     );
