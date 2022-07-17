@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import { COLORS_STUDYBOX } from '../../../elements/colors';
+import {COLORS_STUDYBOX} from '../../../elements/colors';
 
 export const members = StyleSheet.create({
   container: {

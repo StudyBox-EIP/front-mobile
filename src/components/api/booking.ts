@@ -85,7 +85,6 @@ export async function getSeatAvailibility(id: number, timestamp: number) {
       throw 'userInfo not found';
     }
     const userInfo = JSON.parse(rawUserInfo);
-
     const res = await axios.get(
       `${API.WEB_ROOT}/rooms/${id}/availability/${timestamp}`,
       {
