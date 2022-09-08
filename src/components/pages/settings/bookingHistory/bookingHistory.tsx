@@ -3,6 +3,7 @@ import {View, Text, ScrollView} from 'react-native';
 import {getBooking} from '../../../api/booking';
 import PageHeader from '../../../elements/controllers/pageHeader';
 import BackButton from '../../../../assets/svg/angle-left-solid.svg';
+import { historyStyle } from './style';
 
 export class BookingHistory extends React.Component<Props> {
   state = {
@@ -27,7 +28,7 @@ export class BookingHistory extends React.Component<Props> {
         {this.state.bookingHistory.map((payment: any) => {
           console.info(payment);
           return (
-            <View style={{width: '80%', height: 100}}>
+            <View style={historyStyle.history_container}>
               <Text>
                 {String(new Date(payment?.date_start))} {payment?.room_id.name}
               </Text>
