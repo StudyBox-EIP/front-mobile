@@ -13,29 +13,55 @@ export class BookingButton extends React.Component<Props> {
   };
 
   componentDidUpdate() {
-    if (!this.state.isOutdated && this.props.seatsAvailable <= 0) {
+    if (__DEV__) {
+      console.info(
+        '__DEV__',
+        'Seats Available',
+        this.props?.seatsAvailable?.hour_start,
+        this.props.seatsAvailable?.avaible_seat,
+      );
+    }
+
+    if (
+      this.props?.seatsAvailable?.hour_start !== undefined &&
+      this.state.slotDateStart !==
+        new Date(this.props.seatsAvailable.hour_start).getTime()
+    ) {
+      this.setState({
+        slotDateStart: new Date(
+          this.props?.seatsAvailable?.hour_start,
+        ).getTime(),
+      });
+    }
+
+    if (
+      this.props?.seatsAvailable?.hour_end !== undefined &&
+      this.state.slotDateEnd !==
+        new Date(this.props.seatsAvailable.hour_end).getTime()
+    ) {
+      this.setState({
+        slotDateEnd: new Date(this.props?.seatsAvailable?.hour_end).getTime(),
+      });
+    }
+
+    if (
+      !this.state.isOutdated &&
+      this.props.seatsAvailable?.avaible_seat <= 0
+    ) {
       this.setState({isOutdated: true});
     }
   }
 
   componentDidMount() {
-    this.state.title = this.props.title;
+    this.state.title = this.props.title.hour_start.split('T')[1].split('.')[0];
     this.setState({title: this.state.title});
     this.state.slotDateStart = new Date(
-      new Date(Date.now()).setHours(
-        parseInt(this.state.title.split('-')[0], 10),
-        0,
-        0,
-        0,
-      ),
+      this.props?.seatsAvailable?.hour_start,
     ).getTime();
-    this.state.slotDateEnd = new Date(Date.now()).setUTCHours(
-      parseInt(this.state.title.split('-')[1], 10),
-      0,
-      0,
-      0,
-    );
-    this.state.isOutdated = Date.now() - this.state.slotDateStart > 0;
+    this.state.slotDateEnd = new Date(
+      this.props?.seatsAvailable?.hour_end,
+    ).getTime();
+    this.state.isOutdated = Date.now() - this.state.slotDateStart < 0;
   }
 
   render() {
@@ -51,6 +77,7 @@ export class BookingButton extends React.Component<Props> {
                   ? COLORS_STUDYBOX.GREY
                   : COLORS_STUDYBOX.GREEN,
             });
+            console.info('slotDateStart', this.state.slotDateStart);
             this.props.callback([
               this.state.slotDateStart,
               this.state.slotDateEnd,

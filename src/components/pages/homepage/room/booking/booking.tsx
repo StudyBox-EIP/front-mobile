@@ -40,11 +40,21 @@ export class BookingScreen extends React.Component<Props> {
     }
     const userInfo = JSON.parse(rawUserInfo);
 
-    this.state.selectedDate.date = new Date(Date.now()).setHours(0, 0, 0, 0);
+    this.state.selectedDate.date = Date.now();
     this.state.bookingInfo.user_id = userInfo.id;
     this.state.bookingInfo.room_id = this.state.params.id;
     this.state.bookingInfo.price = this.state.params.price;
     this.setState({cardExp: __DEV__ ? '12/30' : ''});
+
+    // await getSeatAvailibility(
+    //   this.state.bookingInfo.room_id,
+    //   new Date(Date.now()).toISOString(),
+    // );
+    // console.log(new Date(Date.now()).toISOString());
+    // await getSeatAvailibility(
+    //   this.state.bookingInfo.room_id,
+    //   new Date(Date.now()).getTime(),
+    // );
 
     if (__DEV__) {
       this.state.paymentInfo.number = 4242424242424242;
@@ -59,6 +69,8 @@ export class BookingScreen extends React.Component<Props> {
       this.state.bookingInfo.room_id,
       bookingDate,
     );
+    // console.debug(this.state.selectedDate.seatsAvailable);
+
     this.forceUpdate();
   }
 
@@ -72,11 +84,11 @@ export class BookingScreen extends React.Component<Props> {
       <View style={bookingStyle.bookingSelector}>
         <Text style={bookingStyle.title}>Choisissez votre plage horaire</Text>
         <ScrollView style={bookingStyle.ButtonList}>
-          {this.state.params.open_hours.map((slot: string, index: number) => {
+          {this.state.params.open_hours.map((slot: any, index: number) => {
             return (
               <BookingButton
                 title={slot}
-                key={slot}
+                key={slot.hour_start}
                 seatsAvailable={this.state.selectedDate.seatsAvailable[index]}
                 callback={(newDate: Array<number>) => {
                   [this.state.slotDateStart, this.state.slotDateEnd] = newDate;
@@ -168,6 +180,10 @@ export class BookingScreen extends React.Component<Props> {
                 this.state.paymentInfo,
               );
               if (paymentStatus === true) {
+                this.state.selectedDate = {
+                  date: 0,
+                  seatsAvailable: [],
+                };
                 this.props.navigation.navigate('HomePageScreen');
               } else {
                 Alert.alert('Paiement Refusé');
