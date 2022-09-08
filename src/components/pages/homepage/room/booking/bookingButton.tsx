@@ -6,6 +6,7 @@ import {bookingStyle} from './style';
 export class BookingButton extends React.Component<Props> {
   state = {
     title: '',
+    seats_total: 0,
     buttonColor: COLORS_STUDYBOX.GREY,
     slotDateStart: 0,
     slotDateEnd: 0,
@@ -54,6 +55,7 @@ export class BookingButton extends React.Component<Props> {
 
   componentDidMount() {
     this.state.title = this.props.title.hour_start.split('T')[1].split('.')[0];
+    this.setState({seats_total: this.props.seats_total});
     this.setState({title: this.state.title});
     this.state.slotDateStart = new Date(
       this.props?.seatsAvailable?.hour_start,
@@ -68,7 +70,7 @@ export class BookingButton extends React.Component<Props> {
     return (
       <View style={bookingStyle.buttonTime} key={this.state.title}>
         <Button
-          title={this.state.title}
+          title={`${this.state.title}  -  ${this.props.seatsAvailable?.avaible_seat}/${this.state.seats_total}`}
           color={this.state.buttonColor}
           onPress={() => {
             this.setState({

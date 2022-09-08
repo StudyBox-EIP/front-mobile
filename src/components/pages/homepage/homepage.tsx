@@ -60,6 +60,7 @@ export class HomePageScreen extends React.Component<Props> {
         favorite: false, // FAVORITE NEEDS TO BE IMPLEMENTED IN API
         seats_available: remoteRoom.seats_available,
         open_hours: remoteRoom.open_hours,
+        seats_total: remoteRoom.seats_total,
         image: undefined,
       });
     }
@@ -139,6 +140,7 @@ export class HomePageScreen extends React.Component<Props> {
                 longitude={val.longitude}
                 favorite={val.favorite}
                 seats_available={val.seats_available}
+                seats_total={val.seats_total}
                 open_hours={val.open_hours}
                 navigation={this.props.navigation}
               />
