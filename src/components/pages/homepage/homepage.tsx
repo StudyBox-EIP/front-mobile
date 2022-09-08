@@ -6,6 +6,7 @@ import {getRooms, getRoomsNearby} from '../../api/rooms';
 import Geolocation from 'react-native-geolocation-service';
 import RoomCard from '../../elements/roomcard';
 import BasicSearchBar from '../../elements/searchbar';
+import {getData, storeData} from '../../api/userInfo';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -143,6 +144,42 @@ export class HomePageScreen extends React.Component<Props> {
                 seats_total={val.seats_total}
                 open_hours={val.open_hours}
                 navigation={this.props.navigation}
+                onFavorite={(newFavorite: boolean) => {
+                  this.setState({
+                    nearbyRooms: this.state.nearbyRooms.map((v: any) => {
+                      if (v.name === val.name) {
+                        v.favorite = !val.favorite;
+                      }
+                      return v;
+                    }),
+                  });
+                  getData('favorites')
+                    .then(res => {
+                      if (newFavorite === true) {
+                        if (res === null && res !== undefined) {
+                          storeData('favorites', JSON.stringify([val.id]));
+                        } else if (res !== undefined) {
+                          const oldValues = JSON.parse(res);
+                          oldValues.push(val.id);
+                          storeData('favorites', JSON.stringify(oldValues));
+                        }
+                      } else {
+                        if (res !== null && res !== undefined) {
+                          const oldValues = JSON.parse(res);
+                          storeData(
+                            'favorites',
+                            JSON.stringify(
+                              oldValues.filter((id: any) => id !== val.id),
+                            ),
+                          );
+                        }
+                      }
+                    })
+                    .catch(console.error);
+
+                  console.log(this.state.nearbyRooms);
+                  console.log('favorite');
+                }}
               />
             );
           })}

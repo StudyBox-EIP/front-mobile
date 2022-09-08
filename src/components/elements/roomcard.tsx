@@ -1,5 +1,12 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, Image, View} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {getPictureObject} from '../../tools/images';
 import {COLORS_STUDYBOX} from '../elements/colors';
 import HeartEmptyIcon from '../../assets/svg/heart.svg';
@@ -116,17 +123,21 @@ function RoomCard(props: any) {
       }}>
       <Image style={smallObject.imageCover} source={picture} />
       <Text style={cardStyle.title}>{props.title}</Text>
-      <HeartEmptyIcon
+      <TouchableOpacity
         style={smallObject.favorite}
-        height={smallObject.favorite.size}
-        width={smallObject.favorite.size}
-      />
-      <HeartFullIcon
-        opacity={props.favorite ? '100%' : '0'}
-        style={smallObject.favorite}
-        height={smallObject.favorite.size}
-        width={smallObject.favorite.size}
-      />
+        onPress={() => props.onFavorite(!props.favorite)}>
+        <HeartEmptyIcon
+          style={smallObject.favorite}
+          height={smallObject.favorite.size}
+          width={smallObject.favorite.size}
+        />
+        <HeartFullIcon
+          opacity={props.favorite ? '100%' : '0'}
+          style={smallObject.favorite}
+          height={smallObject.favorite.size}
+          width={smallObject.favorite.size}
+        />
+      </TouchableOpacity>
       <Score score={props.score} />
     </Pressable>
   );
