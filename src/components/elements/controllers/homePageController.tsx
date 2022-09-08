@@ -6,6 +6,7 @@ import {faUserCircle as farUserCircle} from '@fortawesome/free-regular-svg-icons
 import {faCompass as farCompass} from '@fortawesome/free-regular-svg-icons';
 // import {faCompass as fasCompass} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as farHeart} from '@fortawesome/free-regular-svg-icons';
+import {resetPageHistory} from './navigation';
 // import {faHeart as fasHeart} from '@fortawesome/free-solid-svg-icons';
 
 export const pageBottomMargin = StyleSheet.create({
@@ -45,6 +46,7 @@ export const BottomBarIcon = (props: any) => {
     <SafeAreaView style={iconStyle.icon}>
       <TouchableOpacity
         onPress={() => {
+          resetPageHistory(props.navigation, props.destPage);
           props.navigation.navigate(props.destPage);
         }}>
         <FontAwesomeIcon size={42} icon={props.icon} />
@@ -63,7 +65,7 @@ export const BottomHomePageController = (props: any) => {
       />
       <BottomBarIcon
         icon={farHeart}
-        destPage={'HomePageScreen'}
+        destPage={'FavoritesPageScreen'}
         navigation={props.navigation}
       />
       <BottomBarIcon
