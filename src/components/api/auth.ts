@@ -27,6 +27,8 @@ export async function login(
         return error;
       } else if (error.response?.status === 400) {
         Alert.alert('Wrong Credentials', error.response?.data?.message);
+      } else {
+        console.error(error);
       }
     } else {
       Alert.alert('Unknown Error');

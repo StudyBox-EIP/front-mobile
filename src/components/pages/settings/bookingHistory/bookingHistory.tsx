@@ -24,10 +24,13 @@ export class BookingHistory extends React.Component<Props> {
           icon={BackButton}
           linePercentage="90%"
         />
-        {this.state.bookingHistory.map(payment => {
+        {this.state.bookingHistory.map((payment: any) => {
+          console.info(payment);
           return (
-            <View>
-              <Text>{JSON.stringify(payment)}</Text>
+            <View style={{width: '80%', height: 100}}>
+              <Text>
+                {String(new Date(payment?.date_start))} {payment?.room_id.name}
+              </Text>
             </View>
           );
         })}

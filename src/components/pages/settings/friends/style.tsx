@@ -96,7 +96,7 @@ export const modal = StyleSheet.create({
   },
   viewContent: {
     justifyContent: 'space-between',
-    flexDirection: 'column',
+    flexDirection: 'row',
     width: '100%',
     paddingHorizontal: 10,
   },

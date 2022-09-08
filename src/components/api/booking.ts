@@ -36,6 +36,12 @@ export async function makeBooking(data: any, cardInfo: Object) {
     data.payment_infos = {
       id: await getPaymentMethod(cardInfo),
     };
+    data.dates = [
+      {
+        date_start: data.date_start,
+        date_end: data.date_end,
+      },
+    ];
     const res = await axios.post(route, data, {
       headers: {
         Authorization: 'Bearer ' + userInfo.token,
@@ -78,13 +84,14 @@ export async function getBooking() {
   }
 }
 
-export async function getSeatAvailibility(id: number, timestamp: number) {
+export async function getSeatAvailibility(id: number, timestamp: any) {
   try {
     const rawUserInfo = await getData('userInfo');
     if (rawUserInfo === undefined || rawUserInfo === null) {
       throw 'userInfo not found';
     }
     const userInfo = JSON.parse(rawUserInfo);
+    console.info(`${API.WEB_ROOT}/rooms/${id}/availability/${timestamp}`);
     const res = await axios.get(
       `${API.WEB_ROOT}/rooms/${id}/availability/${timestamp}`,
       {
@@ -93,8 +100,8 @@ export async function getSeatAvailibility(id: number, timestamp: number) {
         },
       },
     );
-
-    return res.data[0]?.current_seats_available;
+    console.info('getSeatAvailibility', res.data[0]?.open_hours);
+    return res.data[0]?.open_hours;
   } catch (e) {
     if (axios.isAxiosError(e)) {
       console.error(e.code, e.message, e.response?.data);
