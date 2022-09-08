@@ -1,14 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, PermissionsAndroid} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
-import {getRooms, getRoomsNearby} from '../../api/rooms';
-import Geolocation from 'react-native-geolocation-service';
+import {getRooms} from '../../api/rooms';
 import RoomCard from '../../elements/roomcard';
-import BasicSearchBar from '../../elements/searchbar';
 import {getData, storeData} from '../../api/userInfo';
 
-const HomePageScreenStyle = StyleSheet.create({
+const FavoritesPageScreenStyle = StyleSheet.create({
   base: {
     flex: 1,
     alignItems: 'center',
@@ -38,7 +36,7 @@ const HomePageScreenStyle = StyleSheet.create({
   },
 });
 
-export class HomePageScreen extends React.Component<Props> {
+export class FavoritesPageScreen extends React.Component<Props> {
   state = {
     nearbyRooms: [{}], // Storing all nearby Rooms from current Device
     favoriteRooms: [{}],
@@ -46,10 +44,8 @@ export class HomePageScreen extends React.Component<Props> {
     longitude: 0,
   };
 
-  async applyRoomState(remoteRooms: Array<any>) {
+  applyRoomState(remoteRooms: Array<any>) {
     const newRooms = [];
-
-    await this.loadFavoriteRooms(remoteRooms);
 
     for (const remoteRoom of remoteRooms) {
       newRooms.push({
@@ -71,7 +67,6 @@ export class HomePageScreen extends React.Component<Props> {
     this.setState({nearbyRooms: newRooms});
   }
 
-  // FAVORITES LOADING
   async loadFavoriteRooms(defaultRooms: Array<Object>) {
     const stringFavorites = await getData('favorites');
     if (typeof stringFavorites === 'string') {
@@ -92,63 +87,17 @@ export class HomePageScreen extends React.Component<Props> {
   }
 
   async componentDidMount() {
-    // GEOLOCATION ACCESS
-    let havePermission: Boolean =
-      (await PermissionsAndroid.check(
-        'android.permission.ACCESS_COARSE_LOCATION',
-      )) === true &&
-      (await PermissionsAndroid.check(
-        'android.permission.ACCESS_FINE_LOCATION',
-      )) === true;
-
-    if (havePermission === false) {
-      const granted = await PermissionsAndroid.requestMultiple([
-        'android.permission.ACCESS_COARSE_LOCATION',
-        'android.permission.ACCESS_FINE_LOCATION',
-      ]);
-      if (
-        granted['android.permission.ACCESS_COARSE_LOCATION'] === 'granted' &&
-        granted['android.permission.ACCESS_FINE_LOCATION'] === 'granted'
-      ) {
-        havePermission = true;
-      }
-    }
-
-    if (havePermission) {
-      Geolocation.getCurrentPosition(
-        async info => {
-          this.setState({latitude: info.coords.latitude});
-          this.setState({longitude: info.coords.longitude});
-          const remoteRooms = await getRoomsNearby(
-            this.state.latitude,
-            this.state.longitude,
-          );
-          this.applyRoomState(remoteRooms);
-        },
-        (e: any) => console.error(e),
-        {enableHighAccuracy: true},
-      );
-    } else {
-      const defaultRooms = await getRooms();
-      this.applyRoomState(defaultRooms);
-    }
+    const defaultRooms = await getRooms();
+    await this.loadFavoriteRooms(defaultRooms);
+    this.applyRoomState(this.state.favoriteRooms);
   }
 
   render() {
-    let contextFilter: String = '';
     return (
-      <View style={HomePageScreenStyle.base}>
-        <BasicSearchBar
-          placeholder="Chercher une salle"
-          onEndEditing={async v => {
-            contextFilter = v.nativeEvent.text;
-            const filteredRooms = await getRooms(contextFilter);
-            this.applyRoomState(filteredRooms);
-          }}
-        />
+      <View style={FavoritesPageScreenStyle.base}>
         <ScrollView
-          style={HomePageScreenStyle.cardContainer}
-          contentContainerStyle={HomePageScreenStyle.cardContentContainer}
+          style={FavoritesPageScreenStyle.cardContainer}
+          contentContainerStyle={FavoritesPageScreenStyle.cardContentContainer}
           showsVerticalScrollIndicator={false}>
           {this.state.nearbyRooms.map((val: any, key) => {
             return (
