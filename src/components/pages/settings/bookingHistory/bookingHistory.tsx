@@ -3,7 +3,7 @@ import {View, Text, ScrollView} from 'react-native';
 import {getBooking} from '../../../api/booking';
 import PageHeader from '../../../elements/controllers/pageHeader';
 import BackButton from '../../../../assets/svg/angle-left-solid.svg';
-import { historyStyle } from './style';
+import {historyStyle} from './style';
 
 export class BookingHistory extends React.Component<Props> {
   state = {
