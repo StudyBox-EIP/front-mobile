@@ -109,6 +109,7 @@ function RoomCard(props: any) {
           latitude: props.latitude,
           longitude: props.longitude,
           seats_available: props.seats_available,
+          seats_total: props.seats_total,
           open_hours: props.open_hours,
           pic: picture,
         });

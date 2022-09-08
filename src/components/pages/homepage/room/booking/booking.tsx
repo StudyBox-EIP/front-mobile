@@ -90,6 +90,7 @@ export class BookingScreen extends React.Component<Props> {
                 title={slot}
                 key={slot.hour_start}
                 seatsAvailable={this.state.selectedDate.seatsAvailable[index]}
+                seats_total={this.state.params.seats_total}
                 callback={(newDate: Array<number>) => {
                   [this.state.slotDateStart, this.state.slotDateEnd] = newDate;
                 }}
