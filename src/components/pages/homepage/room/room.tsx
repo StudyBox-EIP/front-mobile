@@ -11,7 +11,7 @@ import {
 import getDirections from 'react-native-google-maps-directions';
 import BasicButton from '../../../elements/button';
 import {COLORS_STUDYBOX} from '../../..//elements/colors';
-import {getReservations, noteRoom} from '../../../api/booking';
+import {getReservations, noteRoom, openLocker} from '../../../api/booking';
 import StarSVG from '../../../../assets/svg/star.svg';
 import {style} from './roomStyle';
 
@@ -92,7 +92,9 @@ const BasicInfo = (props: any) => {
 export class RoomScreen extends React.Component<Props> {
   state = {
     reservations: [{}],
+    reservationsNote: [{}],
     canRate: false,
+    canOpen: false,
   };
 
   goToRoom = () => {
@@ -113,18 +115,29 @@ export class RoomScreen extends React.Component<Props> {
 
   async prepareRoomNote() {
     this.state.reservations = await getReservations();
-    this.state.reservations = this.state.reservations.filter(
+    this.state.reservationsNote = this.state.reservations.filter(
       (res: any) =>
         res.has_noted === false &&
         this.props.route.params.id === res.room_id.id,
     );
-    if (this.state.reservations.length > 0) {
+    if (this.state.reservationsNote.length > 0) {
       this.setState({canRate: true});
     }
   }
 
   componentDidMount() {
-    this.prepareRoomNote();
+    this.prepareRoomNote().then(() => {
+      const tempReservations = this.state.reservations.filter((res: any) => {
+        new Date(res.date_start).getTime() <= Date.now() &&
+          Date.now() <= new Date(res.date_end).getTime();
+      });
+
+      if (tempReservations.length > 0) {
+        this.setState({canOpen: true});
+      }
+
+      this.setState({reservations: tempReservations});
+    });
   }
 
   StarComponent = (props: any) => {
@@ -133,7 +146,7 @@ export class RoomScreen extends React.Component<Props> {
         onPress={() =>
           noteRoom(
             this.props.route.params.id,
-            this.state.reservations[0].id,
+            this.state.reservationsNote[0].id,
             props.starNumber,
           ).then(() => {
             this.setState({canRate: false});
@@ -193,6 +206,30 @@ export class RoomScreen extends React.Component<Props> {
           callback={this.goToRoom}
           txt="En route !"
         />
+        {(__DEV__ ? true : this.state.canOpen) ? (
+          <BasicButton
+            style={RoomScreenStyle.button}
+            callback={() => {
+              if (this.state.reservations[0]) {
+                console.info(
+                  'Opening Door...',
+                  this.state.reservations[0].room_id.name,
+                );
+                openLocker(this.state.reservations[0].id).then(() =>
+                  Alert.alert(
+                    'Porte Ouverte',
+                    'Porte déverouillée, vous pouvez rentrer !',
+                  ),
+                );
+              } else {
+                console.error('No Reservation in range');
+              }
+            }}
+            txt="Déverouiller la salle"
+          />
+        ) : (
+          <TouchableOpacity />
+        )}
       </View>
     );
   }
