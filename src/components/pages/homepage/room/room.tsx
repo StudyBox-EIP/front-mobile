@@ -77,14 +77,36 @@ const BasicInfoStyle = StyleSheet.create({
 });
 
 const BasicInfo = (props: any) => {
+  const basicStyle = StyleSheet.create({
+    basicContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    starBarHider: {
+      position: 'absolute',
+      backgroundColor: COLORS_STUDYBOX.DARK_WHITE,
+      width: (5 - props.score) * 15,
+      height: 15,
+      right: 0,
+    },
+  });
+
   return (
     <View style={BasicInfoStyle.base}>
       <Text style={BasicInfoStyle.title} adjustsFontSizeToFit>
         {props.name}
       </Text>
-      <Text style={BasicInfoStyle.score} adjustsFontSizeToFit>
-        Score: {props.score}/{scoreMax}
-      </Text>
+      <View style={basicStyle.basicContainer}>
+        <Text style={BasicInfoStyle.score} adjustsFontSizeToFit>
+          Score: {props.score}/{scoreMax}
+        </Text>
+        <StarSVG height={15} width={15} fill="yellow" />
+        <StarSVG height={15} width={15} fill="yellow" />
+        <StarSVG height={15} width={15} fill="yellow" />
+        <StarSVG height={15} width={15} fill="yellow" />
+        <StarSVG height={15} width={15} fill="yellow" />
+        <View style={basicStyle.starBarHider} />
+      </View>
     </View>
   );
 };
