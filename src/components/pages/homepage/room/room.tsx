@@ -149,9 +149,22 @@ export class RoomScreen extends React.Component<Props> {
 
   componentDidMount() {
     this.prepareRoomNote().then(() => {
-      const tempReservations = this.state.reservations.filter((res: any) => {
-        new Date(res.date_start).getTime() <= Date.now() &&
-          Date.now() <= new Date(res.date_end).getTime();
+      const tempReservations: Array<any> = [];
+      this.state.reservations.forEach((res: any) => {
+        const dateNow = new Date();
+
+        if (__DEV__) {
+          dateNow.setHours(dateNow.getHours() + 2);
+        } else {
+          dateNow.setHours(dateNow.getHours());
+        }
+
+        if (
+          dateNow >= new Date(res.date_start) &&
+          dateNow <= new Date(res.date_end)
+        ) {
+          tempReservations.push(res);
+        }
       });
 
       if (tempReservations.length > 0) {
@@ -236,6 +249,7 @@ export class RoomScreen extends React.Component<Props> {
                 console.info(
                   'Opening Door...',
                   this.state.reservations[0].room_id.name,
+                  this.state.reservations[0].id,
                 );
                 openLocker(this.state.reservations[0].id).then(() =>
                   Alert.alert(
