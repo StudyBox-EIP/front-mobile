@@ -167,3 +167,30 @@ export async function noteRoom(
     }
   }
 }
+
+// Open Locker
+
+export async function openLocker(reservationId: number) {
+  try {
+    const rawUserInfo = await getData('userInfo');
+    if (rawUserInfo === undefined || rawUserInfo === null) {
+      throw 'userInfo not found';
+    }
+    const userInfo = JSON.parse(rawUserInfo);
+    const res = await axios.put(
+      `${API.WEB_ROOT}/users/reservations/${reservationId}/open`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + userInfo.token,
+        },
+      },
+    );
+    return res.data;
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      console.error(e.code, e.message, e.response?.data);
+    }
+    return undefined;
+  }
+}
