@@ -1,8 +1,19 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import getDirections from 'react-native-google-maps-directions';
 import BasicButton from '../../../elements/button';
 import {COLORS_STUDYBOX} from '../../..//elements/colors';
+import {getReservations, noteRoom} from '../../../api/booking';
+import StarSVG from '../../../../assets/svg/star.svg';
+import {style} from './roomStyle';
 
 const scoreMax = 5;
 
@@ -79,6 +90,11 @@ const BasicInfo = (props: any) => {
 };
 
 export class RoomScreen extends React.Component<Props> {
+  state = {
+    reservations: [{}],
+    canRate: false,
+  };
+
   goToRoom = () => {
     const data = {
       destination: {
@@ -93,6 +109,45 @@ export class RoomScreen extends React.Component<Props> {
       ],
     };
     getDirections(data);
+  };
+
+  async prepareRoomNote() {
+    this.state.reservations = await getReservations();
+    this.state.reservations = this.state.reservations.filter(
+      (res: any) =>
+        res.has_noted === false &&
+        this.props.route.params.id === res.room_id.id,
+    );
+    if (this.state.reservations.length > 0) {
+      this.setState({canRate: true});
+    }
+  }
+
+  componentDidMount() {
+    this.prepareRoomNote();
+  }
+
+  StarComponent = (props: any) => {
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          noteRoom(
+            this.props.route.params.id,
+            this.state.reservations[0].id,
+            props.starNumber,
+          ).then(() => {
+            this.setState({canRate: false});
+            Alert.alert(
+              'Merci pour votre Avis',
+              `Vous avez donné ${props.starNumber} Étoile${
+                props.starNumber > 1 ? 's' : ''
+              }`,
+            );
+          })
+        }>
+        <StarSVG height={40} width={40} fill="yellow" />
+      </TouchableOpacity>
+    );
   };
 
   render(): React.ReactNode {
@@ -110,6 +165,22 @@ export class RoomScreen extends React.Component<Props> {
           <Text style={RoomScreenStyle.subtitle}>Adresse:</Text>
           <Text style={RoomScreenStyle.txt}>{props.adress}</Text>
         </ScrollView>
+        {this.state.canRate ? (
+          <View style={style.notationContainer}>
+            <View style={style.starContainer}>
+              <this.StarComponent starNumber={1} />
+              <this.StarComponent starNumber={2} />
+              <this.StarComponent starNumber={3} />
+              <this.StarComponent starNumber={4} />
+              <this.StarComponent starNumber={5} />
+            </View>
+            <View style={style.textContainer}>
+              <Text style={style.text}>Souhaitez-vous noter la salle ?</Text>
+            </View>
+          </View>
+        ) : (
+          <TouchableOpacity />
+        )}
         <BasicButton
           style={RoomScreenStyle.button}
           callback={() =>

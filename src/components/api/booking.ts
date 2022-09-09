@@ -109,3 +109,61 @@ export async function getSeatAvailibility(id: number, timestamp: any) {
     return undefined;
   }
 }
+
+// GET RESERVATIONS
+
+export async function getReservations() {
+  try {
+    const rawUserInfo = await getData('userInfo');
+    if (rawUserInfo === undefined || rawUserInfo === null) {
+      throw 'userInfo not found';
+    }
+    const userInfo = JSON.parse(rawUserInfo);
+    const res = await axios.get(`${API.WEB_ROOT}/users/reservations`, {
+      headers: {
+        Authorization: 'Bearer ' + userInfo.token,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      console.error(e.code, e.message, e.response?.data);
+    }
+    return undefined;
+  }
+}
+
+// ROOM NOTATION
+
+export async function noteRoom(
+  roomId: number,
+  reservationId: number,
+  roomNote: number,
+) {
+  try {
+    const rawUserInfo = await getData('userInfo');
+    if (rawUserInfo === undefined || rawUserInfo === null) {
+      throw 'userInfo not found';
+    }
+    const userInfo = JSON.parse(rawUserInfo);
+    const res = await axios.put(
+      `${API.WEB_ROOT}/rooms/${roomId}/${reservationId}/note`,
+      {
+        note: roomNote,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + userInfo.token,
+        },
+      },
+    );
+    console.debug(res.status);
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response);
+    } else {
+      console.error(error);
+    }
+  }
+}
