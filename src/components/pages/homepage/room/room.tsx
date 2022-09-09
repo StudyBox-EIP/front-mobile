@@ -100,11 +100,11 @@ const BasicInfo = (props: any) => {
         <Text style={BasicInfoStyle.score} adjustsFontSizeToFit>
           Score: {props.score}/{scoreMax}
         </Text>
-        <StarSVG height={15} width={15} fill="yellow" />
-        <StarSVG height={15} width={15} fill="yellow" />
-        <StarSVG height={15} width={15} fill="yellow" />
-        <StarSVG height={15} width={15} fill="yellow" />
-        <StarSVG height={15} width={15} fill="yellow" />
+        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
+        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
+        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
+        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
+        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
         <View style={basicStyle.starBarHider} />
       </View>
     </View>
