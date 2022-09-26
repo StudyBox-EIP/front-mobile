@@ -208,7 +208,7 @@ export class RoomScreen extends React.Component<Props> {
           style={RoomScreenStyle.cardContainer}
           contentContainerStyle={RoomScreenStyle.cardContentContainer}
           showsVerticalScrollIndicator={true}>
-          <Text style={RoomScreenStyle.subtitle}>Descritpion:</Text>
+          <Text style={RoomScreenStyle.subtitle}>Description:</Text>
           <Text style={RoomScreenStyle.txt}>{props.desc}</Text>
           <Text style={RoomScreenStyle.subtitle}>Adresse:</Text>
           <Text style={RoomScreenStyle.txt}>{props.adress}</Text>
