@@ -18,7 +18,6 @@ export class BookingHistory extends React.Component<Props> {
   }
 
   render() {
-    console.log(this.state.bookingHistory);
     return (
       <View>
         <PageHeader
