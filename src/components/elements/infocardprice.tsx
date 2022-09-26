@@ -1,7 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Value} from 'react-native-reanimated';
-// import {COLORS_STUDYBOX} from './colors';
 
 function InfoCardPrice(props: any) {
   const style = StyleSheet.create({
@@ -53,7 +51,8 @@ function InfoCardPrice(props: any) {
       <View style={style.info}>
         <Text style={style.subtitle}>Réservation:</Text>
         <Text style={style.txt}>
-          {' '}{props.time} - {props.date}
+          {' '}
+          {props.time} - {props.date}
         </Text>
       </View>
       <View style={style.info}>

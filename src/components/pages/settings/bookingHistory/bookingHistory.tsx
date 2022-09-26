@@ -18,12 +18,6 @@ export class BookingHistory extends React.Component<Props> {
   }
 
   render() {
-    var options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
     console.log(this.state.bookingHistory);
     return (
       <View>
