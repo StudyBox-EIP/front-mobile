@@ -68,3 +68,25 @@ export async function disconnect(navigation: any) {
     navigation.navigate('AuthScreen');
   }
 }
+
+export async function checkJWT(JWT: string) {
+  try {
+    const res = await axios.get(API.WEB_ROOT + '/auth/jwt', {
+      headers: {
+        Authorization: 'Bearer ' + JWT,
+      },
+    });
+
+    return res.status;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 201) {
+        return error.response?.status;
+      } else {
+        console.error(error.response?.data);
+      }
+    } else {
+      console.error(error, error);
+    }
+  }
+}
