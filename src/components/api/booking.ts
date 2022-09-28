@@ -157,7 +157,6 @@ export async function noteRoom(
         },
       },
     );
-    console.debug(res.status);
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -189,7 +188,11 @@ export async function openLocker(reservationId: number) {
     return res.data;
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      console.error(e.code, e.message, e.response?.data);
+      if (e.response?.status === 400) {
+        throw 400;
+      } else {
+        console.error(e.response?.status, e.message, e.response?.data);
+      }
     }
     return undefined;
   }
