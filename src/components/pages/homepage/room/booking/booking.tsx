@@ -186,6 +186,10 @@ export class BookingScreen extends React.Component<Props> {
                   seatsAvailable: [],
                 };
                 this.props.navigation.navigate('HomePageScreen');
+                Alert.alert(
+                  'Réservation confirmée !',
+                  'Votre réservation a bien été prise en compte',
+                );
               } else {
                 Alert.alert('Paiement Refusé');
               }

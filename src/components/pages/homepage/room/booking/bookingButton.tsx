@@ -15,12 +15,12 @@ export class BookingButton extends React.Component<Props> {
 
   componentDidUpdate() {
     if (__DEV__) {
-      console.info(
-        '__DEV__',
-        'Seats Available',
-        this.props?.seatsAvailable?.hour_start,
-        this.props.seatsAvailable?.avaible_seat,
-      );
+      // console.info(
+      //   '__DEV__',
+      //   'Seats Available',
+      //   this.props?.seatsAvailable?.hour_start,
+      //   this.props.seatsAvailable?.avaible_seat,
+      // );
     }
 
     if (
@@ -79,7 +79,7 @@ export class BookingButton extends React.Component<Props> {
                   ? COLORS_STUDYBOX.GREY
                   : COLORS_STUDYBOX.GREEN,
             });
-            console.info('slotDateStart', this.state.slotDateStart);
+            // console.info('slotDateStart', this.state.slotDateStart);
             this.props.callback([
               this.state.slotDateStart,
               this.state.slotDateEnd,

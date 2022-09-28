@@ -153,11 +153,8 @@ export class RoomScreen extends React.Component<Props> {
       this.state.reservations.forEach((res: any) => {
         const dateNow = new Date();
 
-        if (__DEV__) {
-          dateNow.setHours(dateNow.getHours() + 2);
-        } else {
-          dateNow.setHours(dateNow.getHours());
-        }
+        // Fixing Phone Internal Delay
+        dateNow.setHours(dateNow.getHours() + 2);
 
         if (
           dateNow >= new Date(res.date_start) &&
@@ -249,14 +246,22 @@ export class RoomScreen extends React.Component<Props> {
                 console.info(
                   'Opening Door...',
                   this.state.reservations[0].room_id.name,
-                  this.state.reservations[0].id,
                 );
-                openLocker(this.state.reservations[0].id).then(() =>
-                  Alert.alert(
-                    'Porte Ouverte',
-                    'Porte déverouillée, vous pouvez rentrer !',
-                  ),
-                );
+                openLocker(this.state.reservations[0].id)
+                  .then(() =>
+                    Alert.alert(
+                      'Porte Ouverte',
+                      'Porte déverouillée, vous pouvez rentrer !',
+                    ),
+                  )
+                  .catch(errorCode => {
+                    if (errorCode === 400) {
+                      Alert.alert(
+                        'Erreur Salle',
+                        'La salle reservée ne possède pas de boîtier',
+                      );
+                    }
+                  });
               } else {
                 console.error('No Reservation in range');
               }
