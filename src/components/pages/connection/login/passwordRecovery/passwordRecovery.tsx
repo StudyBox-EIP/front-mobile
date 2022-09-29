@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Alert,
-  Dimensions,
-  Image,
-  Keyboard,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Alert, Image, Keyboard, StyleSheet, Text, View} from 'react-native';
 import {resetForgotPassword, sendRecoverMail} from '../../../../api/auth';
 import {COLORS_STUDYBOX} from '../../../../elements/colors';
 import {resetPageHistory} from '../../../../elements/controllers/navigation';
