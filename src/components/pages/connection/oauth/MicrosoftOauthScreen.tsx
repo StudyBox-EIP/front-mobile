@@ -11,7 +11,7 @@ const MicrosoftOauthScreenStyle = StyleSheet.create({
   },
 });
 
-export class MicrosoftOauthScreen extends React.Component<Props> {
+export class MicrosoftOauthScreen extends React.Component {
   componentDidMount() {
     this.oauthMicrosoft(this.props.navigation);
   }

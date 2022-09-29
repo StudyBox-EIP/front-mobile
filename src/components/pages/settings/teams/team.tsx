@@ -23,7 +23,7 @@ import TrashIcon from '../../../../assets/svg/trash-can-solid.svg';
 import AddLogo from '../../../../assets/svg/plus.svg';
 import {COLORS_STUDYBOX} from '../../../elements/colors';
 
-export class TeamPage extends React.Component<Props> {
+export class TeamPage extends React.Component {
   state = {
     userInfo: {},
     team: {},

@@ -75,7 +75,7 @@ const SettingsButton = (props: any) => {
   );
 };
 
-export class SettingsScreen extends React.Component<Props> {
+export class SettingsScreen extends React.Component {
   state = {
     userInfo: {},
   };

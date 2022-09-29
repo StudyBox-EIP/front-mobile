@@ -11,7 +11,7 @@ const GoogleOauthScreenStyle = StyleSheet.create({
   },
 });
 
-export class GoogleOauthScreen extends React.Component<Props> {
+export class GoogleOauthScreen extends React.Component {
   componentDidMount() {
     this.oauthGoogle(this.props.navigation);
   }

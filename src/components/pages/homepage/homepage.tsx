@@ -38,7 +38,7 @@ const HomePageScreenStyle = StyleSheet.create({
   },
 });
 
-export class HomePageScreen extends React.Component<Props> {
+export class HomePageScreen extends React.Component {
   state = {
     nearbyRooms: [{}], // Storing all nearby Rooms from current Device
     favoriteRooms: [{}],

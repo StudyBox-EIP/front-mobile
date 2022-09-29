@@ -3,7 +3,7 @@ import {Button, View} from 'react-native';
 import {COLORS_STUDYBOX} from '../../../../elements/colors';
 import {bookingStyle} from './style';
 
-export class BookingButton extends React.Component<Props> {
+export class BookingButton extends React.Component {
   state = {
     title: '',
     seats_total: 0,
