@@ -1,5 +1,13 @@
 import React from 'react';
-import {Alert, Image, Keyboard, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  Image,
+  Keyboard,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {resetForgotPassword, sendRecoverMail} from '../../../../api/auth';
 import {COLORS_STUDYBOX} from '../../../../elements/colors';
 import {resetPageHistory} from '../../../../elements/controllers/navigation';
@@ -20,6 +28,9 @@ export class PasswordRecoveryScreen extends React.Component<Props> {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+      },
+      tokenContainer: {
+        maxWidth: '70%',
       },
       main_wrapper: {
         width: '70%',
@@ -92,7 +103,7 @@ export class PasswordRecoveryScreen extends React.Component<Props> {
           />
         </View>
         {this.state.isEmailValid ? (
-          <View>
+          <View style={RecoverPasswordStyle.tokenContainer}>
             <Text style={RecoverPasswordStyle.title}>
               Un Token vous a été envoyé par Mail
             </Text>
