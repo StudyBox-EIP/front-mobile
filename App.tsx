@@ -30,6 +30,7 @@ import {TeamPage} from './src/components/pages/settings/teams/team';
 import {BookingScreen} from './src/components/pages/homepage/room/booking/booking';
 import {BookingHistory} from './src/components/pages/settings/bookingHistory/bookingHistory';
 import {COLORS_STUDYBOX} from './src/components/elements/colors';
+import {PasswordRecoveryScreen} from './src/components/pages/connection/login/passwordRecovery/passwordRecovery';
 
 const NavigationLoader = () => {
   const Stack = createStackNavigator();
@@ -59,6 +60,11 @@ const NavigationLoader = () => {
           name="ManualSignIn"
           options={ScreensOptions}
           component={LoginScreen}
+        />
+        <Stack.Screen
+          name="PasswordRecoveryScreen"
+          options={ScreensOptions}
+          component={PasswordRecoveryScreen}
         />
         <Stack.Screen
           name="ManualSignUp"
