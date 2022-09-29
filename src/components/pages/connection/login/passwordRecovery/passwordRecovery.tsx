@@ -6,7 +6,7 @@ import {resetPageHistory} from '../../../../elements/controllers/navigation';
 import StudyBoxTextInput from '../../../../elements/form/input/StudyBoxInput';
 import StudyBoxSubmitButton from '../../../../elements/form/submit/StudyBoxSubmitButton';
 
-export class PasswordRecoveryScreen extends React.Component<Props> {
+export class PasswordRecoveryScreen extends React.Component {
   state = {
     email: '',
     token: '',

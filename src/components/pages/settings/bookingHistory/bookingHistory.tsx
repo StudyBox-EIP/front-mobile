@@ -6,7 +6,7 @@ import BackButton from '../../../../assets/svg/angle-left-solid.svg';
 import InfoCardPrice from '../../../elements/infocardprice';
 import {historyStyle} from './style';
 
-export class BookingHistory extends React.Component<Props> {
+export class BookingHistory extends React.Component {
   state = {
     bookingHistory: [],
   };

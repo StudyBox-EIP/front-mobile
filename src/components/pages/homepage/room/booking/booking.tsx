@@ -9,7 +9,7 @@ import {getSeatAvailibility, makeBooking} from '../../../../api/booking';
 import {bookingStyle} from './style';
 import {BookingButton} from './bookingButton';
 
-export class BookingScreen extends React.Component<Props> {
+export class BookingScreen extends React.Component {
   state = {
     params: this.props.route.params,
     bookingInfo: {

@@ -5,7 +5,7 @@ import {resetPageHistory} from '../elements/controllers/navigation';
 import {getData} from '../api/userInfo';
 import {checkJWT} from '../api/auth';
 
-export class SplashScreen extends Component<Props> {
+export class SplashScreen extends Component {
   componentDidMount() {
     setTimeout(
       () =>

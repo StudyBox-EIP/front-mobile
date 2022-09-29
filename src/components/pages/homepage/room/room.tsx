@@ -111,7 +111,7 @@ const BasicInfo = (props: any) => {
   );
 };
 
-export class RoomScreen extends React.Component<Props> {
+export class RoomScreen extends React.Component {
   state = {
     reservations: [{}],
     reservationsNote: [{}],

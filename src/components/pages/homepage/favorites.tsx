@@ -36,7 +36,7 @@ const FavoritesPageScreenStyle = StyleSheet.create({
   },
 });
 
-export class FavoritesPageScreen extends React.Component<Props> {
+export class FavoritesPageScreen extends React.Component {
   state = {
     nearbyRooms: [{}], // Storing all nearby Rooms from current Device
     favoriteRooms: [{}],
