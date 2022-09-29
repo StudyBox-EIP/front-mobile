@@ -1,8 +1,9 @@
 import React from 'react';
 import StudyBoxTextInput from '../../../elements/form/input/StudyBoxInput';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import StudyBoxSubmitButton from '../../../elements/form/submit/StudyBoxSubmitButton';
 import {login} from '../../../api/auth';
+import {COLORS_STUDYBOX} from '../../../elements/colors';
 
 const LoginStyle = StyleSheet.create({
   container: {
@@ -20,6 +21,10 @@ const LoginStyle = StyleSheet.create({
     alignSelf: 'center',
     marginTop: '-40%',
     marginBottom: '20%',
+  },
+  forgotPassword: {
+    opacity: 0.6,
+    color: COLORS_STUDYBOX.LIGHT_BLUE,
   },
 });
 
@@ -55,6 +60,12 @@ export function LoginScreen({navigation}: any) {
           secureTextEntry={true}
           changeText={changePassword}
         />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('PasswordRecoveryScreen');
+          }}>
+          <Text style={LoginStyle.forgotPassword}>Mot de passe oublié ?</Text>
+        </TouchableOpacity>
       </View>
       {/* Backend Authentication */}
       <StudyBoxSubmitButton

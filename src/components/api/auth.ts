@@ -90,3 +90,32 @@ export async function checkJWT(JWT: string) {
     }
   }
 }
+
+export async function sendRecoverMail(email: string) {
+  try {
+    const res = await axios.post(API.WEB_ROOT + '/auth/sendRecoverMail', {
+      email,
+    });
+
+    return res.status;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response?.status;
+    }
+  }
+}
+
+export async function resetForgotPassword(token: string, newPassword: string) {
+  try {
+    const res = await axios.post(API.WEB_ROOT + '/auth/resetForgotPassword', {
+      token,
+      password: newPassword,
+    });
+
+    return res.status;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response?.status;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, TextInput, View} from 'react-native';
 import {COLORS_STUDYBOX} from '../../colors';
 
 function StudyBoxTextInput(props: any) {
@@ -10,6 +10,7 @@ function StudyBoxTextInput(props: any) {
       color: COLORS_STUDYBOX.GREY,
     },
     textInput: {
+      maxWidth: (Dimensions.get('screen').width / 100) * 70,
       width: '100%',
       borderRadius: 7,
       marginBottom: 15,
