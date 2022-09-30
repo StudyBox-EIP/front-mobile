@@ -28,6 +28,7 @@ export function SignUpScreen({navigation}: any) {
     last_name: '',
     email: '',
     password: '',
+    address: '',
   };
 
   return (
@@ -47,6 +48,12 @@ export function SignUpScreen({navigation}: any) {
           text="Nom"
           changeText={(newText: string) => {
             data.last_name = newText;
+          }}
+        />
+        <StudyBoxTextInput
+          text="Adresse"
+          changeText={(newText: string) => {
+            data.address = newText;
           }}
         />
         <StudyBoxTextInput

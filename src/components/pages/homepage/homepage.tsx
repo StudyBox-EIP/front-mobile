@@ -140,7 +140,7 @@ export class HomePageScreen extends React.Component {
       <View style={HomePageScreenStyle.base}>
         <BasicSearchBar
           placeholder="Chercher une salle"
-          onEndEditing={async v => {
+          onEndEditing={async (v: any) => {
             contextFilter = v.nativeEvent.text;
             const filteredRooms = await getRooms(contextFilter);
             this.applyRoomState(filteredRooms);

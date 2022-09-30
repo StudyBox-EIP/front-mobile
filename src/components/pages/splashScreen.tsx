@@ -15,17 +15,23 @@ export class SplashScreen extends Component {
               console.info(res);
             }
 
-            if ((await checkJWT(await JSON.parse(res)?.token)) === 201) {
+            const JWT_Validity = await checkJWT(await JSON.parse(res)?.token);
+
+            if (JWT_Validity === 201) {
               Alert.alert(
                 'Session expirée !',
                 'Votre session a expiré, veuillez vous reconnecter',
               );
               resetPageHistory(this.props.navigation, 'AuthScreen');
               return;
+            } else if (JWT_Validity !== 200) {
+              // Redirect to Home Page for any other Error
+              resetPageHistory(this.props.navigation, 'AuthScreen');
             }
-
+            // Successful Authentication
             resetPageHistory(this.props.navigation, 'HomePageScreen');
           } else {
+            // Not stored JWT
             resetPageHistory(this.props.navigation, 'AuthScreen');
           }
         }),

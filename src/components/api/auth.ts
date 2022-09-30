@@ -47,6 +47,7 @@ export async function register(
       last_name: data.last_name,
       email: data.email,
       password: data.password,
+      address: data.address,
     });
     navigation.navigate('AuthScreen');
     return auth;
@@ -83,7 +84,8 @@ export async function checkJWT(JWT: string) {
       if (error.response?.status === 201) {
         return error.response?.status;
       } else {
-        console.error(error.response?.data);
+        console.info(error.response?.data);
+        return error.response?.status;
       }
     } else {
       console.error(error, error);
