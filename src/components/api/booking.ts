@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {API} from '../../../config';
+import {getBearerHeader} from './API_tools';
 import {getData} from './userInfo';
 
 async function getPaymentMethod(cardInfo: Object) {
@@ -151,11 +152,7 @@ export async function noteRoom(
       {
         note: roomNote,
       },
-      {
-        headers: {
-          Authorization: 'Bearer ' + userInfo.token,
-        },
-      },
+      getBearerHeader(userInfo.token),
     );
     return res.data;
   } catch (error) {

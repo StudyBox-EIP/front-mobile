@@ -1,12 +1,17 @@
 import React from 'react';
-import {StyleSheet, View, PermissionsAndroid} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  PermissionsAndroid,
+  RefreshControl,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
 import {getRooms, getRoomsNearby} from '../../api/rooms';
 import Geolocation from 'react-native-geolocation-service';
 import RoomCard from '../../elements/roomcard';
 import BasicSearchBar from '../../elements/searchbar';
-import {getData, storeData} from '../../api/userInfo';
+import {addFavorite, getFavorites, removeFavorite} from '../../api/favorites';
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
@@ -44,14 +49,15 @@ export class HomePageScreen extends React.Component {
     favoriteRooms: [{}],
     latitude: 0,
     longitude: 0,
+    refreshing: false,
   };
 
   async applyRoomState(remoteRooms: Array<any>) {
     const newRooms = [];
 
-    await this.loadFavoriteRooms(remoteRooms);
+    const roomsWithFavorites = await this.loadFavoriteRooms(remoteRooms);
 
-    for (const remoteRoom of remoteRooms) {
+    for (const remoteRoom of roomsWithFavorites) {
       newRooms.push({
         id: remoteRoom.id,
         name: remoteRoom.name,
@@ -61,7 +67,7 @@ export class HomePageScreen extends React.Component {
         price: remoteRoom.price,
         latitude: remoteRoom.latitude,
         longitude: remoteRoom.longitude,
-        favorite: remoteRoom.favorite, // FAVORITE NEEDS TO BE IMPLEMENTED IN API || LOCALSTORAGE IMPLEMENTATION CURRENTLY
+        favorite: remoteRoom.favorite,
         seats_available: remoteRoom.seats_available,
         open_hours: remoteRoom.open_hours,
         seats_total: remoteRoom.seats_total,
@@ -73,26 +79,19 @@ export class HomePageScreen extends React.Component {
 
   // FAVORITES LOADING
   async loadFavoriteRooms(defaultRooms: Array<Object>) {
-    const stringFavorites = await getData('favorites');
-    if (typeof stringFavorites === 'string') {
-      const favorites: Array<number> = JSON.parse(stringFavorites);
+    const favoriteRooms: Array<any> = await getFavorites();
 
-      this.state.favoriteRooms = defaultRooms.filter((room: Object) =>
-        favorites.includes(room.id),
-      );
-      this.state.favoriteRooms = this.state.favoriteRooms.map(
-        (room: Object) => {
-          if (favorites.includes(room.id)) {
-            room.favorite = true;
-          }
-          return room;
-        },
-      );
-    }
+    return defaultRooms.map(room => {
+      favoriteRooms.forEach(favoriteRoom => {
+        if (room.id === favoriteRoom.id) {
+          room.favorite = true;
+        }
+      });
+      return room;
+    });
   }
 
-  async componentDidMount() {
-    // GEOLOCATION ACCESS
+  async checkGeolocation() {
     let havePermission: Boolean =
       (await PermissionsAndroid.check(
         'android.permission.ACCESS_COARSE_LOCATION',
@@ -134,6 +133,11 @@ export class HomePageScreen extends React.Component {
     }
   }
 
+  async componentDidMount() {
+    // GEOLOCATION ACCESS
+    this.checkGeolocation();
+  }
+
   render() {
     let contextFilter: String = '';
     return (
@@ -149,7 +153,13 @@ export class HomePageScreen extends React.Component {
         <ScrollView
           style={HomePageScreenStyle.cardContainer}
           contentContainerStyle={HomePageScreenStyle.cardContentContainer}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={async () => {}}
+            />
+          }>
           {this.state.nearbyRooms.map((val: any, key) => {
             return (
               <RoomCard
@@ -177,29 +187,12 @@ export class HomePageScreen extends React.Component {
                       return v;
                     }),
                   });
-                  getData('favorites')
-                    .then(res => {
-                      if (newFavorite === true) {
-                        if (res === null && res !== undefined) {
-                          storeData('favorites', JSON.stringify([val.id]));
-                        } else if (res !== undefined) {
-                          const oldValues = JSON.parse(res);
-                          oldValues.push(val.id);
-                          storeData('favorites', JSON.stringify(oldValues));
-                        }
-                      } else {
-                        if (res !== null && res !== undefined) {
-                          const oldValues = JSON.parse(res);
-                          storeData(
-                            'favorites',
-                            JSON.stringify(
-                              oldValues.filter((id: any) => id !== val.id),
-                            ),
-                          );
-                        }
-                      }
-                    })
-                    .catch(console.error);
+
+                  if (newFavorite === true) {
+                    addFavorite(val.id);
+                  } else {
+                    removeFavorite(val.id);
+                  }
                 }}
               />
             );

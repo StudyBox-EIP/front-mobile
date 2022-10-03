@@ -98,12 +98,13 @@ function RoomCard(props: any) {
       top: 8,
       right: 8,
       size: 32,
+      zIndex: -2,
     },
   });
   const picture = getPictureObject(props.image);
 
   return (
-    <Pressable
+    <TouchableOpacity
       style={cardStyle.container}
       onPress={() => {
         props.navigation.navigate('RoomScreen', {
@@ -123,9 +124,12 @@ function RoomCard(props: any) {
       }}>
       <Image style={smallObject.imageCover} source={picture} />
       <Text style={cardStyle.title}>{props.title}</Text>
-      <TouchableOpacity
+      <Pressable
         style={smallObject.favorite}
-        onPress={() => props.onFavorite(!props.favorite)}>
+        onPress={() => {
+          props.onFavorite(!props.favorite);
+          console.log('click', Date.now());
+        }}>
         <HeartEmptyIcon
           style={smallObject.favorite}
           height={smallObject.favorite.size}
@@ -137,8 +141,8 @@ function RoomCard(props: any) {
           height={smallObject.favorite.size}
           width={smallObject.favorite.size}
         />
-      </TouchableOpacity>
+      </Pressable>
       <Score score={props.score} />
-    </Pressable>
+    </TouchableOpacity>
   );
 }

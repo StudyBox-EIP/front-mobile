@@ -1,10 +1,9 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {RefreshControl, StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
-import {getRooms} from '../../api/rooms';
 import RoomCard from '../../elements/roomcard';
-import {getData, storeData} from '../../api/userInfo';
+import {addFavorite, getFavorites, removeFavorite} from '../../api/favorites';
 
 const FavoritesPageScreenStyle = StyleSheet.create({
   base: {
@@ -42,6 +41,7 @@ export class FavoritesPageScreen extends React.Component {
     favoriteRooms: [{}],
     latitude: 0,
     longitude: 0,
+    refreshing: false,
   };
 
   applyRoomState(remoteRooms: Array<any>) {
@@ -57,7 +57,7 @@ export class FavoritesPageScreen extends React.Component {
         price: remoteRoom.price,
         latitude: remoteRoom.latitude,
         longitude: remoteRoom.longitude,
-        favorite: remoteRoom.favorite, // FAVORITE NEEDS TO BE IMPLEMENTED IN API || LOCALSTORAGE IMPLEMENTATION CURRENTLY
+        favorite: remoteRoom.favorite,
         seats_available: remoteRoom.seats_available,
         open_hours: remoteRoom.open_hours,
         seats_total: remoteRoom.seats_total,
@@ -67,29 +67,21 @@ export class FavoritesPageScreen extends React.Component {
     this.setState({nearbyRooms: newRooms});
   }
 
-  async loadFavoriteRooms(defaultRooms: Array<Object>) {
-    const stringFavorites = await getData('favorites');
-    if (typeof stringFavorites === 'string') {
-      const favorites: Array<number> = JSON.parse(stringFavorites);
+  async loadFavoriteRooms() {
+    const favoriteRooms: Array<Object> = await getFavorites();
 
-      this.state.favoriteRooms = defaultRooms.filter((room: Object) =>
-        favorites.includes(room.id),
-      );
-      this.state.favoriteRooms = this.state.favoriteRooms.map(
-        (room: Object) => {
-          if (favorites.includes(room.id)) {
-            room.favorite = true;
-          }
-          return room;
-        },
-      );
-    }
+    console.info(favoriteRooms);
+
+    this.setState({favoriteRooms});
+
+    return favoriteRooms.map(room => {
+      room.favorite = true;
+      return room;
+    });
   }
 
   async componentDidMount() {
-    const defaultRooms = await getRooms();
-    await this.loadFavoriteRooms(defaultRooms);
-    this.applyRoomState(this.state.favoriteRooms);
+    this.applyRoomState(await this.loadFavoriteRooms());
   }
 
   render() {
@@ -98,7 +90,13 @@ export class FavoritesPageScreen extends React.Component {
         <ScrollView
           style={FavoritesPageScreenStyle.cardContainer}
           contentContainerStyle={FavoritesPageScreenStyle.cardContentContainer}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={async () => {}}
+            />
+          }>
           {this.state.nearbyRooms.map((val: any, key) => {
             return (
               <RoomCard
@@ -126,29 +124,15 @@ export class FavoritesPageScreen extends React.Component {
                       return v;
                     }),
                   });
-                  getData('favorites')
-                    .then(res => {
-                      if (newFavorite === true) {
-                        if (res === null && res !== undefined) {
-                          storeData('favorites', JSON.stringify([val.id]));
-                        } else if (res !== undefined) {
-                          const oldValues = JSON.parse(res);
-                          oldValues.push(val.id);
-                          storeData('favorites', JSON.stringify(oldValues));
-                        }
-                      } else {
-                        if (res !== null && res !== undefined) {
-                          const oldValues = JSON.parse(res);
-                          storeData(
-                            'favorites',
-                            JSON.stringify(
-                              oldValues.filter((id: any) => id !== val.id),
-                            ),
-                          );
-                        }
-                      }
-                    })
-                    .catch(console.error);
+
+                  if (newFavorite === true) {
+                    addFavorite(val.id);
+                  } else {
+                    removeFavorite(val.id);
+                    this.loadFavoriteRooms().then(res =>
+                      this.applyRoomState(res),
+                    );
+                  }
                 }}
               />
             );
