@@ -128,7 +128,6 @@ function RoomCard(props: any) {
         style={smallObject.favorite}
         onPress={() => {
           props.onFavorite(!props.favorite);
-          console.log('click', Date.now());
         }}>
         <HeartEmptyIcon
           style={smallObject.favorite}
