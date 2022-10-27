@@ -34,7 +34,12 @@ export class BookingHistory extends React.Component {
                 Number(new Date(a?.date_start)),
             )
             .map((payment: any) => {
-              let myDate = new Date(payment?.date_start);
+              // Adjust Server Delay
+              let myDate = new Date(
+                new Date(payment?.date_start).setHours(
+                  new Date(payment?.date_start).getHours() - 2,
+                ),
+              );
               // console.log(payment);
               return (
                 <InfoCardPrice

@@ -92,7 +92,6 @@ export async function getSeatAvailibility(id: number, timestamp: any) {
       throw 'userInfo not found';
     }
     const userInfo = JSON.parse(rawUserInfo);
-    console.info(`${API.WEB_ROOT}/rooms/${id}/availability/${timestamp}`);
     const res = await axios.get(
       `${API.WEB_ROOT}/rooms/${id}/availability/${timestamp}`,
       {
@@ -101,7 +100,6 @@ export async function getSeatAvailibility(id: number, timestamp: any) {
         },
       },
     );
-    console.info('getSeatAvailibility', res.data[0]?.open_hours);
     return res.data[0]?.open_hours;
   } catch (e) {
     if (axios.isAxiosError(e)) {
