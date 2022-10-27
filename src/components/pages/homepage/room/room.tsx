@@ -214,7 +214,11 @@ export class RoomScreen extends React.Component {
             );
           })
         }>
-        <StarSVG height={40} width={40} fill="STUDYBOX_YELLOW" />
+        <StarSVG
+          height={40}
+          width={40}
+          fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+        />
       </TouchableOpacity>
     );
   };
