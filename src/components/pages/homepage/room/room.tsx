@@ -15,6 +15,7 @@ import {getReservations, noteRoom} from '../../../api/booking';
 import StarSVG from '../../../../assets/svg/star.svg';
 import {style} from './roomStyle';
 import Unlock from '../../../../assets/svg/unlocked.svg';
+import {openLocker} from '../../../api/booking';
 
 const scoreMax = 5;
 
