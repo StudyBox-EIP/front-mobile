@@ -2,10 +2,9 @@ import axios from 'axios';
 import {API} from '../../config';
 import {getData} from '../components/api/userInfo';
 
-const errorReturn = require('../assets/img/MBA_Lyon.jpg');
-
 export async function getPictureObject(picture: String) {
-  return require('../assets/img/MBA_Lyon.jpg');
+  var errorReturn = require('../assets/img/MBA_Lyon.jpg');
+
   if (picture === null || picture === undefined) {
     return errorReturn;
   }
@@ -31,7 +30,6 @@ export async function getPictureObject(picture: String) {
     console.log('4');
     console.log(res.status === 200);
 
-    return require('../assets/img/MBA_Lyon.jpg');
     return res.status === 200 ? {uri: res.data} : errorReturn;
   } catch (e) {
     if (axios.isAxiosError(e)) {
@@ -40,9 +38,3 @@ export async function getPictureObject(picture: String) {
     return errorReturn;
   }
 }
-
-// export function getPictureObject(picture: object) {
-//   return picture === undefined
-//     ? require('../assets/img/MBA_Lyon.jpg')
-//     : {uri: picture};
-// }

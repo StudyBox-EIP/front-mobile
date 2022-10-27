@@ -88,7 +88,7 @@ export const modal = StyleSheet.create({
     alignSelf: 'center',
     height: 100,
     backgroundColor: 'white',
-    borderColor: COLORS_STUDYBOX.GREEN,
+    borderColor: COLORS_STUDYBOX.STUDYBOX_GREEN,
     borderWidth: 1,
     width: '75%',
     borderRadius: 10,

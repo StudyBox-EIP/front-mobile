@@ -7,7 +7,7 @@ export class BookingButton extends React.Component {
   state = {
     title: '',
     seats_total: 0,
-    buttonColor: COLORS_STUDYBOX.GREY,
+    buttonColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
     slotDateStart: 0,
     slotDateEnd: 0,
     isOutdated: false,
@@ -66,9 +66,9 @@ export class BookingButton extends React.Component {
           onPress={() => {
             this.setState({
               buttonColor:
-                this.state.buttonColor === COLORS_STUDYBOX.GREEN
-                  ? COLORS_STUDYBOX.GREY
-                  : COLORS_STUDYBOX.GREEN,
+                this.state.buttonColor === COLORS_STUDYBOX.STUDYBOX_GREEN
+                  ? COLORS_STUDYBOX.STUDYBOX_BLACK
+                  : COLORS_STUDYBOX.STUDYBOX_GREEN,
             });
             this.props.callback([
               this.state.slotDateStart,

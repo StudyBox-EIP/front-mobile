@@ -39,7 +39,7 @@ const NavigationLoader = () => {
     headerStyle: {
       backgroundColor: COLORS_STUDYBOX.DARK_WHITE,
     },
-    headerTintColor: COLORS_STUDYBOX.LIGHT_BLUE,
+    headerTintColor: COLORS_STUDYBOX.STUDYBOX_BLUE,
     headerShown: false,
   };
 

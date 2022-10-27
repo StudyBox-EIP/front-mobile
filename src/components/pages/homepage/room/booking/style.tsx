@@ -24,11 +24,11 @@ export const RoomScreenStyle = StyleSheet.create({
     width: '100%',
     height: '30%',
     resizeMode: 'contain',
-    backgroundColor: COLORS_STUDYBOX.GREY,
+    backgroundColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
     flex: 1.5,
   },
   cardContainer: {
-    borderTopColor: COLORS_STUDYBOX.GREEN,
+    borderTopColor: COLORS_STUDYBOX.STUDYBOX_GREEN,
     borderTopWidth: 3,
     width: '100%',
     paddingBottom: 80,
@@ -50,10 +50,7 @@ export const bookingStyle = StyleSheet.create({
     width: '100%',
     marginVertical: 8,
   },
-  BookingButton: {
-    flex: 0.5,
-    margin: 10,
-  },
+  BookingButton: {},
   ButtonList: {
     margin: 2,
     width: '100%',
@@ -61,7 +58,7 @@ export const bookingStyle = StyleSheet.create({
   },
   cardInputLarge: {
     borderWidth: 1,
-    borderColor: COLORS_STUDYBOX.GREY,
+    borderColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
     minWidth: 100,
     borderRadius: 10,
   },
@@ -74,7 +71,7 @@ export const bookingStyle = StyleSheet.create({
   },
   cardInputSmall: {
     borderWidth: 1,
-    borderColor: COLORS_STUDYBOX.GREY,
+    borderColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
     minWidth: 100,
     borderRadius: 10,
     flex: 1,

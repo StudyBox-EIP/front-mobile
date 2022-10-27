@@ -11,7 +11,7 @@ function StudyBoxSubmitButton(props: any) {
       paddingBottom: 12,
       borderRadius: 7,
       marginBottom: 15,
-      backgroundColor: COLORS_STUDYBOX.CONFIRM_GREEN,
+      backgroundColor: COLORS_STUDYBOX.STUDYBOX_GREEN,
       shadowColor: 'black',
       shadowOffset: {
         width: 0,

@@ -71,7 +71,7 @@ export class HomePageScreen extends React.Component {
         seats_available: remoteRoom.seats_available,
         open_hours: remoteRoom.open_hours,
         seats_total: remoteRoom.seats_total,
-        image: undefined,
+        image: remoteRoom.image,
       });
     }
     this.setState({nearbyRooms: newRooms});

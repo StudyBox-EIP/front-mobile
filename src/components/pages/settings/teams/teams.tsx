@@ -75,7 +75,7 @@ export class TeamsView extends React.Component {
             <CheckIcon
               width={'100%'}
               height={'100%'}
-              fill={COLORS_STUDYBOX.GREEN}
+              fill={COLORS_STUDYBOX.STUDYBOX_GREEN}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -87,7 +87,7 @@ export class TeamsView extends React.Component {
             <TrashIcon
               width={'100%'}
               height={'100%'}
-              fill={COLORS_STUDYBOX.CONFIRM_RED}
+              fill={COLORS_STUDYBOX.STUDYBOX_RED}
             />
           </TouchableOpacity>
         </View>
@@ -122,7 +122,7 @@ export class TeamsView extends React.Component {
               <CheckIcon
                 width={'100%'}
                 height={'100%'}
-                fill={COLORS_STUDYBOX.GREEN}
+                fill={COLORS_STUDYBOX.STUDYBOX_GREEN}
               />
             </TouchableOpacity>
           </View>
@@ -153,7 +153,7 @@ export class TeamsView extends React.Component {
               <TrashIcon
                 width={'100%'}
                 height={'100%'}
-                fill={COLORS_STUDYBOX.CONFIRM_RED}
+                fill={COLORS_STUDYBOX.STUDYBOX_RED}
               />
             </TouchableOpacity>
           </View>
@@ -194,7 +194,11 @@ export class TeamsView extends React.Component {
           <TouchableOpacity
             style={addButton.touchableOpacity}
             onPress={() => this.setState({modalState: !this.state.modalState})}>
-            <AddLogo width={60} height={60} fill={COLORS_STUDYBOX.GREEN} />
+            <AddLogo
+              width={60}
+              height={60}
+              fill={COLORS_STUDYBOX.STUDYBOX_GREEN}
+            />
           </TouchableOpacity>
         </View>
       </SafeAreaView>

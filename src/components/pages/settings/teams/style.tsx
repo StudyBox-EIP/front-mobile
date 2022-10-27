@@ -50,7 +50,7 @@ export const modal = StyleSheet.create({
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     backgroundColor: 'white',
-    borderColor: COLORS_STUDYBOX.GREEN,
+    borderColor: COLORS_STUDYBOX.STUDYBOX_GREEN,
     borderWidth: 1,
     width: '85%',
     height: '20%',
