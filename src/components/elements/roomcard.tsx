@@ -106,12 +106,8 @@ function RoomCard(props: any) {
       right: 8,
     },
   });
-  const picture = require('../../assets/img/MBA_Lyon.jpg');
-  // const picture = getPictureObject(props?.image?.hash);
-  // picture = re
-  // console.log('lol -> ' + picture);
-  // console.log(String(picture));
-  // console.log(picture);
+  const errorPicture = require('../../assets/img/NoPicture.png');
+  const picture = getPictureObject(props?.image?.hash);
 
   return (
     <TouchableOpacity
@@ -129,10 +125,10 @@ function RoomCard(props: any) {
           seats_available: props.seats_available,
           seats_total: props.seats_total,
           open_hours: props.open_hours,
-          pic: picture,
+          pic: picture === null ? errorPicture : {uri: picture},
         });
       }}>
-      <Image style={smallObject.imageCover} source={picture} />
+      <Image style={smallObject.imageCover} source={picture === null ? errorPicture : {uri: picture}} />
       <Text style={cardStyle.title}>{props.title}</Text>
       <Pressable
         style={smallObject.favPos}
