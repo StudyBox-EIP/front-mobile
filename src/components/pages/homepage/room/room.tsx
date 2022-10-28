@@ -101,37 +101,41 @@ const BasicInfo = (props: any) => {
       <Text style={BasicInfoStyle.title} adjustsFontSizeToFit>
         {props.name}
       </Text>
-      <View style={basicStyle.basicContainer}>
-        <Text style={BasicInfoStyle.score} adjustsFontSizeToFit>
-          Score: {props.score}/{scoreMax}
-        </Text>
-        <StarSVG
-          height={15}
-          width={15}
-          fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
-        />
-        <StarSVG
-          height={15}
-          width={15}
-          fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
-        />
-        <StarSVG
-          height={15}
-          width={15}
-          fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
-        />
-        <StarSVG
-          height={15}
-          width={15}
-          fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
-        />
-        <StarSVG
-          height={15}
-          width={15}
-          fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
-        />
-        <View style={basicStyle.starBarHider} />
-      </View>
+      {props.noted > 0 ? (
+        <View style={basicStyle.basicContainer}>
+          <Text style={BasicInfoStyle.score} adjustsFontSizeToFit>
+            Score: {props.score}/{scoreMax}
+          </Text>
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <View style={basicStyle.starBarHider} />
+        </View>
+      ) : (
+        <TouchableOpacity />
+      )}
     </View>
   );
 };
@@ -229,7 +233,11 @@ export class RoomScreen extends React.Component {
     return (
       <View style={RoomScreenStyle.base}>
         <Image style={RoomScreenStyle.imageCover} source={props.pic} />
-        <BasicInfo name={props.name} score={props.score} />
+        <BasicInfo
+          name={props.name}
+          score={props.score}
+          noted={props.nb_note}
+        />
         <ScrollView
           style={RoomScreenStyle.cardContainer}
           contentContainerStyle={RoomScreenStyle.cardContentContainer}
