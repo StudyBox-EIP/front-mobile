@@ -18,7 +18,7 @@ export async function login(
       password: data.password,
     });
     storeData('userInfo', JSON.stringify(auth.data));
-    resetPageHistory(navigation, 'HomePageScreen');
+    resetPageHistory(navigation.navigation, 'HomePageScreen');
     return auth;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -32,6 +32,7 @@ export async function login(
       }
     } else {
       Alert.alert('Unknown Error');
+      console.error(error);
     }
   }
   return false;
