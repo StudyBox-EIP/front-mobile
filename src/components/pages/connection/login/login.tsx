@@ -1,17 +1,15 @@
 import React from 'react';
-import StudyBoxTextInput from '../../../elements/form/input/StudyBoxInput';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import StudyBoxSubmitButton from '../../../elements/form/submit/StudyBoxSubmitButton';
+import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {login} from '../../../api/auth';
 import {COLORS_STUDYBOX} from '../../../elements/colors';
-
 import STUDYBOX_ICON from '../../../../assets/svg/logo_studybox_couleur.svg';
 
 const LoginStyle = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFFFFF',
   },
   main_wrapper: {
     width: '70%',
@@ -31,32 +29,11 @@ const LoginStyle = StyleSheet.create({
 });
 
 export function LoginScreen({navigation}: any) {
-  const data = {
-    email: '',
-    password: '',
-  };
-
-  function changeUsername(newText: string) {
-    data.email = newText;
-  }
-
-  function changePassword(newText: string) {
-    data.password = newText;
-  }
-
   return (
     <View style={LoginStyle.container}>
-      {/* Header */}
       <ConnectionHeader />
-
-      {/* Body */}
-      {/* Title */}
-      {/* Mail */}
-      {/* Passwords */}
-      {/* Forgotten Password */}
-      {/* Connection Button */}
-
-      {/* Footer */}
+      <ConnectionBody navigation={navigation} />
+      <ConnectionFooter />
     </View>
   );
 }
@@ -64,9 +41,11 @@ export function LoginScreen({navigation}: any) {
 const ConnectionHeader = () => {
   const style = StyleSheet.create({
     container: {
-      flex: 1,
+      width: '100%',
+      height: '10%',
       flexDirection: 'row',
       alignItems: 'center',
+      backgroundColor: '#F9FAFA',
     },
     text: {
       marginLeft: 10,
@@ -85,31 +64,91 @@ const ConnectionHeader = () => {
   );
 };
 
-{/* <Image
-  style={LoginStyle.logo}
-  source={require('../../../../assets/studybox-logo.png')}
-/>
-<View style={LoginStyle.main_wrapper}>
-  <StudyBoxTextInput
-    text="Email"
-    keyboardType={'email-address'}
-    changeText={changeUsername}
-  />
-  <StudyBoxTextInput
-    text="Mot de Passe"
-    autoCompleteType="password"
-    secureTextEntry={true}
-    changeText={changePassword}
-  />
-  <TouchableOpacity
-    onPress={() => {
-      navigation.navigate('PasswordRecoveryScreen');
-    }}>
-    <Text style={LoginStyle.forgotPassword}>Mot de passe oublié ?</Text>
-  </TouchableOpacity>
-</View> */}
-{/* Backend Authentication */}
-{/* <StudyBoxSubmitButton
-  text="Se connecter"
-  onPress={() => login(navigation, data)}
-/> */}
+const ConnectionBody = (navigation: any) => {
+  const style = StyleSheet.create({
+    bodyContainer: {
+      width: '100%',
+    },
+    title: {
+      fontSize: 24,
+    },
+    titleContainer: {
+      alignSelf: 'center',
+      width: '80%',
+    },
+    inputField: {
+      marginTop: 10,
+      backgroundColor: '#F9FAFA',
+      width: '100%',
+      color: 'black',
+    },
+    forgottenPassword: {
+      paddingTop: 10,
+      width: '100%',
+    },
+  });
+
+  let email = '';
+  let password = '';
+
+  return (
+    <View style={style.bodyContainer}>
+      <View style={style.titleContainer}>
+        <Text style={style.title}>Connexion</Text>
+        <Text>Veuillez-vous connecter pour continuer</Text>
+      </View>
+      <View style={{width: '80%', alignSelf: 'center', alignItems: 'center'}}>
+        <TextInput
+          placeholderTextColor={'black'}
+          style={style.inputField}
+          placeholder="Mail"
+          keyboardType={'email-address'}
+          onChangeText={(newText: string) => {
+            email = newText;
+          }}
+        />
+        <TextInput
+          placeholderTextColor={'black'}
+          style={style.inputField}
+          placeholder="Mot de Passe"
+          autoCompleteType="password"
+          secureTextEntry={true}
+          onChangeText={(newText: string) => {
+            password = newText;
+          }}
+        />
+        <Text style={style.forgottenPassword} onPress={console.log}>
+          Mot de passe oublié ?
+        </Text>
+
+        {/* <TouchableOpacity style={{width: 10, height: 10, backgroundColor: 'green', alignSelf: 'flex-end'}} /> */}
+
+        {/* <Button onPress={console.log} color={} title="Connexion" /> */}
+        <Pressable
+          style={{width: '25%', height: 40, alignSelf: 'flex-end', backgroundColor: COLORS_STUDYBOX.CONFIRM_GREEN, justifyContent: 'center', alignItems: 'center', borderRadius: 10}}
+          onPress={() => login(navigation, {email, password})}>
+          <Text style={{color: 'white'}}>Connexion</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+};
+
+const ConnectionFooter = () => {
+  const style = StyleSheet.create({
+    container: {
+      marginVertical: 20,
+    },
+  });
+
+  return (
+    <View style={style.container}>
+      <Text>
+        Pas encore de compte ?{' '}
+        <Text style={{fontWeight: 'bold'}} onPress={console.log}>
+          créez-en un
+        </Text>
+      </Text>
+    </View>
+  );
+};

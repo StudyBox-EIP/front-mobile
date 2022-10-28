@@ -16,8 +16,9 @@ export class SplashScreen extends Component {
             }
 
             const JWT_Validity = await checkJWT(await JSON.parse(res)?.token);
+            console.log(JWT_Validity);
 
-            if (JWT_Validity === 201) {
+            if (JWT_Validity === 408) {
               Alert.alert(
                 'Session expirée !',
                 'Votre session a expiré, veuillez vous reconnecter',
@@ -27,6 +28,7 @@ export class SplashScreen extends Component {
             } else if (JWT_Validity !== 200) {
               // Redirect to Home Page for any other Error
               resetPageHistory(this.props.navigation, 'AuthScreen');
+              return;
             }
             // Successful Authentication
             resetPageHistory(this.props.navigation, 'HomePageScreen');
