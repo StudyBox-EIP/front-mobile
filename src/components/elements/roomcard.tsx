@@ -70,9 +70,10 @@ const Score = (props: any) => {
     },
   });
 
+  const txt = props.noted > 0 ? props.score + '/5' : 'Aucune Note';
   return (
     <View style={cardStyle.score}>
-      <Text style={elements.text}>{props.score}/5</Text>
+      <Text style={elements.text}>{txt}</Text>
       <StarIcon
         style={elements.star}
         height={elements.star.size}
@@ -119,6 +120,7 @@ function RoomCard(props: any) {
           desc: props.desc,
           adress: props.adress,
           score: props.score,
+          nb_note: props.nb_note,
           price: props.price,
           latitude: props.latitude,
           longitude: props.longitude,
@@ -128,7 +130,10 @@ function RoomCard(props: any) {
           pic: picture === null ? errorPicture : {uri: picture},
         });
       }}>
-      <Image style={smallObject.imageCover} source={picture === null ? errorPicture : {uri: picture}} />
+      <Image
+        style={smallObject.imageCover}
+        source={picture === null ? errorPicture : {uri: picture}}
+      />
       <Text style={cardStyle.title}>{props.title}</Text>
       <Pressable
         style={smallObject.favPos}
@@ -147,7 +152,7 @@ function RoomCard(props: any) {
           width={smallObject.favorite.size}
         />
       </Pressable>
-      <Score score={props.score} />
+      <Score score={props.score} noted={props.nb_note} />
     </TouchableOpacity>
   );
 }
