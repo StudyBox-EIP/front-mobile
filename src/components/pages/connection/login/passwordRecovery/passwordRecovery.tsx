@@ -49,7 +49,7 @@ export class PasswordRecoveryScreen extends React.Component {
     });
 
     const checkEmail = async () => {
-      const res = await sendRecoverMail(this.state.email);
+      const res = await sendRecoverMail(this.state.email?.trim());
       Keyboard.dismiss();
 
       if (res === 200) {
