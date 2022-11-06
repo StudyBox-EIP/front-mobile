@@ -184,7 +184,7 @@ class ConnectionBody extends Component {
             disabled={this.state.buttonStatus}
             onPress={() =>
               login(this.props.navigation, {
-                email: this.state.email,
+                email: this.state.email.trim(),
                 password: this.state.password,
               })
             }>
