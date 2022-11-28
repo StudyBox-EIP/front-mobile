@@ -67,7 +67,6 @@ function InfoCardPrice(props: any) {
     favPos: {
       position: 'absolute',
       right: 8,
-      bottom: 8,
     },
     cancel: {
       fill: COLORS_STUDYBOX.STUDYBOX_RED,
@@ -81,7 +80,6 @@ function InfoCardPrice(props: any) {
     },
   });
 
-  const errorPicture = require('../../assets/img/NoPicture.png');
   const picture = getPictureObject(props?.image?.hash);
   const container =
     props.style == null
