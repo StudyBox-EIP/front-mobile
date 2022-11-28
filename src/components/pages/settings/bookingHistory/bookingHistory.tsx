@@ -53,8 +53,8 @@ export class BookingHistory extends React.Component {
           {this.state.bookingHistory
             .sort(
               (a, b) =>
-                Number(new Date(b?.date_start)) -
-                Number(new Date(a?.date_start)),
+                Number(new Date(b?.createdAt)) -
+                Number(new Date(a?.createdAt)),
             )
             .map((payment: any) => {
               // Adjust Server Delay
