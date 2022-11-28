@@ -30,7 +30,7 @@ function BasicSearchBar(props: any) {
       margin: 2,
       marginHorizontal: 8,
       size: 32,
-      fill: COLORS_STUDYBOX.GREEN,
+      fill: COLORS_STUDYBOX.STUDYBOX_GREEN,
     },
   });
 

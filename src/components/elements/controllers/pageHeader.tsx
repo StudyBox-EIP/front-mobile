@@ -17,7 +17,7 @@ export default class PageHeader extends React.Component {
           ? this.props.linePercentage
           : '0%',
       height: 2,
-      backgroundColor: COLORS_STUDYBOX.GREEN,
+      backgroundColor: COLORS_STUDYBOX.STUDYBOX_GREEN,
     },
   });
 
@@ -29,7 +29,7 @@ export default class PageHeader extends React.Component {
             <this.props.icon
               width={50}
               height={50}
-              fill={COLORS_STUDYBOX.GREEN}
+              fill={COLORS_STUDYBOX.STUDYBOX_GREEN}
             />
           </TouchableOpacity>
           <Text style={this.style.titleText}>{this.props?.headerText}</Text>

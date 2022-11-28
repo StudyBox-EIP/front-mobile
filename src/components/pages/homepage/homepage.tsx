@@ -64,6 +64,7 @@ export class HomePageScreen extends React.Component {
         desc: remoteRoom.desc,
         address: remoteRoom.address,
         score: remoteRoom.average,
+        nb_note: remoteRoom.nb_note,
         price: remoteRoom.price,
         latitude: remoteRoom.latitude,
         longitude: remoteRoom.longitude,
@@ -71,7 +72,7 @@ export class HomePageScreen extends React.Component {
         seats_available: remoteRoom.seats_available,
         open_hours: remoteRoom.open_hours,
         seats_total: remoteRoom.seats_total,
-        image: undefined,
+        image: remoteRoom.image,
       });
     }
     this.setState({nearbyRooms: newRooms});
@@ -170,6 +171,7 @@ export class HomePageScreen extends React.Component {
                 adress={val.address}
                 score={val.score}
                 price={val.price}
+                nb_note={val.nb_note}
                 image={val.image}
                 latitude={val.latitude}
                 longitude={val.longitude}

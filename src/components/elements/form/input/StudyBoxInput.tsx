@@ -7,7 +7,7 @@ function StudyBoxTextInput(props: any) {
     label_text: {
       fontSize: 16,
       fontFamily: 'RopaSans-Regular',
-      color: COLORS_STUDYBOX.GREY,
+      color: COLORS_STUDYBOX.STUDYBOX_BLACK,
     },
     textInput: {
       maxWidth: (Dimensions.get('screen').width / 100) * 70,

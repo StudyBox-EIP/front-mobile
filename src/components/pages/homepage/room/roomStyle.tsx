@@ -4,7 +4,7 @@ import {COLORS_STUDYBOX} from '../../../elements/colors';
 export const style = StyleSheet.create({
   notationContainer: {
     width: '90%',
-    backgroundColor: COLORS_STUDYBOX.GREY,
+    backgroundColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
     borderRadius: 10,
   },
   starContainer: {

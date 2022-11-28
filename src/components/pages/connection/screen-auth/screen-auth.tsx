@@ -24,7 +24,7 @@ const ScreenAuthStyle = StyleSheet.create({
     fontSize: 33,
     marginTop: 20,
     marginBottom: 20,
-    color: COLORS_STUDYBOX.GREY,
+    color: COLORS_STUDYBOX.STUDYBOX_BLACK,
     fontFamily: 'RopaSans-Regular',
   },
   button_auth: {
@@ -44,7 +44,7 @@ const ScreenAuthStyle = StyleSheet.create({
     elevation: 10,
   },
   button_text: {
-    color: COLORS_STUDYBOX.GREY,
+    color: COLORS_STUDYBOX.STUDYBOX_BLACK,
     textAlign: 'center',
     fontSize: 17,
     fontFamily: 'RopaSans-Regular',

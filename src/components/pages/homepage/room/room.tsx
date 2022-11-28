@@ -9,11 +9,13 @@ import {
   View,
 } from 'react-native';
 import getDirections from 'react-native-google-maps-directions';
-import BasicButton from '../../../elements/button';
+import {BasicButton, BasicIcon} from '../../../elements/button';
 import {COLORS_STUDYBOX} from '../../..//elements/colors';
-import {getReservations, noteRoom, openLocker} from '../../../api/booking';
+import {getReservations, noteRoom} from '../../../api/booking';
 import StarSVG from '../../../../assets/svg/star.svg';
 import {style} from './roomStyle';
+import Unlock from '../../../../assets/svg/unlocked.svg';
+import {openLocker} from '../../../api/booking';
 
 const scoreMax = 5;
 
@@ -44,15 +46,13 @@ const RoomScreenStyle = StyleSheet.create({
     flex: 1.5,
   },
   cardContainer: {
-    borderTopColor: COLORS_STUDYBOX.GREEN,
+    borderTopColor: COLORS_STUDYBOX.STUDYBOX_GREEN,
     borderTopWidth: 3,
     width: '100%',
     paddingBottom: 80,
     flex: 10,
   },
-  button: {
-    flex: 0.8,
-  },
+  button: {},
 });
 
 const BasicInfoStyle = StyleSheet.create({
@@ -73,6 +73,11 @@ const BasicInfoStyle = StyleSheet.create({
     fontSize: 12,
     marginVertical: 2,
     padding: 2,
+  },
+  icon: {
+    position: 'absolute',
+    top: '20%',
+    right: '15%',
   },
 });
 
@@ -96,17 +101,41 @@ const BasicInfo = (props: any) => {
       <Text style={BasicInfoStyle.title} adjustsFontSizeToFit>
         {props.name}
       </Text>
-      <View style={basicStyle.basicContainer}>
-        <Text style={BasicInfoStyle.score} adjustsFontSizeToFit>
-          Score: {props.score}/{scoreMax}
-        </Text>
-        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
-        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
-        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
-        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
-        <StarSVG height={15} width={15} fill={COLORS_STUDYBOX.YELLOW} />
-        <View style={basicStyle.starBarHider} />
-      </View>
+      {props.noted > 0 ? (
+        <View style={basicStyle.basicContainer}>
+          <Text style={BasicInfoStyle.score} adjustsFontSizeToFit>
+            Score: {props.score}/{scoreMax}
+          </Text>
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <StarSVG
+            height={15}
+            width={15}
+            fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+          />
+          <View style={basicStyle.starBarHider} />
+        </View>
+      ) : (
+        <TouchableOpacity />
+      )}
     </View>
   );
 };
@@ -190,7 +219,11 @@ export class RoomScreen extends React.Component {
             );
           })
         }>
-        <StarSVG height={40} width={40} fill="yellow" />
+        <StarSVG
+          height={40}
+          width={40}
+          fill={COLORS_STUDYBOX.STUDYBOX_YELLOW}
+        />
       </TouchableOpacity>
     );
   };
@@ -200,7 +233,11 @@ export class RoomScreen extends React.Component {
     return (
       <View style={RoomScreenStyle.base}>
         <Image style={RoomScreenStyle.imageCover} source={props.pic} />
-        <BasicInfo name={props.name} score={props.score} />
+        <BasicInfo
+          name={props.name}
+          score={props.score}
+          noted={props.nb_note}
+        />
         <ScrollView
           style={RoomScreenStyle.cardContainer}
           contentContainerStyle={RoomScreenStyle.cardContentContainer}
@@ -239,8 +276,10 @@ export class RoomScreen extends React.Component {
           txt="En route !"
         />
         {(__DEV__ ? true : this.state.canOpen) ? (
-          <BasicButton
-            style={RoomScreenStyle.button}
+          <BasicIcon
+            Icon={Unlock}
+            size={24}
+            style={BasicInfoStyle.icon}
             callback={() => {
               if (this.state.reservations[0]) {
                 console.info(
@@ -266,7 +305,6 @@ export class RoomScreen extends React.Component {
                 console.error('No Reservation in range');
               }
             }}
-            txt="Déverouiller la salle"
           />
         ) : (
           <TouchableOpacity />

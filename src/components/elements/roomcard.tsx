@@ -6,6 +6,7 @@ import {
   Image,
   View,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {getPictureObject} from '../../tools/images';
 import {COLORS_STUDYBOX} from '../elements/colors';
@@ -34,10 +35,9 @@ const cardStyle = StyleSheet.create({
   },
   title: {
     position: 'absolute',
-    height: 36,
-    bottom: 8,
-    left: 4,
-    fontSize: 24,
+    bottom: 2 * Dimensions.get('screen').fontScale,
+    left: 4 * Dimensions.get('screen').fontScale,
+    fontSize: 16 * Dimensions.get('screen').fontScale,
     overflow: 'scroll',
     marginLeft: 4,
     marginTop: 8,
@@ -46,7 +46,7 @@ const cardStyle = StyleSheet.create({
     position: 'absolute',
     left: 4,
     top: 4,
-    backgroundColor: COLORS_STUDYBOX.LIGHT_BLUE,
+    backgroundColor: COLORS_STUDYBOX.STUDYBOX_BLUE,
     borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 8,
@@ -62,7 +62,7 @@ const Score = (props: any) => {
       size: 16,
       padding: 2,
       marginLeft: 4,
-      fill: COLORS_STUDYBOX.YELLOW,
+      fill: COLORS_STUDYBOX.STUDYBOX_YELLOW,
     },
     text: {
       color: 'white',
@@ -70,38 +70,52 @@ const Score = (props: any) => {
     },
   });
 
-  return (
-    <View style={cardStyle.score}>
-      <Text style={elements.text}>{props.score}/5</Text>
-      <StarIcon
-        style={elements.star}
-        height={elements.star.size}
-        width={elements.star.size}
-      />
-    </View>
-  );
+  if (props.noted > 0) {
+    return (
+      <View style={cardStyle.score}>
+        <Text style={elements.text}>{props.score + '/5'}</Text>
+        <StarIcon
+          style={elements.star}
+          height={elements.star.size}
+          width={elements.star.size}
+        />
+      </View>
+    );
+  } else {
+    return (
+      <View style={cardStyle.score}>
+        <Text style={elements.text}>Aucune Note</Text>
+      </View>
+    );
+  }
 };
 
 function RoomCard(props: any) {
   const smallObject = StyleSheet.create({
     imageCover: {
+      // backgroundColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
       position: 'absolute',
       alignSelf: 'baseline',
-      width: 250,
+      width: '100%',
       height: 200,
       borderTopLeftRadius: 10,
-      borderBottomRightRadius: 10,
+      borderTopRightRadius: 10,
     },
     favorite: {
-      fill: COLORS_STUDYBOX.CONFIRM_RED,
-      position: 'absolute',
-      top: 8,
-      right: 8,
+      fill: COLORS_STUDYBOX.STUDYBOX_GREEN,
       size: 32,
       zIndex: -2,
+      position: 'absolute',
+      top: 2,
+      right: 4,
+    },
+    favPos: {
+      position: 'absolute',
+      right: 8,
     },
   });
-  const picture = getPictureObject(props.image);
+  const errorPicture = require('../../assets/img/NoPicture.png');
+  const picture = getPictureObject(props?.image?.hash);
 
   return (
     <TouchableOpacity
@@ -113,19 +127,23 @@ function RoomCard(props: any) {
           desc: props.desc,
           adress: props.adress,
           score: props.score,
+          nb_note: props.nb_note,
           price: props.price,
           latitude: props.latitude,
           longitude: props.longitude,
           seats_available: props.seats_available,
           seats_total: props.seats_total,
           open_hours: props.open_hours,
-          pic: picture,
+          pic: picture === null ? errorPicture : {uri: picture},
         });
       }}>
-      <Image style={smallObject.imageCover} source={picture} />
+      <Image
+        style={smallObject.imageCover}
+        source={picture === null ? errorPicture : {uri: picture}}
+      />
       <Text style={cardStyle.title}>{props.title}</Text>
       <Pressable
-        style={smallObject.favorite}
+        style={smallObject.favPos}
         onPress={() => {
           props.onFavorite(!props.favorite);
         }}>
@@ -141,7 +159,7 @@ function RoomCard(props: any) {
           width={smallObject.favorite.size}
         />
       </Pressable>
-      <Score score={props.score} />
+      <Score score={props.score} noted={props.nb_note} />
     </TouchableOpacity>
   );
 }

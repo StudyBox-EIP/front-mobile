@@ -41,8 +41,8 @@ export class SplashScreen extends Component {
 
   splashView = StyleSheet.create({
     base: {
-      width: '100%',
       height: '100%',
+      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -52,8 +52,6 @@ export class SplashScreen extends Component {
     return (
       <View style={this.splashView.base}>
         <Image
-          width={250}
-          height={250}
           resizeMode="center"
           source={require('../../assets/studybox-logo.png')}
         />
