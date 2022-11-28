@@ -70,17 +70,24 @@ const Score = (props: any) => {
     },
   });
 
-  const txt = props.noted > 0 ? props.score + '/5' : 'Aucune Note';
-  return (
-    <View style={cardStyle.score}>
-      <Text style={elements.text}>{txt}</Text>
-      <StarIcon
-        style={elements.star}
-        height={elements.star.size}
-        width={elements.star.size}
-      />
-    </View>
-  );
+  if (props.noted > 0) {
+    return (
+      <View style={cardStyle.score}>
+        <Text style={elements.text}>{props.score + '/5'}</Text>
+        <StarIcon
+          style={elements.star}
+          height={elements.star.size}
+          width={elements.star.size}
+        />
+      </View>
+    );
+  } else {
+    return (
+      <View style={cardStyle.score}>
+        <Text style={elements.text}>Aucune Note</Text>
+      </View>
+    );
+  }
 };
 
 function RoomCard(props: any) {
