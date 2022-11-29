@@ -72,17 +72,3 @@ export function AuthScreen({navigation}: any) {
     </SafeAreaView>
   );
 }
-
-/* <View style={ScreenAuthStyle.base}>
-        <Button
-          title="GOOGLE"
-          onPress={() => navigation.navigate('GoogleOauthScreen')}
-        />
-      </View>
-      <View style={ScreenAuthStyle.base}>
-        <Button
-          title="MICROSOFT"
-          onPress={() => navigation.navigate('MicrosoftOauthScreen')}
-        />
-      </View>navigation
-      */
