@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
+import {StyleSheet, Text, View, Image, Pressable, Alert} from 'react-native';
 import {getPictureObject} from '../../tools/images';
 import PlusIcon from '../../assets/svg/plus.svg';
 import {COLORS_STUDYBOX} from './colors';
@@ -62,15 +62,21 @@ function InfoCardPrice(props: any) {
     favorite: {
       fill: COLORS_STUDYBOX.STUDYBOX_GREEN,
       size: 40,
-      zIndex: -2,
-      position: 'absolute',
-      top: 2,
-      right: 4,
     },
     favPos: {
       position: 'absolute',
       right: 8,
-      bottom: 8 + 40,
+      bottom: 8,
+    },
+    cancel: {
+      fill: COLORS_STUDYBOX.STUDYBOX_RED,
+      size: 40,
+      transform: [{rotate: '45deg'}],
+    },
+    cancelPos: {
+      position: 'absolute',
+      left: 8,
+      bottom: 8,
     },
   });
 
@@ -127,6 +133,30 @@ function InfoCardPrice(props: any) {
           style={style.favorite}
           height={style.favorite.size}
           width={style.favorite.size}
+        />
+      </Pressable>
+      <Pressable
+        style={style.cancelPos}
+        onPress={() => {
+          Alert.alert(
+            'Annulé Réservation',
+            'Êtes-vous sure de vouloir annuler votre réservation ?',
+            [
+              {
+                text: 'Oui',
+                onPress: () => console.log('Reservation Annulé'),
+              },
+              {
+                text: 'Retour',
+                style: 'cancel',
+              },
+            ],
+          );
+        }}>
+        <PlusIcon
+          style={style.cancel}
+          height={style.cancel.size}
+          width={style.cancel.size}
         />
       </Pressable>
     </View>
