@@ -48,11 +48,19 @@ export const BottomBarIcon = (props: any) => {
           resetPageHistory(props.navigation, props.destPage);
           props.navigation.navigate(props.destPage);
         }}>
-        <FontAwesomeIcon
-          color={COLORS_STUDYBOX.BLUE_FOOTER}
-          size={ICON_SIZE}
-          icon={props.icon}
-        />
+        {props.isIconFontAwesome === true ? (
+          <FontAwesomeIcon
+            color={COLORS_STUDYBOX.BLUE_FOOTER}
+            size={ICON_SIZE}
+            icon={props.icon}
+          />
+        ) : (
+          <props.icon
+            width={ICON_SIZE}
+            height={ICON_SIZE}
+            color={COLORS_STUDYBOX.BLUE_FOOTER}
+          />
+        )}
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -63,23 +71,27 @@ export const BottomHomePageController = (props: any) => {
     <View style={pageController.container}>
       <BottomBarIcon
         icon={faMap}
+        isIconFontAwesome={true}
         destPage={'HomePageScreen'}
         navigation={props.navigation}
       />
       <BottomBarIcon
         icon={faListAlt}
+        isIconFontAwesome={true}
         destPage={'SettingsPageScreen'}
         navigation={props.navigation}
       />
       <BottomBarIcon
         icon={faHeart}
-        destPage={'SettingsPageScreen'}
+        isIconFontAwesome={true}
+        destPage={'FavoritesPageScreen'}
         navigation={props.navigation}
       />
-      <SETTINGS_SVG_ICON
-        width={ICON_SIZE}
-        height={ICON_SIZE}
-        color={COLORS_STUDYBOX.BLUE_FOOTER}
+      <BottomBarIcon
+        icon={SETTINGS_SVG_ICON}
+        isIconFontAwesome={false}
+        destPage={'SettingsPageScreen'}
+        navigation={props.navigation}
       />
     </View>
   );
