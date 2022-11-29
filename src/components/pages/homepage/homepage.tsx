@@ -3,21 +3,22 @@ import {
   StyleSheet,
   View,
   PermissionsAndroid,
-  RefreshControl,
-  Text,
+  // RefreshControl,
+  // Text,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+// import {ScrollView} from 'react-native-gesture-handler';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
 import {getRooms, getRoomsNearby} from '../../api/rooms';
 import Geolocation from 'react-native-geolocation-service';
-import RoomCard from '../../elements/roomcard';
-import BasicSearchBar from '../../elements/searchbar';
-import {addFavorite, getFavorites, removeFavorite} from '../../api/favorites';
-import PageHeader from '../../elements/controllers/pageHeader';
+// import RoomCard from '../../elements/roomcard';
+// import BasicSearchBar from '../../elements/searchbar';
+// import {addFavorite, getFavorites, removeFavorite} from '../../api/favorites';
+import {getFavorites} from '../../api/favorites';
+// import PageHeader from '../../elements/controllers/pageHeader';
 import {Header} from '../../elements/header';
 
 import MapboxGL from '@rnmapbox/maps';
-import { API } from '../../../../config';
+import {API} from '../../../../config';
 
 const styles = StyleSheet.create({
   page: {
@@ -60,6 +61,9 @@ const HomePageScreenStyle = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1,
     elevation: 8,
+  },
+  bodyContainer: {
+    height: '80%',
   },
 });
 
@@ -159,16 +163,14 @@ export class HomePageScreen extends React.Component {
     this.checkGeolocation();
   }
 
-  // sk.eyJ1IjoibmF0aGFuMzMyOSIsImEiOiJjbGIxb2Q4YWkwOXgwM3FwY2J0aWo4Ym0xIn0.gsdf5vmpq617bknw5o_sTQ
-
   render() {
     MapboxGL.setWellKnownTileServer('Mapbox');
     MapboxGL.setAccessToken(API.MAPBOX_TOKEN);
 
     return (
       <View style={HomePageScreenStyle.base}>
-        <Header />
-        <View style={{height: '80%'}}>
+        <Header image={require('../../../assets/studybox-logo.png')} />
+        <View style={HomePageScreenStyle.bodyContainer}>
           <View style={styles.page}>
             <View style={styles.container}>
               <MapboxGL.MapView style={styles.map} />
