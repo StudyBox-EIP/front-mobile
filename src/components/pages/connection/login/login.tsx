@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {login} from '../../../api/auth';
 import {COLORS_STUDYBOX} from '../../../elements/colors';
@@ -33,12 +33,12 @@ export function LoginScreen({navigation}: any) {
     <View style={LoginStyle.container}>
       <ConnectionHeader />
       <ConnectionBody navigation={navigation} />
-      <ConnectionFooter />
+      <ConnectionFooter navigation={navigation} />
     </View>
   );
 }
 
-const ConnectionHeader = () => {
+export const ConnectionHeader = () => {
   const style = StyleSheet.create({
     container: {
       width: '100%',
@@ -64,10 +64,32 @@ const ConnectionHeader = () => {
   );
 };
 
-const ConnectionBody = (navigation: any) => {
-  const style = StyleSheet.create({
+class ConnectionBody extends Component {
+  state = {
+    email: '',
+    password: '',
+    buttonStatus: true,
+    buttonCSS: StyleSheet.create({
+      css: {
+        width: '25%',
+        height: 40,
+        alignSelf: 'flex-end',
+        backgroundColor: COLORS_STUDYBOX.UNCONFIRM_GREEN,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+      },
+    }),
+  };
+
+  style = StyleSheet.create({
     bodyContainer: {
       width: '100%',
+    },
+    fieldContainer: {
+      width: '80%',
+      alignSelf: 'center',
+      alignItems: 'center',
     },
     title: {
       fontSize: 24,
@@ -86,58 +108,101 @@ const ConnectionBody = (navigation: any) => {
       paddingTop: 10,
       width: '100%',
     },
+    connectionText: {
+      color: 'white',
+    },
   });
 
-  let email = '';
-  let password = '';
+  checkUnlockButton() {
+    if (this.state.email !== '' && this.state.password !== '') {
+      this.setState({buttonStatus: false});
+      this.setState({
+        buttonCSS: StyleSheet.create({
+          css: {
+            width: '25%',
+            height: 40,
+            alignSelf: 'flex-end',
+            backgroundColor: COLORS_STUDYBOX.CONFIRM_GREEN,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 10,
+          },
+        }),
+      });
+    } else {
+      this.setState({buttonStatus: true});
+      this.setState({
+        buttonCSS: StyleSheet.create({
+          css: {
+            width: '25%',
+            height: 40,
+            alignSelf: 'flex-end',
+            backgroundColor: COLORS_STUDYBOX.UNCONFIRM_GREEN,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 10,
+          },
+        }),
+      });
+    }
+  }
 
-  return (
-    <View style={style.bodyContainer}>
-      <View style={style.titleContainer}>
-        <Text style={style.title}>Connexion</Text>
-        <Text>Veuillez-vous connecter pour continuer</Text>
+  render() {
+    return (
+      <View style={this.style.bodyContainer}>
+        <View style={this.style.titleContainer}>
+          <Text style={this.style.title}>Connexion</Text>
+          <Text>Veuillez-vous connecter pour continuer</Text>
+        </View>
+        <View style={this.style.fieldContainer}>
+          <TextInput
+            placeholderTextColor={'black'}
+            style={this.style.inputField}
+            placeholder="Mail"
+            keyboardType={'email-address'}
+            onChangeText={(newText: string) => {
+              this.state.email = newText;
+              this.checkUnlockButton();
+            }}
+          />
+          <TextInput
+            placeholderTextColor={'black'}
+            style={this.style.inputField}
+            placeholder="Mot de Passe"
+            autoCompleteType="password"
+            secureTextEntry={true}
+            onChangeText={(newText: string) => {
+              this.state.password = newText;
+              this.checkUnlockButton();
+            }}
+          />
+          <Text style={this.style.forgottenPassword} onPress={console.log}>
+            Mot de passe oublié ?
+          </Text>
+          <Pressable
+            style={this.state.buttonCSS.css}
+            disabled={this.state.buttonStatus}
+            onPress={() =>
+              login(this.props.navigation, {
+                email: this.state.email,
+                password: this.state.password,
+              })
+            }>
+            <Text style={this.style.connectionText}>Connexion</Text>
+          </Pressable>
+        </View>
       </View>
-      <View style={{width: '80%', alignSelf: 'center', alignItems: 'center'}}>
-        <TextInput
-          placeholderTextColor={'black'}
-          style={style.inputField}
-          placeholder="Mail"
-          keyboardType={'email-address'}
-          onChangeText={(newText: string) => {
-            email = newText;
-          }}
-        />
-        <TextInput
-          placeholderTextColor={'black'}
-          style={style.inputField}
-          placeholder="Mot de Passe"
-          autoCompleteType="password"
-          secureTextEntry={true}
-          onChangeText={(newText: string) => {
-            password = newText;
-          }}
-        />
-        <Text style={style.forgottenPassword} onPress={console.log}>
-          Mot de passe oublié ?
-        </Text>
+    );
+  }
+}
 
-        {/* <TouchableOpacity style={{width: 10, height: 10, backgroundColor: 'green', alignSelf: 'flex-end'}} /> */}
-
-        {/* <Button onPress={console.log} color={} title="Connexion" /> */}
-        <Pressable
-          style={{width: '25%', height: 40, alignSelf: 'flex-end', backgroundColor: COLORS_STUDYBOX.CONFIRM_GREEN, justifyContent: 'center', alignItems: 'center', borderRadius: 10}}
-          onPress={() => login(navigation, {email, password})}>
-          <Text style={{color: 'white'}}>Connexion</Text>
-        </Pressable>
-      </View>
-    </View>
-  );
-};
-
-const ConnectionFooter = () => {
+const ConnectionFooter = (props: any) => {
   const style = StyleSheet.create({
     container: {
       marginVertical: 20,
+    },
+    text: {
+      fontWeight: 'bold',
     },
   });
 
@@ -145,7 +210,9 @@ const ConnectionFooter = () => {
     <View style={style.container}>
       <Text>
         Pas encore de compte ?{' '}
-        <Text style={{fontWeight: 'bold'}} onPress={console.log}>
+        <Text
+          style={style.text}
+          onPress={() => props.navigation.navigate('ManualSignUp')}>
           créez-en un
         </Text>
       </Text>

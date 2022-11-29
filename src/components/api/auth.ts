@@ -18,7 +18,7 @@ export async function login(
       password: data.password,
     });
     storeData('userInfo', JSON.stringify(auth.data));
-    resetPageHistory(navigation.navigation, 'HomePageScreen');
+    resetPageHistory(navigation, 'HomePageScreen');
     return auth;
   } catch (error) {
     if (axios.isAxiosError(error)) {
