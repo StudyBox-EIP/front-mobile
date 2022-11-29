@@ -4,6 +4,7 @@ import {
   View,
   PermissionsAndroid,
   RefreshControl,
+  Text,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
@@ -12,11 +13,30 @@ import Geolocation from 'react-native-geolocation-service';
 import RoomCard from '../../elements/roomcard';
 import BasicSearchBar from '../../elements/searchbar';
 import {addFavorite, getFavorites, removeFavorite} from '../../api/favorites';
+import PageHeader from '../../elements/controllers/pageHeader';
+import {Header} from '../../elements/header';
+
+import MapboxGL from '@rnmapbox/maps';
+import { API } from '../../../../config';
+
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    height: '100%',
+    width: '100%',
+  },
+  map: {
+    flex: 1,
+  },
+});
 
 const HomePageScreenStyle = StyleSheet.create({
   base: {
     flex: 1,
-    alignItems: 'center',
   },
   cardContainer: {
     width: '100%',
@@ -139,67 +159,29 @@ export class HomePageScreen extends React.Component {
     this.checkGeolocation();
   }
 
+  // sk.eyJ1IjoibmF0aGFuMzMyOSIsImEiOiJjbGIxb2Q4YWkwOXgwM3FwY2J0aWo4Ym0xIn0.gsdf5vmpq617bknw5o_sTQ
+
   render() {
-    let contextFilter: String = '';
+    MapboxGL.setWellKnownTileServer('Mapbox');
+    MapboxGL.setAccessToken(API.MAPBOX_TOKEN);
+
     return (
       <View style={HomePageScreenStyle.base}>
-        <BasicSearchBar
-          placeholder="Chercher une salle"
-          onEndEditing={async (v: any) => {
-            contextFilter = v.nativeEvent.text;
-            const filteredRooms = await getRooms(contextFilter);
-            this.applyRoomState(filteredRooms);
-          }}
-        />
-        <ScrollView
-          style={HomePageScreenStyle.cardContainer}
-          contentContainerStyle={HomePageScreenStyle.cardContentContainer}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={async () => {}}
-            />
-          }>
-          {this.state.nearbyRooms.map((val: any, key) => {
-            return (
-              <RoomCard
-                key={key}
-                id={val.id}
-                title={val.name}
-                desc={val.desc}
-                adress={val.address}
-                score={val.score}
-                price={val.price}
-                nb_note={val.nb_note}
-                image={val.image}
-                latitude={val.latitude}
-                longitude={val.longitude}
-                favorite={val.favorite}
-                seats_available={val.seats_available}
-                seats_total={val.seats_total}
-                open_hours={val.open_hours}
-                navigation={this.props.navigation}
-                onFavorite={(newFavorite: boolean) => {
-                  this.setState({
-                    nearbyRooms: this.state.nearbyRooms.map((v: any) => {
-                      if (v.name === val.name) {
-                        v.favorite = !val.favorite;
-                      }
-                      return v;
-                    }),
-                  });
-
-                  if (newFavorite === true) {
-                    addFavorite(val.id);
-                  } else {
-                    removeFavorite(val.id);
-                  }
+        <Header />
+        <View style={{height: '80%'}}>
+          <View style={styles.page}>
+            <View style={styles.container}>
+              <MapboxGL.MapView style={styles.map} />
+              <MapboxGL.Camera />
+              {/* <MapboxGL.Camera followUserLocation={true} /> */}
+              {/* <MapboxGL.UserLocation
+                ref={location => {
+                  console.log({location});
                 }}
-              />
-            );
-          })}
-        </ScrollView>
+              /> */}
+            </View>
+          </View>
+        </View>
         <BottomHomePageController navigation={this.props.navigation} />
       </View>
     );

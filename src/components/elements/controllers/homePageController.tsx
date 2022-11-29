@@ -1,13 +1,13 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {faUserCircle as farUserCircle} from '@fortawesome/free-regular-svg-icons';
-// import {faUserCircle as fasUserCircle} from '@fortawesome/free-solid-svg-icons';
-import {faCompass as farCompass} from '@fortawesome/free-regular-svg-icons';
-// import {faCompass as fasCompass} from '@fortawesome/free-solid-svg-icons';
-import {faHeart as farHeart} from '@fortawesome/free-regular-svg-icons';
+import {faHeart, faListAlt, faMap} from '@fortawesome/free-regular-svg-icons';
 import {resetPageHistory} from './navigation';
-// import {faHeart as fasHeart} from '@fortawesome/free-solid-svg-icons';
+
+import SETTINGS_SVG_ICON from '../../../assets/svg/footer/Settings.svg';
+import {COLORS_STUDYBOX} from '../colors';
+
+const ICON_SIZE = 34;
 
 export const pageBottomMargin = StyleSheet.create({
   container: {
@@ -20,14 +20,14 @@ export const pageBottomMargin = StyleSheet.create({
 
 export const pageController = StyleSheet.create({
   container: {
-    paddingHorizontal: '10%',
+    paddingHorizontal: '5%',
     alignItems: 'center',
     justifyContent: 'space-around',
     flexDirection: 'row',
     position: 'absolute',
     width: '100%',
-    height: '12%',
-    backgroundColor: 'white',
+    height: '10%',
+    backgroundColor: COLORS_STUDYBOX.BG_WHITE,
     bottom: 0,
   },
 });
@@ -35,7 +35,6 @@ export const pageController = StyleSheet.create({
 export const BottomBarIcon = (props: any) => {
   const iconStyle = StyleSheet.create({
     icon: {
-      // backgroundColor: 'black',
       height: '20%',
       width: '20%',
       justifyContent: 'center',
@@ -49,7 +48,11 @@ export const BottomBarIcon = (props: any) => {
           resetPageHistory(props.navigation, props.destPage);
           props.navigation.navigate(props.destPage);
         }}>
-        <FontAwesomeIcon size={42} icon={props.icon} />
+        <FontAwesomeIcon
+          color={COLORS_STUDYBOX.BLUE_FOOTER}
+          size={ICON_SIZE}
+          icon={props.icon}
+        />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -59,19 +62,24 @@ export const BottomHomePageController = (props: any) => {
   return (
     <View style={pageController.container}>
       <BottomBarIcon
-        icon={farCompass}
+        icon={faMap}
         destPage={'HomePageScreen'}
         navigation={props.navigation}
       />
       <BottomBarIcon
-        icon={farHeart}
-        destPage={'FavoritesPageScreen'}
+        icon={faListAlt}
+        destPage={'SettingsPageScreen'}
         navigation={props.navigation}
       />
       <BottomBarIcon
-        icon={farUserCircle}
+        icon={faHeart}
         destPage={'SettingsPageScreen'}
         navigation={props.navigation}
+      />
+      <SETTINGS_SVG_ICON
+        width={ICON_SIZE}
+        height={ICON_SIZE}
+        color={COLORS_STUDYBOX.BLUE_FOOTER}
       />
     </View>
   );
