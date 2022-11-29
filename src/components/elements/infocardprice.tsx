@@ -61,7 +61,7 @@ function InfoCardPrice(props: any) {
     },
     favorite: {
       fill: COLORS_STUDYBOX.STUDYBOX_GREEN,
-      size: 32,
+      size: 40,
       zIndex: -2,
       position: 'absolute',
       top: 2,
@@ -70,7 +70,7 @@ function InfoCardPrice(props: any) {
     favPos: {
       position: 'absolute',
       right: 8,
-      bottom: 8 + 32,
+      bottom: 8 + 40,
     },
   });
 
