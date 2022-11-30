@@ -1,3 +1,5 @@
+// Disabling Unused Variable for Map Location Loader
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {
   StyleSheet,
@@ -17,8 +19,12 @@ import {getFavorites} from '../../api/favorites';
 // import PageHeader from '../../elements/controllers/pageHeader';
 import {Header} from '../../elements/header';
 
-import MapboxGL from '@rnmapbox/maps';
+import MapboxGL, {Logger} from '@rnmapbox/maps';
 import {API} from '../../../../config';
+
+const FRANCE_LONGITUDE: number = 2.6050842841314767;
+const FRANCE_LATITUDE: number = 46.592420710294704;
+const FRANCE_ZOOM: number = 4.5;
 
 const styles = StyleSheet.create({
   page: {
@@ -67,6 +73,20 @@ const HomePageScreenStyle = StyleSheet.create({
   },
 });
 
+// Edit MapBox logging messages
+Logger.setLogCallback(log => {
+  const {message} = log;
+
+  // expected warnings - see https://github.com/mapbox/mapbox-gl-native/issues/15341#issuecomment-522889062
+  if (
+    message.match('Request failed due to a permanent error: Canceled') ||
+    message.match('Request failed due to a permanent error: Socket Closed')
+  ) {
+    return true;
+  }
+  return false;
+});
+
 export class HomePageScreen extends React.Component {
   state = {
     nearbyRooms: [{}], // Storing all nearby Rooms from current Device
@@ -74,6 +94,7 @@ export class HomePageScreen extends React.Component {
     latitude: 0,
     longitude: 0,
     refreshing: false,
+    defaultZoom: 10,
   };
 
   async applyRoomState(remoteRooms: Array<any>) {
@@ -153,6 +174,9 @@ export class HomePageScreen extends React.Component {
         {enableHighAccuracy: true},
       );
     } else {
+      this.setState({longitude: FRANCE_LONGITUDE});
+      this.setState({latitude: FRANCE_LATITUDE});
+      this.setState({defaultZoom: FRANCE_ZOOM});
       const defaultRooms = await getRooms();
       this.applyRoomState(defaultRooms);
     }
@@ -173,14 +197,24 @@ export class HomePageScreen extends React.Component {
         <View style={HomePageScreenStyle.bodyContainer}>
           <View style={styles.page}>
             <View style={styles.container}>
-              <MapboxGL.MapView style={styles.map} />
-              <MapboxGL.Camera />
-              {/* <MapboxGL.Camera followUserLocation={true} /> */}
-              {/* <MapboxGL.UserLocation
-                ref={location => {
-                  console.log({location});
-                }}
-              /> */}
+              <MapboxGL.MapView style={styles.map}>
+                <MapboxGL.Camera
+                  zoomLevel={this.state.defaultZoom}
+                  animationMode={'flyTo'}
+                  animationDuration={1100}
+                  centerCoordinate={[this.state.longitude, this.state.latitude]}
+                />
+                {this.state.nearbyRooms.map((value, key) => {
+                  if (value.longitude && value.latitude) {
+                    return (
+                      <MapboxGL.PointAnnotation
+                        onSelected={() => console.log(value)}
+                        coordinate={[value.longitude, value.latitude]}
+                      />
+                    );
+                  }
+                })}
+              </MapboxGL.MapView>
             </View>
           </View>
         </View>
