@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Text, TextInput, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import PageHeader from '../../../../elements/controllers/pageHeader';
 import BackButton from '../../../../../assets/svg/angle-left-solid.svg';
@@ -8,12 +8,10 @@ import {BasicButton} from '../../../../elements/button';
 import {getSeatAvailibility, makeBooking} from '../../../../api/booking';
 import {bookingStyle} from './style';
 import {BookingButton} from './bookingButton';
-import CalendarStrip from 'react-native-calendar-strip';
-import moment from 'moment';
 
 export class BookingScreen extends React.Component {
   state = {
-    params: this.props.route.params,
+    params: this.props.route.params.room,
     bookingInfo: {
       user_id: 0,
       room_id: 0,
@@ -29,10 +27,7 @@ export class BookingScreen extends React.Component {
     cardExp: '',
     slotDateStart: 0,
     slotDateEnd: 0,
-    selectedDate: {
-      date: 0,
-      seatsAvailable: [],
-    },
+    selectedDate: this.props.route.params.selectedDate,
   };
 
   async updateBookingInfo() {
@@ -48,16 +43,6 @@ export class BookingScreen extends React.Component {
     this.state.bookingInfo.price = this.state.params.price;
     this.setState({cardExp: __DEV__ ? '12/30' : ''});
 
-    // await getSeatAvailibility(
-    //   this.state.bookingInfo.room_id,
-    //   new Date(Date.now()).toISOString(),
-    // );
-    // console.log(new Date(Date.now()).toISOString());
-    // await getSeatAvailibility(
-    //   this.state.bookingInfo.room_id,
-    //   new Date(Date.now()).getTime(),
-    // );
-
     if (__DEV__) {
       this.state.paymentInfo.number = 4242424242424242;
       this.state.paymentInfo.exp_month = 12;
@@ -71,7 +56,6 @@ export class BookingScreen extends React.Component {
       this.state.bookingInfo.room_id,
       bookingDate,
     );
-    // console.debug(this.state.selectedDate.seatsAvailable);
 
     this.forceUpdate();
   }
@@ -155,42 +139,6 @@ export class BookingScreen extends React.Component {
     );
   };
 
-  Calendar = () => {
-    const styles = StyleSheet.create({
-      container: {flex: 1, width: '100%', minHeight: 100},
-      calendar: {height: 150, paddingTop: 20, paddingBottom: 10},
-    });
-
-    // Change Calendar Language to French
-    moment.locale('fr');
-
-    return (
-      <View style={styles.container}>
-        <CalendarStrip
-          scrollable
-          style={styles.calendar}
-          daySelectionAnimation={{
-            type: 'border',
-            duration: 200,
-            borderWidth: 1,
-            borderHighlightColor: 'black',
-          }}
-          selectedDate={new Date()}
-          onDateSelected={(date: any) => {
-            console.log(date);
-            console.debug(new Date(date).getDate());
-
-            this.state.selectedDate.date = new Date(
-              this.state.selectedDate.date,
-            ).setDate(new Date(date).getDate());
-
-            this.checkRoomAvailibility(date);
-          }}
-        />
-      </View>
-    );
-  };
-
   render() {
     return (
       <View style={bookingStyle.back}>
@@ -202,7 +150,6 @@ export class BookingScreen extends React.Component {
         />
         <View style={bookingStyle.base}>
           <this.BankingSetting />
-          <this.Calendar />
           <this.BookingSelector />
           <BasicButton
             style={bookingStyle.BookingButton}

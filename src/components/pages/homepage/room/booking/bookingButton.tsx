@@ -54,7 +54,16 @@ export class BookingButton extends React.Component {
     this.state.slotDateEnd = new Date(
       this.props?.seatsAvailable?.hour_end,
     ).getTime();
-    this.state.isOutdated = Date.now() - this.state.slotDateStart < 0;
+    this.state.isOutdated =
+      new Date(Date.now()).setHours(new Date().getHours() + 2) -
+        this.state.slotDateStart >
+      0;
+    console.log(
+      new Date(Date.now()).setHours(new Date().getHours() + 2),
+      this.state.slotDateStart,
+      new Date(Date.now()).setHours(new Date().getHours() + 2) -
+        this.state.slotDateStart,
+    );
   }
 
   render() {
