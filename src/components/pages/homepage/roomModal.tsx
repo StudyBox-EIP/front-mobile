@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import {
   Alert,
   Button,
@@ -8,26 +8,29 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getPictureObject} from '../../../tools/images';
-import {COLORS_STUDYBOX} from '../../elements/colors';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBookmark as faBookmark} from '@fortawesome/free-regular-svg-icons';
+import { getPictureObject } from '../../../tools/images';
+import { COLORS_STUDYBOX } from '../../elements/colors';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBookmark as faBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
   faBookmark as fasBookmark,
   faMap,
 } from '@fortawesome/free-solid-svg-icons';
-import {addFavorite, getFavorites, removeFavorite} from '../../api/favorites';
+import { addFavorite, getFavorites, removeFavorite } from '../../api/favorites';
 import getDirections from 'react-native-google-maps-directions';
 import {
   getReservations,
   getSeatAvailibility,
   noteRoom,
+  openLocker,
 } from '../../api/booking';
 import StarSVG from '../../../assets/svg/star.svg';
-import {BasicInfo} from './roomModalComponents';
+import { BasicInfo } from './roomModalComponents';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
-import {style} from './room/roomStyle';
+import { style } from './room/roomStyle';
+import Unlock from '../../../assets/svg/unlocked.svg';
+import { BasicIcon } from '../../elements/button';
 
 export class RoomModal extends React.Component<Props> {
   state = {
@@ -153,11 +156,11 @@ export class RoomModal extends React.Component<Props> {
             if (props.text === 'Favoris') {
               if (this.state.favorite) {
                 removeFavorite(this.props.room.id).then(() =>
-                  this.setState({favorite: false}),
+                  this.setState({ favorite: false }),
                 );
               } else {
                 addFavorite(this.props.room.id).then(() =>
-                  this.setState({favorite: true}),
+                  this.setState({ favorite: true }),
                 );
               }
             } else if (props.text === 'Itinéraire') {
@@ -192,10 +195,10 @@ export class RoomModal extends React.Component<Props> {
     });
 
     if (tempReservations.length > 0) {
-      this.setState({canOpen: true});
+      this.setState({ canOpen: true });
     }
 
-    this.setState({reservations: tempReservations});
+    this.setState({ reservations: tempReservations });
   }
 
   async prepareRoomNote() {
@@ -218,11 +221,10 @@ export class RoomModal extends React.Component<Props> {
             this.state.reservationsNote[0].id,
             props.starNumber,
           ).then(() => {
-            this.setState({canRate: false});
+            this.setState({ canRate: false });
             Alert.alert(
               'Merci pour votre Avis',
-              `Vous avez donné ${props.starNumber} Étoile${
-                props.starNumber > 1 ? 's' : ''
+              `Vous avez donné ${props.starNumber} Étoile${props.starNumber > 1 ? 's' : ''
               }`,
             );
           })
@@ -247,8 +249,8 @@ export class RoomModal extends React.Component<Props> {
 
   Calendar = () => {
     const styles = StyleSheet.create({
-      container: {width: '90%', minHeight: 100, alignSelf: 'center'},
-      calendar: {height: 100, paddingTop: 20},
+      container: { width: '90%', minHeight: 100, alignSelf: 'center' },
+      calendar: { height: 100, paddingTop: 20 },
     });
 
     // Change Calendar Language to French
@@ -286,11 +288,37 @@ export class RoomModal extends React.Component<Props> {
     for (const room of favorites) {
       if (room.id === this.props?.room?.id) {
         console.log(room.id, this.props.room.id);
-        this.setState({favorite: true});
+        this.setState({ favorite: true });
         break;
       }
     }
   }
+
+  BasicInfoStyle = StyleSheet.create({
+    base: {
+      marginBottom: 24,
+      width: '100%',
+      height: '12%',
+      alignItems: 'center',
+      paddingVertical: 8,
+    },
+    title: {
+      fontSize: 35,
+      textAlign: 'center',
+      marginHorizontal: 4,
+      marginVertical: 2,
+    },
+    score: {
+      fontSize: 12,
+      marginVertical: 2,
+      padding: 2,
+    },
+    icon: {
+      position: 'absolute',
+      bottom: 0,
+      right: '2%',
+    },
+  });
 
   componentDidMount() {
     this.checkFavorites();
@@ -313,6 +341,40 @@ export class RoomModal extends React.Component<Props> {
                   : require('../../../assets/img/NoPicture.png')
               }
             />
+            {(__DEV__ ? true : this.state.canOpen) ? (
+              <BasicIcon
+                Icon={Unlock}
+                size={24}
+                style={this.BasicInfoStyle.icon}
+                callback={() => {
+                  if (this.state.reservations[0]) {
+                    console.info(
+                      'Opening Door...',
+                      this.state.reservations[0].room_id.name,
+                    );
+                    openLocker(this.state.reservations[0].id)
+                      .then(() =>
+                        Alert.alert(
+                          'Porte Ouverte',
+                          'Porte déverouillée, vous pouvez rentrer !',
+                        ),
+                      )
+                      .catch(errorCode => {
+                        if (errorCode === 400) {
+                          Alert.alert(
+                            'Erreur Salle',
+                            'La salle reservée ne possède pas de boîtier',
+                          );
+                        }
+                      });
+                  } else {
+                    console.error('No Reservation in range');
+                  }
+                }}
+              />
+            ) : (
+              <TouchableOpacity />
+            )}
           </View>
           <View style={this.style.roomInfoContainer}>
             <View style={this.style.roomInfoNameContainer}>

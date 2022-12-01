@@ -11,11 +11,13 @@ import {
 import getDirections from 'react-native-google-maps-directions';
 import {BasicButton, BasicIcon} from '../../../elements/button';
 import {COLORS_STUDYBOX} from '../../..//elements/colors';
-import {getReservations, noteRoom} from '../../../api/booking';
+import {getReservations, getSeatAvailibility, noteRoom} from '../../../api/booking';
 import StarSVG from '../../../../assets/svg/star.svg';
 import {style} from './roomStyle';
 import Unlock from '../../../../assets/svg/unlocked.svg';
 import {openLocker} from '../../../api/booking';
+import moment from 'moment';
+import CalendarStrip from 'react-native-calendar-strip';
 
 const scoreMax = 5;
 
@@ -41,7 +43,7 @@ const RoomScreenStyle = StyleSheet.create({
   imageCover: {
     width: '100%',
     height: '30%',
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     backgroundColor: 'grey',
     flex: 1.5,
   },
@@ -76,8 +78,8 @@ const BasicInfoStyle = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    top: '20%',
-    right: '15%',
+    bottom: 0,
+    right: '2%',
   },
 });
 
@@ -146,6 +148,10 @@ export class RoomScreen extends React.Component {
     reservationsNote: [{}],
     canRate: false,
     canOpen: false,
+    selectedDate: {
+      date: 0,
+      seatsAvailable: [],
+    },
   };
 
   goToRoom = () => {
@@ -199,6 +205,9 @@ export class RoomScreen extends React.Component {
 
       this.setState({reservations: tempReservations});
     });
+    this.state.selectedDate.date = Date.now();
+    this.checkRoomAvailibility(this.state.selectedDate.date);
+
   }
 
   StarComponent = (props: any) => {
@@ -228,6 +237,50 @@ export class RoomScreen extends React.Component {
     );
   };
 
+  async checkRoomAvailibility(bookingDate: number) {
+    this.state.selectedDate.seatsAvailable = await getSeatAvailibility(
+      this.props.route.params.id,
+      bookingDate,
+    );
+
+    this.forceUpdate();
+  }
+
+  Calendar = () => {
+    const styles = StyleSheet.create({
+      container: {width: '90%', minHeight: 100, alignSelf: 'center'},
+      calendar: {height: 100, paddingTop: 20},
+    });
+
+    // Change Calendar Language to French
+    moment.locale('fr');
+
+    return (
+      <View style={styles.container}>
+        <CalendarStrip
+          scrollable
+          style={styles.calendar}
+          daySelectionAnimation={{
+            type: 'border',
+            duration: 200,
+            borderWidth: 1,
+            borderHighlightColor: 'black',
+          }}
+          selectedDate={new Date()}
+          onDateSelected={(date: any) => {
+            console.debug(new Date(date).getDate());
+
+            this.state.selectedDate.date = new Date(
+              this.state.selectedDate.date,
+            ).setDate(new Date(date).getDate());
+
+            this.checkRoomAvailibility(date);
+          }}
+        />
+      </View>
+    );
+  };
+
   render(): React.ReactNode {
     let props: any = this.props.route.params;
     return (
@@ -247,6 +300,7 @@ export class RoomScreen extends React.Component {
           <Text style={RoomScreenStyle.subtitle}>Adresse:</Text>
           <Text style={RoomScreenStyle.txt}>{props.adress}</Text>
         </ScrollView>
+        <this.Calendar />
         {this.state.canRate ? (
           <View style={style.notationContainer}>
             <View style={style.starContainer}>
@@ -266,7 +320,10 @@ export class RoomScreen extends React.Component {
         <BasicButton
           style={RoomScreenStyle.button}
           callback={() =>
-            this.props.navigation.navigate('BookingScreen', props)
+            this.props.navigation.navigate('BookingScreen', {
+              room: this.props.route.params,
+              selectedDate: this.state.selectedDate,
+            })
           }
           txt="Réserver"
         />
