@@ -1,4 +1,4 @@
-import React from 'react';
+g import React from 'react';
 import {View, ScrollView} from 'react-native';
 import {getBooking} from '../../../api/booking';
 import PageHeader from '../../../elements/controllers/pageHeader';
