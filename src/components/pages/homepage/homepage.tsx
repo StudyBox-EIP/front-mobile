@@ -6,6 +6,7 @@ import {
   View,
   PermissionsAndroid,
   BackHandler,
+  Image,
   // RefreshControl,
   // Text,
 } from 'react-native';
@@ -23,6 +24,7 @@ import {Header} from '../../elements/header';
 import MapboxGL, {Logger} from '@rnmapbox/maps';
 import {API} from '../../../../config';
 import {RoomModal} from './roomModal';
+import LANDMARK_ICON from '../../../assets/svg/Landmark.svg';
 
 const FRANCE_LONGITUDE: number = 2.6050842841314767;
 const FRANCE_LATITUDE: number = 46.592420710294704;
@@ -220,8 +222,9 @@ export class HomePageScreen extends React.Component {
                     return (
                       <MapboxGL.PointAnnotation
                         onSelected={() => this.setState({currentRoom: value})}
-                        coordinate={[value.longitude, value.latitude]}
-                      />
+                        coordinate={[value.longitude, value.latitude]}>
+                        <LANDMARK_ICON width={50} height={50} />
+                      </MapboxGL.PointAnnotation>
                     );
                   }
                 })}
