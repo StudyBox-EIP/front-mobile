@@ -104,6 +104,7 @@ export class RoomListPageScreen extends React.Component<Props> {
     return (
       <View style={this.style.baseContainer}>
         <BasicSearchBar
+          placeholder="Rechercher une salle"
           onChangeText={(newText: string) => this.filterRooms(newText)}
         />
         <FlatList
