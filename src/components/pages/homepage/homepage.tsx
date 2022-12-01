@@ -209,6 +209,7 @@ export class HomePageScreen extends React.Component {
                   if (value.longitude && value.latitude) {
                     return (
                       <MapboxGL.PointAnnotation
+                        key={key}
                         onSelected={() => this.setState({currentRoom: value})}
                         coordinate={[value.longitude, value.latitude]}>
                         <LANDMARK_ICON width={50} height={50} />
