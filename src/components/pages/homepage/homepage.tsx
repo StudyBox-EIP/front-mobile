@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   PermissionsAndroid,
+  BackHandler,
   // RefreshControl,
   // Text,
 } from 'react-native';
@@ -21,6 +22,7 @@ import {Header} from '../../elements/header';
 
 import MapboxGL, {Logger} from '@rnmapbox/maps';
 import {API} from '../../../../config';
+import {RoomModal} from './roomModal';
 
 const FRANCE_LONGITUDE: number = 2.6050842841314767;
 const FRANCE_LATITUDE: number = 46.592420710294704;
@@ -95,6 +97,7 @@ export class HomePageScreen extends React.Component {
     longitude: 0,
     refreshing: false,
     defaultZoom: 10,
+    currentRoom: undefined,
   };
 
   async applyRoomState(remoteRooms: Array<any>) {
@@ -185,6 +188,14 @@ export class HomePageScreen extends React.Component {
   async componentDidMount() {
     // GEOLOCATION ACCESS
     this.checkGeolocation();
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      if (this.state.currentRoom !== undefined) {
+        this.setState({currentRoom: undefined});
+        return true; // Bypass default Back Button
+      } else {
+        return false;
+      }
+    });
   }
 
   render() {
@@ -208,13 +219,25 @@ export class HomePageScreen extends React.Component {
                   if (value.longitude && value.latitude) {
                     return (
                       <MapboxGL.PointAnnotation
-                        onSelected={() => console.log(value)}
+                        onSelected={() => this.setState({currentRoom: value})}
                         coordinate={[value.longitude, value.latitude]}
                       />
                     );
                   }
                 })}
               </MapboxGL.MapView>
+              {this.state.currentRoom ? (
+                <RoomModal
+                  user={{
+                    longitude: this.state.longitude,
+                    latitude: this.state.latitude,
+                  }}
+                  room={this.state.currentRoom}
+                  navigation={this.props.navigation}
+                />
+              ) : (
+                <View />
+              )}
             </View>
           </View>
         </View>
