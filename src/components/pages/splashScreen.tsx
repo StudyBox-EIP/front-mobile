@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Image, StyleSheet, Alert} from 'react-native';
+import {View, Image, StyleSheet, Alert, Dimensions} from 'react-native';
 
 import {resetPageHistory} from '../elements/controllers/navigation';
 import {getData} from '../api/userInfo';
@@ -43,10 +43,13 @@ export class SplashScreen extends Component {
 
   splashView = StyleSheet.create({
     base: {
-      height: '100%',
-      width: '100%',
+      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    image: {
+      width: '80%',
+      height: '80%',
     },
   });
 
@@ -54,7 +57,8 @@ export class SplashScreen extends Component {
     return (
       <View style={this.splashView.base}>
         <Image
-          resizeMode="center"
+          style={this.splashView.image}
+          resizeMode="contain"
           source={require('../../assets/studybox-logo.png')}
         />
       </View>
