@@ -84,7 +84,8 @@ Logger.setLogCallback(log => {
   // expected warnings - see https://github.com/mapbox/mapbox-gl-native/issues/15341#issuecomment-522889062
   if (
     message.match('Request failed due to a permanent error: Canceled') ||
-    message.match('Request failed due to a permanent error: Socket Closed')
+    message.match('Request failed due to a permanent error: Socket Closed') ||
+    message.includes('Not using Vertex Array Objects') // Older Android versions warning Bypass
   ) {
     return true;
   }
