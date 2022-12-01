@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Image, StyleSheet, Alert, Dimensions} from 'react-native';
+import {View, Image, StyleSheet, Alert} from 'react-native';
 
 import {resetPageHistory} from '../elements/controllers/navigation';
 import {getData} from '../api/userInfo';
