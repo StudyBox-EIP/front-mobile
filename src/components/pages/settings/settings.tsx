@@ -107,13 +107,6 @@ export class SettingsScreen extends React.Component {
           <SettingsButton
             backgroundColor="white"
             iconColor={COLORS_STUDYBOX.STUDYBOX_GREEN}
-            text="Gestion du Compte"
-            logo={AccountIcon}
-            callback={undefined}
-          />
-          <SettingsButton
-            backgroundColor="white"
-            iconColor={COLORS_STUDYBOX.STUDYBOX_GREEN}
             text="Gérer mes Amis"
             logo={FriendsIcon}
             callback={() => this.props.navigation.navigate('FriendsView')}
@@ -124,13 +117,6 @@ export class SettingsScreen extends React.Component {
             text="Gérer mes Groupes"
             logo={GroupsIcon}
             callback={() => this.props.navigation.navigate('TeamsView')}
-          />
-          <SettingsButton
-            backgroundColor="white"
-            iconColor={COLORS_STUDYBOX.STUDYBOX_GREEN}
-            text="Paiement"
-            logo={DebitCardIcon}
-            callback={undefined}
           />
           <SettingsButton
             backgroundColor="white"
