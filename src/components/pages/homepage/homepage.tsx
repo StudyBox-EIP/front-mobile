@@ -205,7 +205,6 @@ export class HomePageScreen extends React.Component {
                 />
                 {this.state.nearbyRooms.map((value, key) => {
                   if (value.longitude && value.latitude) {
-                    console.log(value.longitude, value.latitude);
                     return (
                       <MapboxGL.PointAnnotation
                         key={key}
