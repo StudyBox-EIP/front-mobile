@@ -11,7 +11,7 @@ function InfoCardPrice(props: any) {
       backgroundColor: 'white',
       width: '90%',
       marginVertical: 8,
-      paddingBottom: 8,
+      paddingBottom: 16,
       alignSelf: 'center',
       alignItems: 'center',
       shadowOffset: {
@@ -61,20 +61,11 @@ function InfoCardPrice(props: any) {
     },
     favorite: {
       fill: COLORS_STUDYBOX.STUDYBOX_GREEN,
-<<<<<<< HEAD
       size: 40,
-=======
-      size: 32,
-      zIndex: -2,
-      position: 'absolute',
-      top: 2,
-      right: 4,
->>>>>>> 68929e8 ([UPD] Payment have been done)
     },
     favPos: {
       position: 'absolute',
       right: 8,
-<<<<<<< HEAD
       bottom: 8,
     },
     cancel: {
@@ -86,9 +77,6 @@ function InfoCardPrice(props: any) {
       position: 'absolute',
       left: 8,
       bottom: 8,
-=======
-      bottom: 8 + 32,
->>>>>>> 68929e8 ([UPD] Payment have been done)
     },
   });
 
@@ -147,7 +135,6 @@ function InfoCardPrice(props: any) {
           width={style.favorite.size}
         />
       </Pressable>
-<<<<<<< HEAD
       <Pressable
         style={style.cancelPos}
         onPress={() => {
@@ -172,8 +159,6 @@ function InfoCardPrice(props: any) {
           width={style.cancel.size}
         />
       </Pressable>
-=======
->>>>>>> 68929e8 ([UPD] Payment have been done)
     </View>
   );
 }
