@@ -95,7 +95,7 @@ function RoomCard(props: any) {
     imageCover: {
       // backgroundColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
       position: 'absolute',
-      alignSelf: 'baseline',
+      alignSelf: 'center',
       width: '100%',
       height: 200,
       borderTopLeftRadius: 10,

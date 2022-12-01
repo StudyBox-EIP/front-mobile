@@ -45,7 +45,7 @@ function BasicSearchBar(props: any) {
       <TextInput
         style={style.textInput}
         placeholder={props.placeholder}
-        onEndEditing={props.onEndEditing}
+        onChangeText={props.onChangeText}
       />
     </View>
   );

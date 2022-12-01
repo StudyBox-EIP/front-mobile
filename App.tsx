@@ -20,7 +20,7 @@ import {GoogleOauthScreen} from './src/components/pages/connection/oauth/GoogleO
 import {LoginScreen} from './src/components/pages/connection/login/login';
 import {SignUpScreen} from './src/components/pages/connection/register/register';
 import {HomePageScreen} from './src/components/pages/homepage/homepage';
-import {RoomListPageScreen} from './src/components/pages/homepage/roomListPageScreen';
+import {RoomListPageScreen} from './src/components/pages/homepage/roomListPage';
 import {FavoritesPageScreen} from './src/components/pages/homepage/favorites';
 import {SplashScreen} from './src/components/pages/splashScreen';
 import {SettingsScreen} from './src/components/pages/settings/settings';
