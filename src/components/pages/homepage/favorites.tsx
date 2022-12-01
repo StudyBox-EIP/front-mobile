@@ -93,7 +93,9 @@ export class FavoritesPageScreen extends React.Component {
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
-              onRefresh={async () => {}}
+              onRefresh={async () => {
+                this.applyRoomState(await this.loadFavoriteRooms());
+              }}
             />
           }>
           {this.state.nearbyRooms.map((val: any, key) => {
