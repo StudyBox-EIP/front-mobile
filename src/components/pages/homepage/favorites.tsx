@@ -71,8 +71,6 @@ export class FavoritesPageScreen extends React.Component {
   async loadFavoriteRooms() {
     const favoriteRooms: Array<Object> = await getFavorites();
 
-    console.info(favoriteRooms);
-
     this.setState({favoriteRooms});
 
     return favoriteRooms.map(room => {

@@ -78,7 +78,7 @@ export const BottomHomePageController = (props: any) => {
       <BottomBarIcon
         icon={faListAlt}
         isIconFontAwesome={true}
-        destPage={'SettingsPageScreen'}
+        destPage={'RoomListPageScreen'}
         navigation={props.navigation}
       />
       <BottomBarIcon
