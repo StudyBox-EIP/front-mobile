@@ -132,6 +132,33 @@ export async function getReservations() {
   }
 }
 
+// CANCEL RESERVATION
+
+export async function cancelReservation(reservation_id: number) {
+  try {
+    const rawUserInfo = await getData('userInfo');
+    if (rawUserInfo === undefined || rawUserInfo === null) {
+      throw 'userInfo not found';
+    }
+    const userInfo = JSON.parse(rawUserInfo);
+    const res = await axios.delete(
+      `${API.WEB_ROOT}/users/reservations/${reservation_id}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + userInfo.token,
+        },
+      },
+    );
+    console.log(res.status);
+    return res.data;
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      throw "Vous ne pouvez uniquement annuler une réservation pendant l'heure qui la précède";
+    }
+    return undefined;
+  }
+}
+
 // ROOM NOTATION
 
 export async function noteRoom(

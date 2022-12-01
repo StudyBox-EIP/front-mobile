@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, Image, Pressable, Alert} from 'react-native';
 import {getPictureObject} from '../../tools/images';
 import PlusIcon from '../../assets/svg/plus.svg';
 import {COLORS_STUDYBOX} from './colors';
+import {cancelReservation} from '../api/booking';
 
 function InfoCardPrice(props: any) {
   const style = StyleSheet.create({
@@ -144,7 +145,13 @@ function InfoCardPrice(props: any) {
             [
               {
                 text: 'Oui',
-                onPress: () => console.log('Reservation Annulé'),
+                onPress: () =>
+                  cancelReservation(props.paymentId)
+                    .then(() => {
+                      props.updateList();
+                      Alert.prompt('Réservation Annulée');
+                    })
+                    .catch((error: string) => Alert.alert('Erreur', error)),
               },
               {
                 text: 'Retour',

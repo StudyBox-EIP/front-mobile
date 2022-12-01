@@ -53,8 +53,7 @@ export class BookingHistory extends React.Component {
           {this.state.bookingHistory
             .sort(
               (a, b) =>
-                Number(new Date(b?.createdAt)) -
-                Number(new Date(a?.createdAt)),
+                Number(new Date(b?.createdAt)) - Number(new Date(a?.createdAt)),
             )
             .map((payment: any) => {
               // Adjust Server Delay
@@ -88,6 +87,12 @@ export class BookingHistory extends React.Component {
                   image={payment?.room_id.image}
                   info={payment?.room_id}
                   navigation={this.props.navigation}
+                  paymentId={payment?.id}
+                  updateList={() =>
+                    getBooking()
+                      .then(res => this.setState({bookingHistory: res}))
+                      .catch(console.error)
+                  }
                 />
               );
             })}
