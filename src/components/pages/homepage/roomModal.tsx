@@ -270,7 +270,6 @@ export class RoomModal extends React.Component<Props> {
           }}
           selectedDate={new Date()}
           onDateSelected={(date: any) => {
-            console.log(date);
             console.debug(new Date(date).getDate());
 
             this.state.selectedDate.date = new Date(
@@ -288,7 +287,6 @@ export class RoomModal extends React.Component<Props> {
     const favorites: Array<Object> = await getFavorites();
     for (const room of favorites) {
       if (room.id === this.props?.room?.id) {
-        console.log(room.id, this.props.room.id);
         this.setState({favorite: true});
         break;
       }
