@@ -2,8 +2,6 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {COLORS_STUDYBOX} from './colors';
 
-import STUDYBOX_ICON from '../../assets/svg/logo_studybox_couleur.svg';
-
 export const Header = (props: any) => {
   const style = StyleSheet.create({
     container: {
@@ -46,15 +44,19 @@ export const Header = (props: any) => {
       position: 'absolute',
       right: 0,
     },
+    studyboxImage: {
+      width: 40,
+      height: 40,
+    },
   });
 
   return (
     <View style={style.container}>
       <View style={style.studyboxContainer}>
-        <STUDYBOX_ICON
-          color={COLORS_STUDYBOX.DARK_WHITE}
-          width={50}
-          height={50}
+        <Image
+          style={style.studyboxImage}
+          resizeMode="contain"
+          source={require('../../assets/studybox-logo.png')}
         />
         <Text style={style.text}>StudyBox</Text>
       </View>
