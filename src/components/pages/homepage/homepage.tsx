@@ -1,5 +1,3 @@
-// Disabling Unused Variable for Map Location Loader
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {StyleSheet, View, PermissionsAndroid, BackHandler} from 'react-native';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
