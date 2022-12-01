@@ -11,7 +11,11 @@ import {
 import getDirections from 'react-native-google-maps-directions';
 import {BasicButton, BasicIcon} from '../../../elements/button';
 import {COLORS_STUDYBOX} from '../../..//elements/colors';
-import {getReservations, getSeatAvailibility, noteRoom} from '../../../api/booking';
+import {
+  getReservations,
+  getSeatAvailibility,
+  noteRoom,
+} from '../../../api/booking';
 import StarSVG from '../../../../assets/svg/star.svg';
 import {style} from './roomStyle';
 import Unlock from '../../../../assets/svg/unlocked.svg';
@@ -207,7 +211,6 @@ export class RoomScreen extends React.Component {
     });
     this.state.selectedDate.date = Date.now();
     this.checkRoomAvailibility(this.state.selectedDate.date);
-
   }
 
   StarComponent = (props: any) => {
