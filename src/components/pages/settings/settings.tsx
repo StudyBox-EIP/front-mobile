@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
@@ -7,14 +7,13 @@ import {disconnect} from '../../api/auth';
 
 import UserIcon from '../../../assets/svg/circle-user-solid.svg';
 import PriceListIcon from '../../../assets/svg/price-list.svg';
-import DebitCardIcon from '../../../assets/svg/debit-card.svg';
-import AccountIcon from '../../../assets/svg/user(1).svg';
 import FriendsIcon from '../../../assets/svg/friends.svg';
 import GroupsIcon from '../../../assets/svg/communities-social-networking.svg';
 import ReturnIcon from '../../../assets/svg/logout-line.svg';
 
 import {getData} from '../../api/userInfo';
 import {COLORS_STUDYBOX} from '../../elements/colors';
+import {getPictureObject} from '../../../tools/images';
 
 const SettingsPageScreenStyle = StyleSheet.create({
   base: {
@@ -25,6 +24,7 @@ const SettingsPageScreenStyle = StyleSheet.create({
     height: '20%',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    borderRadius: 100,
   },
   profileUnderline: {
     width: '85%',
@@ -93,11 +93,23 @@ export class SettingsScreen extends React.Component {
     return (
       <View style={SettingsPageScreenStyle.base}>
         <View style={SettingsPageScreenStyle.profile}>
-          <UserIcon
-            width={60}
-            height={60}
-            fill={COLORS_STUDYBOX.STUDYBOX_GREEN}
-          />
+          {this.state.userInfo?.profil_picture === null ? (
+            <UserIcon
+              width={60}
+              height={60}
+              fill={COLORS_STUDYBOX.STUDYBOX_GREEN}
+            />
+          ) : (
+            <Image
+              width={60}
+              height={60}
+              source={
+                this.state.userInfo?.profil_picture
+                  ? {uri: getPictureObject(this.state.userInfo?.profil_picture)}
+                  : undefined
+              }
+            />
+          )}
           <Text>
             {this.state.userInfo.first_name} {this.state.userInfo.last_name}
           </Text>
