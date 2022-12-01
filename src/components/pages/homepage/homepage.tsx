@@ -1,24 +1,11 @@
 // Disabling Unused Variable for Map Location Loader
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  PermissionsAndroid,
-  BackHandler,
-  Image,
-  // RefreshControl,
-  // Text,
-} from 'react-native';
-// import {ScrollView} from 'react-native-gesture-handler';
+import {StyleSheet, View, PermissionsAndroid, BackHandler} from 'react-native';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
 import {getRooms, getRoomsNearby} from '../../api/rooms';
 import Geolocation from 'react-native-geolocation-service';
-// import RoomCard from '../../elements/roomcard';
-// import BasicSearchBar from '../../elements/searchbar';
-// import {addFavorite, getFavorites, removeFavorite} from '../../api/favorites';
 import {getFavorites} from '../../api/favorites';
-// import PageHeader from '../../elements/controllers/pageHeader';
 import {Header} from '../../elements/header';
 
 import MapboxGL, {Logger} from '@rnmapbox/maps';
