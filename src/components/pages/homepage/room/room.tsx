@@ -211,11 +211,24 @@ export class RoomScreen extends React.Component {
         const dateNow = new Date();
 
         // Fixing Phone Internal Delay
-        dateNow.setHours(dateNow.getHours() + 2);
+        dateNow.setHours(dateNow.getHours());
+
+        console.log(
+          dateNow.getHours(),
+          new Date(res.date_start).setHours(
+            new Date(res.date_start).getHours() - 1,
+          ),
+        );
 
         if (
-          dateNow >= new Date(res.date_start) &&
-          dateNow <= new Date(res.date_end)
+          dateNow.getTime() >=
+            new Date(res.date_start).setHours(
+              new Date(res.date_start).getHours() - 1,
+            ) &&
+          dateNow.getTime() <=
+            new Date(res.date_end).setHours(
+              new Date(res.date_end).getHours() - 1,
+            )
         ) {
           tempReservations.push(res);
         }
@@ -411,10 +424,7 @@ export class RoomScreen extends React.Component {
             style={BasicInfoStyle.icon}
             callback={() => {
               if (this.state.reservations[0]) {
-                console.info(
-                  'Opening Door...',
-                  this.state.reservations[0].room_id.name,
-                );
+                console.info('Opening Door...', this.state.reservations[0]);
                 openLocker(this.state.reservations[0].id)
                   .then(() =>
                     Alert.alert(

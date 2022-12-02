@@ -59,12 +59,12 @@ export class BookingHistory extends React.Component {
               // Adjust Server Delay
               let hourBegin = new Date(
                 new Date(payment?.date_start).setHours(
-                  new Date(payment?.date_start).getHours() - 2,
+                  new Date(payment?.date_start).getHours() - 3,
                 ),
               );
               let hourFinish = new Date(
                 new Date(payment?.date_end).setHours(
-                  new Date(payment?.date_end).getHours() - 2,
+                  new Date(payment?.date_end).getHours() - 3,
                 ),
               );
 
