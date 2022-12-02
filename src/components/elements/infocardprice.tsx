@@ -87,6 +87,10 @@ function InfoCardPrice(props: any) {
     props.style == null
       ? StyleSheet.compose(props.style, style.container)
       : style.container;
+  const currentDate = new Date(
+    new Date().setHours(new Date().getHours() - 1),
+  ).getTime();
+  const dateStart = new Date(props.date_start).getTime();
 
   return (
     <View style={container}>
@@ -136,36 +140,40 @@ function InfoCardPrice(props: any) {
           width={style.favorite.size}
         />
       </Pressable>
-      <Pressable
-        style={style.cancelPos}
-        onPress={() => {
-          Alert.alert(
-            'Annulé Réservation',
-            'Êtes-vous sure de vouloir annuler votre réservation ?',
-            [
-              {
-                text: 'Oui',
-                onPress: () =>
-                  cancelReservation(props.paymentId)
-                    .then(() => {
-                      props.updateList();
-                      Alert.prompt('Réservation Annulée');
-                    })
-                    .catch((error: string) => Alert.alert('Erreur', error)),
-              },
-              {
-                text: 'Retour',
-                style: 'cancel',
-              },
-            ],
-          );
-        }}>
-        <PlusIcon
-          style={style.cancel}
-          height={style.cancel.size}
-          width={style.cancel.size}
-        />
-      </Pressable>
+      {currentDate - dateStart < 0 ? (
+        <Pressable
+          style={style.cancelPos}
+          onPress={() => {
+            Alert.alert(
+              'Annulé Réservation',
+              'Êtes-vous sure de vouloir annuler votre réservation ?',
+              [
+                {
+                  text: 'Oui',
+                  onPress: () =>
+                    cancelReservation(props.paymentId)
+                      .then(() => {
+                        props.updateList();
+                        Alert.prompt('Réservation Annulée');
+                      })
+                      .catch((error: string) => Alert.alert('Erreur', error)),
+                },
+                {
+                  text: 'Retour',
+                  style: 'cancel',
+                },
+              ],
+            );
+          }}>
+          <PlusIcon
+            style={style.cancel}
+            height={style.cancel.size}
+            width={style.cancel.size}
+          />
+        </Pressable>
+      ) : (
+        <View />
+      )}
     </View>
   );
 }
