@@ -9,6 +9,9 @@ import BasicSearchBar from '../../elements/searchbar';
 
 export class RoomListPageScreen extends React.Component<Props> {
   style = StyleSheet.create({
+    viewContainer: {
+      flex: 1,
+    },
     baseContainer: {
       flex: 1,
       alignItems: 'center',
@@ -109,7 +112,7 @@ export class RoomListPageScreen extends React.Component<Props> {
 
   render(): ReactNode {
     return (
-      <View>
+      <View style={this.style.viewContainer}>
         <ScrollView
           style={this.style.scrollView}
           refreshControl={

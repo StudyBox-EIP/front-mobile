@@ -176,7 +176,11 @@ class ConnectionBody extends Component {
               this.checkUnlockButton();
             }}
           />
-          <Text style={this.style.forgottenPassword} onPress={console.log}>
+          <Text
+            style={this.style.forgottenPassword}
+            onPress={() =>
+              this.props.navigation.navigate('PasswordRecoveryScreen')
+            }>
             Mot de passe oublié ?
           </Text>
           <Pressable

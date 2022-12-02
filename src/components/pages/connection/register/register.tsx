@@ -136,6 +136,24 @@ class SignUpBody extends Component {
     }
   }
 
+  registerButtonEvent() {
+    if (this.state.password === this.state.confirmPassword) {
+      console.log('ok');
+      register(this.props.navigation, {
+        first_name: this.state.first_name.trim(),
+        last_name: this.state.last_name.trim(),
+        address: '',
+        password: this.state.password.trim(),
+        email: this.state.email.trim(),
+      });
+    } else {
+      Alert.alert(
+        'Erreur',
+        'Veuillez vérifier la correspondance des mots de passe',
+      );
+    }
+  }
+
   render() {
     return (
       <View style={this.style.bodyContainer}>
@@ -197,28 +215,11 @@ class SignUpBody extends Component {
           <Pressable
             style={this.state.buttonCSS.css}
             disabled={this.state.buttonStatus}
-            onPress={this.registerButtonEvent}>
+            onPress={() => this.registerButtonEvent()}>
             <Text style={this.style.signUpText}>Inscription</Text>
           </Pressable>
         </View>
       </View>
     );
-  }
-
-  private registerButtonEvent() {
-    if (this.state.password === this.state.confirmPassword) {
-      register(this.props.navigation, {
-        first_name: this.state.first_name.trim(),
-        last_name: this.state.last_name.trim(),
-        address: '',
-        password: this.state.password.trim(),
-        email: this.state.email.trim(),
-      });
-    } else {
-      Alert.alert(
-        'Erreur',
-        'Veuillez vérifier la correspondance des mots de passe',
-      );
-    }
   }
 }
