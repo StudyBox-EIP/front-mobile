@@ -67,6 +67,7 @@ export class BookingHistory extends React.Component {
                   new Date(payment?.date_end).getHours() - 2,
                 ),
               );
+
               return (
                 <InfoCardPrice
                   key={payment?.createdAt}
@@ -88,6 +89,7 @@ export class BookingHistory extends React.Component {
                   info={payment?.room_id}
                   navigation={this.props.navigation}
                   paymentId={payment?.id}
+                  date_start={payment?.date_start}
                   updateList={() =>
                     getBooking()
                       .then(res => this.setState({bookingHistory: res}))
