@@ -16,6 +16,29 @@ export class BookingHistory extends React.Component {
       .then(res => this.setState({bookingHistory: res}))
       .catch(console.error);
   }
+  days = [
+    'Dimanche',
+    'Lundi',
+    'Mardi',
+    'Mercredi',
+    'Jeudi',
+    'Vendredi',
+    'Samedi',
+  ];
+  months = [
+    'Janvier',
+    'Février',
+    'Mars',
+    'Avril',
+    'Mai',
+    'Juin',
+    'Juillet',
+    'Août',
+    'Septembre',
+    'Octobre',
+    'Novembre',
+    'Décembre',
+  ];
 
   render() {
     return (
@@ -30,25 +53,41 @@ export class BookingHistory extends React.Component {
           {this.state.bookingHistory
             .sort(
               (a, b) =>
-                Number(new Date(b?.date_start)) -
-                Number(new Date(a?.date_start)),
+                Number(new Date(b?.createdAt)) -
+                Number(new Date(a?.createdAt)),
             )
             .map((payment: any) => {
               // Adjust Server Delay
-              let myDate = new Date(
+              let hourBegin = new Date(
                 new Date(payment?.date_start).setHours(
                   new Date(payment?.date_start).getHours() - 2,
                 ),
               );
-              // console.log(payment);
+              let hourFinish = new Date(
+                new Date(payment?.date_end).setHours(
+                  new Date(payment?.date_end).getHours() - 2,
+                ),
+              );
               return (
                 <InfoCardPrice
                   key={payment?.createdAt}
-                  time={myDate.toLocaleTimeString()}
-                  date={myDate.toLocaleDateString('fr')}
+                  time={
+                    hourBegin.getHours() + 'H - ' + hourFinish.getHours() + 'H'
+                  }
+                  date={
+                    this.days[hourBegin.getDay()] +
+                    ' ' +
+                    hourBegin.getDate() +
+                    ' ' +
+                    this.months[hourBegin.getMonth()]
+                  }
                   room={payment?.room_id.name}
+                  desc={payment?.room_id.desc}
                   adresse={payment?.room_id.address}
                   price={payment?.room_id.price.toFixed(2)}
+                  image={payment?.room_id.image}
+                  info={payment?.room_id}
+                  navigation={this.props.navigation}
                 />
               );
             })}
