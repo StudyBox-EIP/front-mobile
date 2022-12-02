@@ -183,12 +183,13 @@ export class RoomModal extends React.Component<Props> {
     this.state.reservations.forEach((res: any) => {
       const dateNow = new Date();
 
-      // Fixing Phone Internal Delay
-      dateNow.setHours(dateNow.getHours() + 2);
-
       if (
-        dateNow >= new Date(res.date_start) &&
-        dateNow <= new Date(res.date_end)
+        dateNow.getTime() >=
+          new Date(res.date_start).setHours(
+            new Date(res.date_start).getHours() - 1,
+          ) &&
+        dateNow.getTime() <=
+          new Date(res.date_end).setHours(new Date(res.date_end).getHours() - 1)
       ) {
         tempReservations.push(res);
       }

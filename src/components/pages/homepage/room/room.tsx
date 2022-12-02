@@ -210,16 +210,6 @@ export class RoomScreen extends React.Component {
       this.state.reservations.forEach((res: any) => {
         const dateNow = new Date();
 
-        // Fixing Phone Internal Delay
-        dateNow.setHours(dateNow.getHours());
-
-        console.log(
-          dateNow.getHours(),
-          new Date(res.date_start).setHours(
-            new Date(res.date_start).getHours() - 1,
-          ),
-        );
-
         if (
           dateNow.getTime() >=
             new Date(res.date_start).setHours(
