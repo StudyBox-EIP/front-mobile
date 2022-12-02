@@ -404,12 +404,7 @@ export class RoomScreen extends React.Component {
           }
           txt="Réserver"
         />
-        {/* <BasicButton
-          style={RoomScreenStyle.button}
-          callback={this.goToRoom}
-          txt="En route !"
-        /> */}
-        {(__DEV__ ? true : this.state.canOpen) ? (
+        {this.state.canOpen ? (
           <BasicIcon
             Icon={Unlock}
             size={24}

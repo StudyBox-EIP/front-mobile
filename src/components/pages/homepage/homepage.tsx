@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, PermissionsAndroid, BackHandler} from 'react-native';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
-import {getRooms, getRoomsNearby} from '../../api/rooms';
+import {getRooms} from '../../api/rooms';
 import Geolocation from 'react-native-geolocation-service';
 import {getFavorites} from '../../api/favorites';
 import {Header} from '../../elements/header';
@@ -155,11 +155,6 @@ export class HomePageScreen extends React.Component {
         async info => {
           this.setState({latitude: info.coords.latitude});
           this.setState({longitude: info.coords.longitude});
-          const remoteRooms = await getRoomsNearby(
-            this.state.latitude,
-            this.state.longitude,
-          );
-          this.applyRoomState(remoteRooms);
         },
         (e: any) => console.error(e),
         {enableHighAccuracy: true},
@@ -168,9 +163,9 @@ export class HomePageScreen extends React.Component {
       this.setState({longitude: FRANCE_LONGITUDE});
       this.setState({latitude: FRANCE_LATITUDE});
       this.setState({defaultZoom: FRANCE_ZOOM});
-      const defaultRooms = await getRooms();
-      this.applyRoomState(defaultRooms);
     }
+    const defaultRooms = await getRooms();
+    this.applyRoomState(defaultRooms);
   }
 
   async componentDidMount() {
@@ -185,6 +180,25 @@ export class HomePageScreen extends React.Component {
       }
     });
   }
+
+  test = ({item}: any) => {
+    if (!item.longitude || !item.latitude) {
+      return <View />;
+    }
+
+    return (
+      <MapboxGL.PointAnnotation
+        key={item.id}
+        id={`${item.id}`}
+        onSelected={() => {
+          this.setState({currentRoom: item});
+          console.debug(item);
+        }}
+        coordinate={[item.longitude, item.latitude]}>
+        <LANDMARK_ICON width={50} height={50} />
+      </MapboxGL.PointAnnotation>
+    );
+  };
 
   render() {
     MapboxGL.setWellKnownTileServer('Mapbox');
@@ -203,17 +217,8 @@ export class HomePageScreen extends React.Component {
                   animationDuration={1100}
                   centerCoordinate={[this.state.longitude, this.state.latitude]}
                 />
-                {this.state.nearbyRooms.map((value, key) => {
-                  if (value.longitude && value.latitude) {
-                    return (
-                      <MapboxGL.PointAnnotation
-                        key={key}
-                        onSelected={() => this.setState({currentRoom: value})}
-                        coordinate={[value.longitude, value.latitude]}>
-                        <LANDMARK_ICON width={50} height={50} />
-                      </MapboxGL.PointAnnotation>
-                    );
-                  }
+                {this.state.nearbyRooms.flatMap((room, key) => {
+                  return <this.test key={key} item={room} />;
                 })}
               </MapboxGL.MapView>
               {this.state.currentRoom ? (

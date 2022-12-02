@@ -34,6 +34,10 @@ const SettingsPageScreenStyle = StyleSheet.create({
   buttonBox: {
     height: '70%',
   },
+  profileImage: {
+    width: 60,
+    height: 60,
+  },
 });
 
 const SettingsButton = (props: any) => {
@@ -101,12 +105,11 @@ export class SettingsScreen extends React.Component {
             />
           ) : (
             <Image
-              width={60}
-              height={60}
+              style={SettingsPageScreenStyle.profileImage}
               source={
                 this.state.userInfo?.profil_picture
                   ? {uri: getPictureObject(this.state.userInfo?.profil_picture)}
-                  : undefined
+                  : require('../../../assets/img/NoPicture.png')
               }
             />
           )}
@@ -116,13 +119,6 @@ export class SettingsScreen extends React.Component {
           <View style={SettingsPageScreenStyle.profileUnderline} />
         </View>
         <View style={SettingsPageScreenStyle.buttonBox}>
-          {/* <SettingsButton
-            backgroundColor="white"
-            iconColor={COLORS_STUDYBOX.STUDYBOX_GREEN}
-            text="Gestion du Compte"
-            logo={AccountIcon}
-            callback={undefined}
-          /> */}
           <SettingsButton
             backgroundColor="white"
             iconColor={COLORS_STUDYBOX.STUDYBOX_GREEN}
@@ -137,13 +133,6 @@ export class SettingsScreen extends React.Component {
             logo={GroupsIcon}
             callback={() => this.props.navigation.navigate('TeamsView')}
           />
-          {/* <SettingsButton
-            backgroundColor="white"
-            iconColor={COLORS_STUDYBOX.STUDYBOX_GREEN}
-            text="Paiement"
-            logo={DebitCardIcon}
-            callback={undefined}
-          /> */}
           <SettingsButton
             backgroundColor="white"
             iconColor={COLORS_STUDYBOX.STUDYBOX_GREEN}

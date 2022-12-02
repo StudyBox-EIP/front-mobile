@@ -154,7 +154,9 @@ function InfoCardPrice(props: any) {
                     cancelReservation(props.paymentId)
                       .then(() => {
                         props.updateList();
-                        Alert.prompt('Réservation Annulée');
+                        Alert.alert(
+                          "Réservation Annulée', 'Votre demande d'annulation a bien été prise en compte",
+                        );
                       })
                       .catch((error: string) => Alert.alert('Erreur', error)),
                 },

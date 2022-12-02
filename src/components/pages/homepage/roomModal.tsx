@@ -340,7 +340,7 @@ export class RoomModal extends React.Component<Props> {
                   : require('../../../assets/img/NoPicture.png')
               }
             />
-            {(__DEV__ ? true : this.state.canOpen) ? (
+            {this.state.canOpen ? (
               <BasicIcon
                 Icon={Unlock}
                 size={24}
