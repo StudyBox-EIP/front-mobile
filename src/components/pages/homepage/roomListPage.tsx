@@ -1,6 +1,6 @@
 import React from 'react';
 import {ReactNode} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import {addFavorite, getFavorites, removeFavorite} from '../../api/favorites';
 import {getRooms} from '../../api/rooms';
 import {BottomHomePageController} from '../../elements/controllers/homePageController';
@@ -15,7 +15,9 @@ export class RoomListPageScreen extends React.Component<Props> {
     },
     listContainer: {
       width: '100%',
-      marginBottom: '20%',
+    },
+    scrollView: {
+      marginBottom: '15%',
     },
   });
 
@@ -23,9 +25,10 @@ export class RoomListPageScreen extends React.Component<Props> {
     rooms: [],
     filteredRooms: [],
     favorites: [],
+    refreshing: false,
   };
 
-  componentDidMount() {
+  loadRoomList() {
     getFavorites()
       .then(favorites =>
         this.setState({favorites: favorites.map(favorite => favorite.id)}),
@@ -43,7 +46,11 @@ export class RoomListPageScreen extends React.Component<Props> {
       });
   }
 
-  roomRender = ({item}: any) => {
+  componentDidMount() {
+    this.loadRoomList();
+  }
+
+  roomRender = ({props}: any) => {
     const roomRenderStyle = StyleSheet.create({
       container: {
         alignItems: 'center',
@@ -53,26 +60,26 @@ export class RoomListPageScreen extends React.Component<Props> {
     return (
       <View style={roomRenderStyle.container}>
         <RoomCard
-          key={item.id}
-          id={item.id}
-          title={item.name}
-          desc={item.desc}
-          adress={item.address}
-          score={item.average}
-          price={item.price}
-          nb_note={item.nb_note}
-          image={item.image}
-          latitude={item.latitude}
-          longitude={item.longitude}
-          favorite={item.favorite}
-          seats_available={item.seats_available}
-          seats_total={item.seats_total}
-          open_hours={item.open_hours}
+          key={props.id}
+          id={props.id}
+          title={props.name}
+          desc={props.desc}
+          adress={props.address}
+          score={props.average}
+          price={props.price}
+          nb_note={props.nb_note}
+          image={props.image}
+          latitude={props.latitude}
+          longitude={props.longitude}
+          favorite={props.favorite}
+          seats_available={props.seats_available}
+          seats_total={props.seats_total}
+          open_hours={props.open_hours}
           navigation={this.props.navigation}
           onFavorite={() => {
             this.setState({
               rooms: this.state.rooms.map(room => {
-                if (room.id === item.id) {
+                if (room.id === props.id) {
                   if (room.favorite === true) {
                     removeFavorite(room.id);
                   } else {
@@ -102,17 +109,31 @@ export class RoomListPageScreen extends React.Component<Props> {
 
   render(): ReactNode {
     return (
-      <View style={this.style.baseContainer}>
-        <BasicSearchBar
-          placeholder="Rechercher une salle"
-          onChangeText={(newText: string) => this.filterRooms(newText)}
-        />
-        <FlatList
-          style={this.style.listContainer}
-          data={this.state.filteredRooms}
-          renderItem={this.roomRender}
-          keyExtractor={room => room?.id}
-        />
+      <View>
+        <ScrollView
+          style={this.style.scrollView}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={() => {
+                this.loadRoomList();
+              }}
+            />
+          }>
+          <View style={this.style.baseContainer}>
+            <BasicSearchBar
+              placeholder="Rechercher une salle"
+              onChangeText={(newText: string) => this.filterRooms(newText)}
+            />
+            {this.state.filteredRooms.map(room => {
+              return (
+                <View style={this.style.listContainer}>
+                  <this.roomRender props={room} />
+                </View>
+              );
+            })}
+          </View>
+        </ScrollView>
         <BottomHomePageController navigation={this.props.navigation} />
       </View>
     );

@@ -22,6 +22,13 @@ import Unlock from '../../../../assets/svg/unlocked.svg';
 import {openLocker} from '../../../api/booking';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {addFavorite, removeFavorite} from '../../../api/favorites';
+import {
+  faBookmark as fasBookmark,
+  faMap,
+} from '@fortawesome/free-solid-svg-icons';
+import {faBookmark} from '@fortawesome/free-regular-svg-icons';
 
 const scoreMax = 5;
 
@@ -43,6 +50,7 @@ const RoomScreenStyle = StyleSheet.create({
     textAlign: 'left',
     fontSize: 12,
     marginBottom: 12,
+    paddingHorizontal: 12,
   },
   imageCover: {
     width: '100%',
@@ -59,6 +67,13 @@ const RoomScreenStyle = StyleSheet.create({
     flex: 10,
   },
   button: {},
+  roomBookingButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignSelf: 'auto',
+    height: '8%',
+    width: '75%',
+  },
 });
 
 const BasicInfoStyle = StyleSheet.create({
@@ -148,6 +163,9 @@ const BasicInfo = (props: any) => {
 
 export class RoomScreen extends React.Component {
   state = {
+    favorite: this.props.route.params.favorite
+      ? this.props.route.params.favorite
+      : false,
     reservations: [{}],
     reservationsNote: [{}],
     canRate: false,
@@ -284,6 +302,52 @@ export class RoomScreen extends React.Component {
     );
   };
 
+  InfoButton = (props: any) => {
+    const styleButton = StyleSheet.create({
+      container: {
+        backgroundColor: COLORS_STUDYBOX.BG_GREY,
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+      },
+      text: {
+        alignSelf: 'auto',
+        fontFamily: 'RopaSans-Regular',
+      },
+    });
+
+    return (
+      <View>
+        <TouchableOpacity
+          style={styleButton.container}
+          onPress={() => {
+            if (props.text === 'Favoris') {
+              if (this.state.favorite) {
+                removeFavorite(this.props.route.params.id).then(() =>
+                  this.setState({favorite: false}),
+                );
+              } else {
+                addFavorite(this.props.route.params.id).then(() =>
+                  this.setState({favorite: true}),
+                );
+              }
+            } else if (props.text === 'Itinéraire') {
+              this.goToRoom();
+            }
+          }}>
+          <FontAwesomeIcon
+            icon={props.icon}
+            size={20}
+            color={COLORS_STUDYBOX.BLUE_FOOTER}
+          />
+        </TouchableOpacity>
+        <Text style={styleButton.text}>{props.text}</Text>
+      </View>
+    );
+  };
+
   render(): React.ReactNode {
     let props: any = this.props.route.params;
     return (
@@ -303,6 +367,16 @@ export class RoomScreen extends React.Component {
           <Text style={RoomScreenStyle.subtitle}>Adresse:</Text>
           <Text style={RoomScreenStyle.txt}>{props.adress}</Text>
         </ScrollView>
+
+        <View style={RoomScreenStyle.roomBookingButtons}>
+          <this.InfoButton icon={faMap} text="Itinéraire" />
+          {this.state.favorite ? (
+            <this.InfoButton icon={fasBookmark} text="Favoris" />
+          ) : (
+            <this.InfoButton icon={faBookmark} text="Favoris" />
+          )}
+        </View>
+
         <this.Calendar />
         {this.state.canRate ? (
           <View style={style.notationContainer}>
@@ -330,11 +404,11 @@ export class RoomScreen extends React.Component {
           }
           txt="Réserver"
         />
-        <BasicButton
+        {/* <BasicButton
           style={RoomScreenStyle.button}
           callback={this.goToRoom}
           txt="En route !"
-        />
+        /> */}
         {(__DEV__ ? true : this.state.canOpen) ? (
           <BasicIcon
             Icon={Unlock}

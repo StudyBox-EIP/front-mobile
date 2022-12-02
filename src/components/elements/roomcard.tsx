@@ -134,6 +134,7 @@ function RoomCard(props: any) {
           seats_available: props.seats_available,
           seats_total: props.seats_total,
           open_hours: props.open_hours,
+          favorite: props.favorite,
           pic: picture === null ? errorPicture : {uri: picture},
         });
       }}>
