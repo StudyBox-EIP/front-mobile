@@ -125,9 +125,9 @@ export class RoomListPageScreen extends React.Component<Props> {
               placeholder="Rechercher une salle"
               onChangeText={(newText: string) => this.filterRooms(newText)}
             />
-            {this.state.filteredRooms.map(room => {
+            {this.state.filteredRooms.map((room, key) => {
               return (
-                <View style={this.style.listContainer}>
+                <View key={key} style={this.style.listContainer}>
                   <this.roomRender props={room} />
                 </View>
               );
