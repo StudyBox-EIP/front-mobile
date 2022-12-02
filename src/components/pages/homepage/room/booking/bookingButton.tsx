@@ -48,20 +48,32 @@ export class BookingButton extends React.Component {
     this.state.title = this.props.title.hour_start.split('T')[1].split('.')[0];
     this.setState({seats_total: this.props.seats_total});
     this.setState({title: this.state.title});
+
     this.state.slotDateStart = new Date(
-      this.props?.seatsAvailable?.hour_start,
+      new Date(this.props?.seatsAvailable?.hour_start).setHours(
+        new Date(this.props?.seatsAvailable?.hour_start).getHours() - 1,
+      ),
     ).getTime();
     this.state.slotDateEnd = new Date(
-      this.props?.seatsAvailable?.hour_end,
+      new Date(this.props?.seatsAvailable?.hour_end).setHours(
+        new Date(this.props?.seatsAvailable?.hour_end).getHours() - 1,
+      ),
     ).getTime();
+
+    console.log(
+      this.state.slotDateStart,
+      this.props?.seatsAvailable?.hour_start,
+    );
+
     this.state.isOutdated =
-      new Date(Date.now()).setHours(new Date().getHours() + 2) -
+      new Date(Date.now()).setHours(new Date().getHours()) -
         this.state.slotDateStart >
       0;
+
     console.log(
-      new Date(Date.now()).setHours(new Date().getHours() + 2),
+      new Date(Date.now()).setHours(new Date().getHours()),
       this.state.slotDateStart,
-      new Date(Date.now()).setHours(new Date().getHours() + 2) -
+      new Date(Date.now()).setHours(new Date().getHours()) -
         this.state.slotDateStart,
     );
   }

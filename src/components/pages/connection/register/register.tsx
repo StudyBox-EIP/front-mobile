@@ -138,7 +138,6 @@ class SignUpBody extends Component {
 
   registerButtonEvent() {
     if (this.state.password === this.state.confirmPassword) {
-      console.log('ok');
       register(this.props.navigation, {
         first_name: this.state.first_name.trim(),
         last_name: this.state.last_name.trim(),

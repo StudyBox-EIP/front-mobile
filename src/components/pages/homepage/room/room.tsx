@@ -292,8 +292,6 @@ export class RoomScreen extends React.Component {
           }}
           selectedDate={new Date()}
           onDateSelected={(date: any) => {
-            console.debug(new Date(date).getDate());
-
             this.state.selectedDate.date = new Date(
               this.state.selectedDate.date,
             ).setDate(new Date(date).getDate());

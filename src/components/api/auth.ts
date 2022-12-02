@@ -51,6 +51,10 @@ export async function register(
       address: data.address,
     });
     navigation.navigate('AuthScreen');
+    Alert.alert(
+      "Confirmation d'inscription",
+      "Votre compte peut être soumis à validation par l'équipe administrative",
+    );
     return auth;
   } catch (error) {
     if (axios.isAxiosError(error)) {
