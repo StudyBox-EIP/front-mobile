@@ -19,7 +19,7 @@ export default RoomCard;
 const cardStyle = StyleSheet.create({
   container: {
     width: '85%',
-    height: 250,
+    height: 200,
     alignItems: 'center',
     backgroundColor: COLORS_STUDYBOX.DARK_WHITE,
     shadowOffset: {
@@ -30,7 +30,6 @@ const cardStyle = StyleSheet.create({
     shadowRadius: 1,
     shadowColor: 'black',
     elevation: 8,
-    borderRadius: 10,
     marginVertical: 10,
   },
   title: {
@@ -38,6 +37,7 @@ const cardStyle = StyleSheet.create({
     bottom: 2 * Dimensions.get('screen').fontScale,
     left: 4 * Dimensions.get('screen').fontScale,
     fontSize: 16 * Dimensions.get('screen').fontScale,
+    fontFamily: 'RopaSans-Regular',
     overflow: 'scroll',
     marginLeft: 4,
     marginTop: 8,
@@ -47,7 +47,6 @@ const cardStyle = StyleSheet.create({
     left: 4,
     top: 4,
     backgroundColor: COLORS_STUDYBOX.STUDYBOX_BLUE,
-    borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 8,
     flexDirection: 'row',
@@ -97,9 +96,7 @@ function RoomCard(props: any) {
       position: 'absolute',
       alignSelf: 'center',
       width: '100%',
-      height: 200,
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
+      height: 150,
     },
     favorite: {
       fill: COLORS_STUDYBOX.STUDYBOX_GREEN,

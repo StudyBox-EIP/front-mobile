@@ -14,7 +14,6 @@ export const friendViewStyle = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderRadius: 5,
     elevation: 3,
   },
   viewShareMail: {
@@ -24,7 +23,6 @@ export const friendViewStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 1,
-    borderRadius: 10,
     marginVertical: 10,
     minHeight: 50,
   },
@@ -91,7 +89,6 @@ export const modal = StyleSheet.create({
     borderColor: COLORS_STUDYBOX.STUDYBOX_GREEN,
     borderWidth: 1,
     width: '75%',
-    borderRadius: 10,
     top: '50%',
   },
   viewContent: {

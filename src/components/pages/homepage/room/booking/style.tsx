@@ -53,14 +53,13 @@ export const bookingStyle = StyleSheet.create({
   BookingButton: {},
   ButtonList: {
     margin: 2,
-    width: '100%',
+    width: '80%',
     flexDirection: 'column',
   },
   cardInputLarge: {
     borderWidth: 1,
     borderColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
     minWidth: 100,
-    borderRadius: 10,
   },
   zoneInput: {
     flexDirection: 'row',
@@ -73,7 +72,6 @@ export const bookingStyle = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS_STUDYBOX.STUDYBOX_BLACK,
     minWidth: 100,
-    borderRadius: 10,
     flex: 1,
     marginHorizontal: 2,
   },
@@ -84,7 +82,7 @@ export const bookingStyle = StyleSheet.create({
   },
   cardInfoContainer: {
     alignSelf: 'center',
-    flex: 4,
+    height: 150,
     width: '90%',
     margin: 4,
   },

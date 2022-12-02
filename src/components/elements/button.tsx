@@ -12,7 +12,6 @@ export function BasicButton(props: any) {
       marginVertical: 8,
       paddingVertical: 12,
       paddingHorizontal: 32,
-      borderRadius: 80,
     },
     text: {
       color: 'white',

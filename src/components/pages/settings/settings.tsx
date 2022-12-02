@@ -33,6 +33,8 @@ const SettingsPageScreenStyle = StyleSheet.create({
   },
   buttonBox: {
     height: '70%',
+    width: '85%',
+    alignSelf: 'center',
   },
   profileImage: {
     width: 60,
@@ -63,6 +65,9 @@ const SettingsButton = (props: any) => {
     },
     text: {
       fontSize: 20,
+    },
+    title: {
+      fontFamily: 'RopaSans-Regular',
     },
   });
 
@@ -113,7 +118,7 @@ export class SettingsScreen extends React.Component {
               }
             />
           )}
-          <Text>
+          <Text style={SettingsPageScreenStyle.title}>
             {this.state.userInfo.first_name} {this.state.userInfo.last_name}
           </Text>
           <View style={SettingsPageScreenStyle.profileUnderline} />
