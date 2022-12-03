@@ -15,8 +15,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {AuthScreen} from './src/components/pages/connection/screen-auth/screen-auth';
-import {MicrosoftOauthScreen} from './src/components/pages/connection/oauth/MicrosoftOauthScreen';
-import {GoogleOauthScreen} from './src/components/pages/connection/oauth/GoogleOauthScreen';
 import {LoginScreen} from './src/components/pages/connection/login/login';
 import {SignUpScreen} from './src/components/pages/connection/register/register';
 import {HomePageScreen} from './src/components/pages/homepage/homepage';
@@ -71,11 +69,6 @@ const NavigationLoader = () => {
           name="ManualSignUp"
           options={ScreensOptions}
           component={SignUpScreen}
-        />
-        <Stack.Screen name="GoogleOauthScreen" component={GoogleOauthScreen} />
-        <Stack.Screen
-          name="MicrosoftOauthScreen"
-          component={MicrosoftOauthScreen}
         />
         <Stack.Screen
           name="HomePageScreen"

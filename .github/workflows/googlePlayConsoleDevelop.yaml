@@ -68,10 +68,6 @@ jobs:
         working-directory: ./android
         run: ./gradlew assembleRelease
 
-      - name: Build Project
-        working-directory: ./android
-        run: ./gradlew build
-
       - name: Build Release AAB
         working-directory: ./android
         run: ./gradlew bundleRelease
