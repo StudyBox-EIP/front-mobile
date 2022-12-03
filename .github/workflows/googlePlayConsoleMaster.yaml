@@ -11,15 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Set Up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: 11
 
       - name: Installing Node version 16
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -48,15 +48,15 @@ jobs:
     needs: build
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Set Up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: 11
 
       - name: Installing Node version 16
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -77,10 +77,6 @@ jobs:
       - name: Assemble Project
         working-directory: ./android
         run: ./gradlew assembleRelease
-
-      - name: Build Project
-        working-directory: ./android
-        run: ./gradlew buildRelease
 
       - name: Build Release AAB
         working-directory: ./android
