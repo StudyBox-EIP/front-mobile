@@ -17,7 +17,7 @@
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
     "axios": "^0.24.0",
-    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-module-resolver": "^5.0.0",
     "react": "^18.0.0",
     "react-native": "^0.69.1",
     "react-native-app-auth": "^6.3.0",
